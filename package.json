@@ -4,8 +4,12 @@
   "private": true,
   "scripts": {
     "build": "cd app && npm run build",
-    "dev": "cd app && npm run dev", 
+    "dev": "cd app && npm run dev",
     "start": "cd app && npm run start",
     "install:app": "cd app && npm install"
+  },
+  "dependencies": {
+    "marked": "^15.0.12",
+    "puppeteer": "^24.20.0"
   }
 }

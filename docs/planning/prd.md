@@ -24,7 +24,7 @@ Drive qualified FMS leads and convert them into first sessions efficiently and s
 * **Lead Gen & Conversion:** Week‑1 baseline; **+50%** FMS leads by Week‑4; form completion **≥70%**; FMS→first session **≥60%**; median **TTF ≤5 days**.
 * **Member Engagement:** ≥ **40%** of active members log into portal weekly.
 * **Content/SEO:** Publish **4** articles + **2** condition hubs; organic mix **≥20%**; Google Business Profile (GBP) actions **+20%** vs. pre‑launch.
-* **Quality/Performance:** Core Web Vitals pass on **≥75%** of page views; **≥99.9%** uptime.
+* **Quality/Performance:** Core Web Vitals thresholds (LCP ≤2.5s, CLS ≤0.1, INP ≤200ms) pass on **≥75%** of page views; **≥99.9%** uptime.
 
 ### Measurement Plan
 
@@ -204,15 +204,15 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 ## 13) Timeline & Milestones (4‑Week MVP)
 
-**Assumed start:** Monday **Sep 15, 2025**
+**Assumed start:** Monday **Sep 16, 2025**
 
-* **Week 0 (Sep 15–19):** Tech setup; Sanity schemas; GA4/GSC/GBP access; repo/CI; base components.
-* **Week 1 (Sep 22–26):** IA & wires (Home, FMS, Timetable, Hubs); FMS copy & form spec; timetable module MVP; finalize content plan.
-* **Week 2 (Sep 29–Oct 3):** Build core pages; portal (light); trust components; GA4 wiring; schema scaffolds.
-* **Week 3 (Oct 6–10):** Load content (2 hubs, 4 posts, 12 vids); a11y pass; CWV tuning; SEO polish; errors/empty states; sitemap/robots.
-* **Week 4 (Oct 13–17):** QA & UAT; go‑live by **Fri Oct 17, 2025**; KPI baseline; chat on in Week +1.
+* **Week 0 (Sep 16–20):** Tech setup; Sanity schemas; GA4/GSC/GBP access; repo/CI; base components.
+* **Week 1 (Sep 23–27):** IA & wires (Home, FMS, Timetable, Hubs); FMS copy & form spec; timetable module MVP; finalize content plan.
+* **Week 2 (Sep 30–Oct 4):** Build core pages; portal (light); trust components; GA4 wiring; schema scaffolds.
+* **Week 3 (Oct 7–11):** Load content (2 hubs, 4 posts, 12 vids); a11y pass; CWV tuning; SEO polish; errors/empty states; sitemap/robots.
+* **Week 4 (Oct 14–18):** QA & UAT; go‑live by **Fri Oct 18, 2025**; KPI baseline; chat on in Week +1.
 
-Post‑Launch Week +1 (Oct 20–24): KPI review, copy tweaks, proof enhancements; content cadence continues.
+Post‑Launch Week +1 (Oct 21–25): KPI review, copy tweaks, proof enhancements; content cadence continues.
 
 ---
 

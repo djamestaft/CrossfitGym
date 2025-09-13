@@ -32,7 +32,7 @@ Defines the MVP’s focus on **FMS conversion funnel**, **lightweight member por
 
 ## 3. Information Architecture & Navigation
 
-* **Top-level nav**: Home, Hubs, Articles, About, Portal, Contact.
+* **Top-level nav**: Home, Programs, Timetable, Pricing, Physio, Coaches, Blog, Member Portal, Contact.
 * **Conversion pathways**: Homepage hero → FMS → form → success.
 * **Content hierarchy**: Structured hubs & articles; professional but accessible tone.
 * **Behaviours**: Sticky header, breadcrumbs, mobile nav, portal login.
@@ -41,7 +41,7 @@ Defines the MVP’s focus on **FMS conversion funnel**, **lightweight member por
 
 ## 4. Screens, Templates & Components
 
-* **Screens**: Homepage, Hub, Article, Portal Dashboard, Movement Library, FMS Form, Contact Page.
+* **Screens**: Homepage, Programs, Timetable, Pricing, Physio, Coaches, Blog (Hub/Article), FMS Form, Member Portal Dashboard, Movement Library, Contact Page.
 * **Templates**: Layout, Hub, Article, Portal, Form.
 * **Components**: CTA button, Proof panel, Video card, Accordion (FAQs), Breadcrumbs, Magic link login, Timetable fallback, Chat toggle.
 
@@ -66,7 +66,7 @@ Defines the MVP’s focus on **FMS conversion funnel**, **lightweight member por
 
 ## 7. CMS Schema & Content Ops
 
-* **CMS**: Sanity CMS with types for hubs, articles, proof panels, videos, notes, FAQs, timetable, site settings.
+* **CMS**: Sanity CMS with types for hubs, articles, proof panels, movement videos (≥12), programming notes, FAQs, testimonials (≥6), coach bios (≥3), timetable, site settings.
 * **Governance**: Admin, Editor, Author roles; draft → review → publish workflow.
 * **Ops**: Versioning, preview mode, media management via CDN, fallbacks.
 

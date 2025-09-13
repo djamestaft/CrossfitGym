@@ -44,7 +44,7 @@ Increase the volume and quality of **Functional Movement Screen (FMS)** submissi
 
   * Publish **≥ 4** articles + **2** “condition hubs”; achieve **≥ 20%** organic traffic mix by week‑4.
   * Clicks from Google Business Profile (calls + directions) **+20%** vs. pre‑launch 4‑week average.
-* **Quality/Performance:** Core Web Vitals pass on 75%+ of page views; Uptime ≥ 99.9%.
+* **Quality/Performance:** Core Web Vitals thresholds (LCP ≤2.5s, CLS ≤0.1, INP ≤200ms) pass on 75%+ of page views; Uptime ≥ 99.9%.
 
 **Measurement Plan**
 
@@ -125,7 +125,7 @@ Increase the volume and quality of **Functional Movement Screen (FMS)** submissi
 
 **Content Priorities (MVP)**
 
-* FMS landing copy + visuals; 2 condition hubs (Shoulder, Low‑Back); 4 articles; 12 movement videos; 12 FAQs.
+* FMS landing copy + visuals; 2 condition hubs (Shoulder, Low‑Back); 4 articles; ≥12 movement videos; 12 FAQs; ≥6 testimonials; ≥3 coach bios.
 
 ---
 
@@ -150,7 +150,7 @@ Increase the volume and quality of **Functional Movement Screen (FMS)** submissi
 **7.4 Trust & Proof**
 
 * Testimonials carousel; “Safety/Standards” panel; coach bios with quals.
-* **Acceptance:** ≥6 testimonials loaded; schema valid; bios complete.
+* **Acceptance:** ≥6 testimonials loaded; ≥3 coach bios with qualifications; schema valid; components complete.
 
 **7.5 Chat Toggle**
 
@@ -209,7 +209,7 @@ Increase the volume and quality of **Functional Movement Screen (FMS)** submissi
 
 ## 13) Definition of Done (DoD)
 
-* All MVP pages live and navigable; forms and events tracked; sitemap/robots submitted; CWV pass; accessibility quick pass; privacy/cookie in place; timetable accurate; 6+ testimonials; 12+ movement videos; portal accessible to members.
+* All MVP pages live and navigable; forms and events tracked; sitemap/robots submitted; CWV pass; accessibility quick pass; privacy/cookie in place; timetable accurate; ≥6 testimonials; ≥12 movement videos; ≥3 coach bios; portal accessible to members.
 
 ---
 
