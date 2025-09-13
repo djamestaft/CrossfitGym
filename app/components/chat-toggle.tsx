@@ -87,7 +87,7 @@ export function ChatToggle() {
       <Button
         onClick={toggleChat}
         size="lg"
-        className="h-14 w-14 rounded-full bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all duration-200 group"
+        className="h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-200 group"
         aria-label={isMinimized ? "Open chat support" : "Close chat support"}
       >
         {isMinimized ? (

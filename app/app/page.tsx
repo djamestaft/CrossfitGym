@@ -15,14 +15,14 @@ export default function HomePage() {
               Geelong's Movement Specialists
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold text-balance">
-              Train Around Pain, <span className="text-emerald-600">Move Freely Again</span>
+              <span style={{color: '#3f2e2e'}}>Train Around Pain,</span> <span style={{color: '#3f2e2e'}}>Move Freely Again</span>
             </h1>
             <p className="text-xl text-slate-600 text-balance max-w-3xl mx-auto">
               Professional movement therapy and functional movement screening in Geelong. Expert physiotherapy and
               exercise rehabilitation to help you move without limitations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="text-lg px-8 bg-emerald-600 hover:bg-emerald-700" asChild>
+              <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90" asChild>
                 <Link href="/fms">
                   Get Your Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -47,14 +47,14 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="text-center border border-slate-200">
               <CardContent className="pt-8">
-                <Activity className="h-16 w-16 text-emerald-600 mx-auto mb-6" />
+                <Activity className="h-16 w-16 text-primary mx-auto mb-6" />
                 <h3 className="text-xl font-semibold mb-4 text-slate-900">Functional Movement Screen</h3>
                 <p className="text-slate-600 mb-6">
                   Comprehensive 7-point assessment to identify movement limitations and injury risks.
                 </p>
                 <Button
                   variant="outline"
-                  className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 bg-transparent"
+                  className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                   asChild
                 >
                   <Link href="/fms">
@@ -67,14 +67,14 @@ export default function HomePage() {
 
             <Card className="text-center border border-slate-200">
               <CardContent className="pt-8">
-                <Users className="h-16 w-16 text-emerald-600 mx-auto mb-6" />
+                <Users className="h-16 w-16 text-primary mx-auto mb-6" />
                 <h3 className="text-xl font-semibold mb-4 text-slate-900">Personalized Therapy</h3>
                 <p className="text-slate-600 mb-6">
                   One-on-one treatment plans tailored to your specific needs and goals.
                 </p>
                 <Button
                   variant="outline"
-                  className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 bg-transparent"
+                  className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                   asChild
                 >
                   <Link href="/timetable">
@@ -87,14 +87,14 @@ export default function HomePage() {
 
             <Card className="text-center border border-slate-200">
               <CardContent className="pt-8">
-                <Clock className="h-16 w-16 text-emerald-600 mx-auto mb-6" />
+                <Clock className="h-16 w-16 text-primary mx-auto mb-6" />
                 <h3 className="text-xl font-semibold mb-4 text-slate-900">Ongoing Support</h3>
                 <p className="text-slate-600 mb-6">
                   Access to movement resources and ongoing guidance through our member portal.
                 </p>
                 <Button
                   variant="outline"
-                  className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 bg-transparent"
+                  className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                   asChild
                 >
                   <Link href="/portal">
@@ -116,7 +116,7 @@ export default function HomePage() {
             <div className="flex justify-center items-center gap-2 mb-8">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-emerald-500 text-emerald-500" />
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
                 ))}
               </div>
               <span className="text-slate-600">4.9/5 from 127 reviews</span>
@@ -128,7 +128,7 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-emerald-500 text-emerald-500" />
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
                 <p className="text-sm mb-4 text-slate-700">
@@ -146,7 +146,7 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-emerald-500 text-emerald-500" />
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
                 <p className="text-sm mb-4 text-slate-700">
@@ -164,7 +164,7 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-emerald-500 text-emerald-500" />
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
                 <p className="text-sm mb-4 text-slate-700">
@@ -185,7 +185,7 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-emerald-gradient border-0 shadow-lg">
+            <Card className="bg-primary-gradient border-0 shadow-lg">
               <CardContent className="pt-8 pb-8">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                   <div className="text-center md:text-left">
@@ -197,7 +197,7 @@ export default function HomePage() {
                       Check availability and book your spot in our movement classes and workshops.
                     </p>
                   </div>
-                  <Button size="lg" variant="secondary" className="bg-white text-emerald-700 hover:bg-slate-50" asChild>
+                  <Button size="lg" variant="secondary" className="bg-white text-primary-foreground hover:bg-slate-50" asChild>
                     <Link href="/timetable">
                       View Timetable
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -220,7 +220,7 @@ export default function HomePage() {
               day.
             </p>
             <div className="space-y-4">
-              <Button size="lg" className="text-lg px-8 bg-emerald-600 hover:bg-emerald-700" asChild>
+              <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90" asChild>
                 <Link href="/fms">
                   Book Your Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -228,15 +228,15 @@ export default function HomePage() {
               </Button>
               <div className="flex justify-center items-center gap-6 text-sm text-slate-500">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-600" />
+                  <CheckCircle className="h-4 w-4 text-primary" />
                   No obligation
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-600" />
+                  <CheckCircle className="h-4 w-4 text-primary" />
                   45-minute assessment
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-600" />
+                  <CheckCircle className="h-4 w-4 text-primary" />
                   Personalized plan
                 </div>
               </div>

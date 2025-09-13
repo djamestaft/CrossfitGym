@@ -33,7 +33,7 @@ const hubs = [
     readTime: "10 min read",
     articleCount: 2,
     lastUpdated: "2024-01-20",
-    color: "bg-green-50 border-green-200",
+    color: "bg-primary/5 border-primary/20",
     icon: "🏃‍♂️",
   },
 ]

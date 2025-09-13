@@ -115,7 +115,7 @@ export default function RootLayout({
         />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#059669" />
+        <meta name="theme-color" content="#3f2e2e" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
