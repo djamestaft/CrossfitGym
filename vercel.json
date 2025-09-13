@@ -1,11 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "cd app && npm install --no-audit --no-fund && npm run build:vercel",
-  "outputDirectory": "app/.next",
-  "installCommand": "cd app && npm install --no-audit --no-fund",
-  "env": {
-    "NODE_ENV": "production",
-    "NPM_CONFIG_WORKSPACE": "false"
-  }
+  "builds": [
+    {
+      "src": "app/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app/$1"
+    }
+  ]
 }
