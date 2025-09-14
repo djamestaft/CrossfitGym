@@ -202,28 +202,42 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 ---
 
-## 13) Timeline & Milestones (4‑Week MVP)
+## 13) Timeline & Milestones (REVISED - Accelerated 2‑Week MVP)
 
-**Assumed start:** Monday **Sep 16, 2025**
+**✅ Current Status:** **Week 2.5 equivalent ALREADY COMPLETE** via v0 AI generation
 
-* **Week 0 (Sep 16–20):** Tech setup; Sanity schemas; GA4/GSC/GBP access; repo/CI; base components.
-* **Week 1 (Sep 23–27):** IA & wires (Home, FMS, Timetable, Hubs); FMS copy & form spec; timetable module MVP; finalize content plan.
-* **Week 2 (Sep 30–Oct 4):** Build core pages; portal (light); trust components; GA4 wiring; schema scaffolds.
-* **Week 3 (Oct 7–11):** Load content (2 hubs, 4 posts, 12 vids); a11y pass; CWV tuning; SEO polish; errors/empty states; sitemap/robots.
-* **Week 4 (Oct 14–18):** QA & UAT; go‑live by **Fri Oct 18, 2025**; KPI baseline; chat on in Week +1.
+**Revised timeline based on actual development state:**
+
+* **✅ Week 0-2 COMPLETE:** Next.js setup; base components; Home, FMS, Portal pages built; responsive design; GA4 events; trust components; schema markup.
+* **Week 1 (Sep 16–20):** Backend integration; FMS form API; email notifications; navigation header/footer; Vercel deployment.
+* **Week 2 (Sep 23–27):** Missing pages (About, Contact, Legal); Sanity CMS setup; content loading; final testing; **LAUNCH by Fri Sep 27, 2025**.
+
+**🚀 NEW LAUNCH TARGET: September 27, 2025** (3 weeks ahead of original schedule)
 
 Post‑Launch Week +1 (Oct 21–25): KPI review, copy tweaks, proof enhancements; content cadence continues.
 
 ---
 
-## 14) Definition of Done (DoD)
+## 14) Definition of Done (DoD) - REVISED for Accelerated Launch
 
-* **Launch Readiness:** All MVP pages live; FMS 2‑step form with validation & admin notice; timetable responsive with fallback; portal accessible with ≥12 captioned videos.
-* **Analytics & SEO:** GA4 events per spec; GSC verified; sitemap/robots submitted; schema valid (no critical errors).
-* **Content & Proof:** 2 condition hubs; 4 articles; 12 FAQs; ≥6 testimonials; ≥3 coach bios.
-* **Quality & Compliance:** CWV p75 thresholds met; a11y quick pass; privacy/terms/cookies live; consent on FMS form.
-* **Ops & Reliability:** Ops sheet capture functioning; weekly KPI report template ready; Vercel pipelines; rollback validated; chat toggle wired (off at launch; on Week +1).
-* **Post‑Launch Day‑7:** KPI baseline captured; top 5 fixes/opportunities logged.
+### **MVP Launch Ready (September 27, 2025):**
+* **✅ Frontend Complete:** All MVP pages built (Home, FMS, Portal, Timetable); responsive design; professional UI/UX
+* **✅ Core Functionality:** FMS 2‑step form with validation; portal with programming notes; testimonials & trust elements
+* **🔧 Backend Integration:** FMS form API with email notifications; lead storage system
+* **🔧 Navigation:** Header navigation and footer for site-wide user flow
+* **🔧 Deployment:** Vercel hosting with environment variables; production deployment
+* **✅ Analytics Foundation:** GA4 events configured; schema markup implemented
+
+### **Post-Launch Content & Enhancement (Week 3-4):**
+* **Content Creation:** 2 condition hubs; 4 articles; coach bios; business pages
+* **CMS Integration:** Sanity workspace; dynamic content management
+* **Advanced Features:** Chat toggle; enhanced analytics; performance optimization
+* **SEO Polish:** GSC verification; sitemap optimization; internal linking
+
+### **Quality Standards (Maintained):**
+* **Performance:** Core Web Vitals compliance; mobile-first responsive
+* **Accessibility:** WCAG 2.1 AA basics; keyboard navigation; screen reader support  
+* **Security:** Form validation; input sanitization; environment variable management
 
 ---
 
