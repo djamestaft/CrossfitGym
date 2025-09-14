@@ -1,5 +1,4 @@
 import { GET } from '../api/health/route'
-import { NextRequest } from 'next/server'
 
 describe('/api/health', () => {
   it('should return healthy status', async () => {
