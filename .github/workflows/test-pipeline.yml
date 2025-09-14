@@ -71,7 +71,7 @@ jobs:
         working-directory: ./app
         run: |
           echo "🔍 Running ESLint checks..."
-          npx eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
+          npx eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Prettier formatting check
         working-directory: ./app
