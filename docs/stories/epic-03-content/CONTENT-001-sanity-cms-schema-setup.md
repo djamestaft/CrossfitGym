@@ -4,17 +4,18 @@
 **Story ID:** CONTENT-001  
 **Priority:** High  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 0-1  
+**Sprint Target:** Week 0-1
 
 ## 📋 User Story
 
 **As a** content editor and operations team member  
 **I want** structured content templates with user-friendly editing interfaces  
-**So that** I can publish consistently formatted, SEO-optimized content efficiently without technical knowledge  
+**So that** I can publish consistently formatted, SEO-optimized content efficiently without technical knowledge
 
 ## ✅ Acceptance Criteria
 
 ### Content Type Schemas
+
 - [ ] **Article Schema (`post_article`):**
   - Title, slug, excerpt, and rich text body
   - SEO metadata fields (meta title, description, OG image)
@@ -56,6 +57,7 @@
   - Professional achievements and continuing education
 
 ### Content Management Features
+
 - [ ] **Editorial Workflow:**
   - Draft/review/publish status management
   - Content preview functionality with live site styling
@@ -81,6 +83,7 @@
   - XML sitemap automatic generation
 
 ### User Experience & Access Control
+
 - [ ] **Role-Based Permissions:**
   - Content Editor: Create, edit, publish content
   - Reviewer: Review and approve content
@@ -97,6 +100,7 @@
   - Content templates for consistency
 
 ### Technical Integration
+
 - [ ] **Next.js Integration:**
   - API endpoints for content retrieval
   - Static site generation (SSG) for performance
@@ -116,12 +120,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Sanity account setup and project configuration
 - [ ] Vercel hosting and deployment pipeline (INFRA-001)
 - [ ] Team access management and role definitions
 - [ ] Content strategy and governance documentation
 
 **Technical Dependencies:**
+
 - [ ] Next.js Sanity plugin configuration
 - [ ] TypeScript types and interface definitions
 - [ ] Image optimization service integration
@@ -129,6 +135,7 @@
 - [ ] SEO tooling and validation systems
 
 **Content Dependencies:**
+
 - [ ] Content style guide and editorial standards
 - [ ] SEO keyword research and strategy
 - [ ] Content creation calendar and workflow
@@ -192,29 +199,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Schema design changes needed | Medium | Medium | Iterative design, stakeholder review |
-| Team adoption challenges | Medium | Low | Training program, simple interface design |
-| Performance issues with content | High | Low | Optimization pipeline, monitoring |
-| Data migration complexity | Low | Low | Fresh start advantage, clean schemas |
-| Integration bugs with Next.js | Medium | Low | Thorough testing, phased rollout |
+| Risk                            | Impact | Probability | Mitigation                                |
+| ------------------------------- | ------ | ----------- | ----------------------------------------- |
+| Schema design changes needed    | Medium | Medium      | Iterative design, stakeholder review      |
+| Team adoption challenges        | Medium | Low         | Training program, simple interface design |
+| Performance issues with content | High   | Low         | Optimization pipeline, monitoring         |
+| Data migration complexity       | Low    | Low         | Fresh start advantage, clean schemas      |
+| Integration bugs with Next.js   | Medium | Low         | Thorough testing, phased rollout          |
 
 ## 📈 Success Metrics
 
 **Technical Performance:**
+
 - **Content Query Speed:** <500ms for 95% of requests
 - **Image Optimization:** >60% file size reduction
 - **Studio Load Time:** <3 seconds initial load
 - **Build Time Impact:** <20% increase with content
 
 **Team Productivity:**
+
 - **Content Creation Time:** <2 hours for standard article
 - **Training Time:** <4 hours for new content editors
 - **Error Rate:** <5% content requires republishing
 - **Team Satisfaction:** >4.0/5 rating for CMS usability
 
 **Content Quality:**
+
 - **SEO Compliance:** 100% content with proper meta tags
 - **Schema Validation:** Zero critical errors
 - **Consistency:** >95% content follows style guide
@@ -223,6 +233,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Sanity Schema Definitions
+
 ```typescript
 // sanity/schemas/post-article.ts
 export const postArticleSchema = {
@@ -232,7 +243,7 @@ export const postArticleSchema = {
   groups: [
     { name: 'content', title: 'Content' },
     { name: 'seo', title: 'SEO' },
-    { name: 'settings', title: 'Settings' }
+    { name: 'settings', title: 'Settings' },
   ],
   fields: [
     {
@@ -240,7 +251,7 @@ export const postArticleSchema = {
       title: 'Title',
       type: 'string',
       group: 'content',
-      validation: Rule => Rule.required().min(10).max(100)
+      validation: Rule => Rule.required().min(10).max(100),
     },
     {
       name: 'slug',
@@ -248,7 +259,7 @@ export const postArticleSchema = {
       type: 'slug',
       group: 'content',
       options: { source: 'title', maxLength: 80 },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'excerpt',
@@ -256,7 +267,7 @@ export const postArticleSchema = {
       type: 'text',
       group: 'content',
       rows: 3,
-      validation: Rule => Rule.max(160)
+      validation: Rule => Rule.max(160),
     },
     {
       name: 'featuredImage',
@@ -269,14 +280,14 @@ export const postArticleSchema = {
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
-          validation: Rule => Rule.required()
+          validation: Rule => Rule.required(),
         },
         {
           name: 'caption',
           title: 'Caption',
-          type: 'string'
-        }
-      ]
+          type: 'string',
+        },
+      ],
     },
     {
       name: 'body',
@@ -284,20 +295,20 @@ export const postArticleSchema = {
       type: 'array',
       group: 'content',
       of: [
-        { 
+        {
           type: 'block',
           styles: [
             { title: 'Normal', value: 'normal' },
             { title: 'H2', value: 'h2' },
             { title: 'H3', value: 'h3' },
             { title: 'H4', value: 'h4' },
-            { title: 'Quote', value: 'blockquote' }
+            { title: 'Quote', value: 'blockquote' },
           ],
           marks: {
             decorators: [
               { title: 'Strong', value: 'strong' },
               { title: 'Emphasis', value: 'em' },
-              { title: 'Code', value: 'code' }
+              { title: 'Code', value: 'code' },
             ],
             annotations: [
               {
@@ -308,17 +319,17 @@ export const postArticleSchema = {
                   {
                     title: 'URL',
                     name: 'href',
-                    type: 'url'
+                    type: 'url',
                   },
                   {
                     title: 'Open in new tab',
                     name: 'blank',
-                    type: 'boolean'
-                  }
-                ]
-              }
-            ]
-          }
+                    type: 'boolean',
+                  },
+                ],
+              },
+            ],
+          },
         },
         {
           type: 'image',
@@ -328,18 +339,18 @@ export const postArticleSchema = {
               name: 'alt',
               title: 'Alt Text',
               type: 'string',
-              validation: Rule => Rule.required()
-            }
-          ]
-        }
-      ]
+              validation: Rule => Rule.required(),
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'author',
       title: 'Author',
       type: 'reference',
       group: 'content',
-      to: [{ type: 'coachBio' }]
+      to: [{ type: 'coachBio' }],
     },
     {
       name: 'categories',
@@ -353,9 +364,9 @@ export const postArticleSchema = {
           { title: 'Nutrition', value: 'nutrition' },
           { title: 'Recovery', value: 'recovery' },
           { title: 'Beginner Guide', value: 'beginner' },
-          { title: 'Injury Prevention', value: 'injury-prevention' }
-        ]
-      }
+          { title: 'Injury Prevention', value: 'injury-prevention' },
+        ],
+      },
     },
     {
       name: 'tags',
@@ -363,14 +374,14 @@ export const postArticleSchema = {
       type: 'array',
       group: 'content',
       of: [{ type: 'string' }],
-      options: { layout: 'tags' }
+      options: { layout: 'tags' },
     },
     {
       name: 'seoTitle',
       title: 'SEO Title',
       type: 'string',
       group: 'seo',
-      validation: Rule => Rule.max(60)
+      validation: Rule => Rule.max(60),
     },
     {
       name: 'metaDescription',
@@ -378,28 +389,29 @@ export const postArticleSchema = {
       type: 'text',
       group: 'seo',
       rows: 3,
-      validation: Rule => Rule.max(160)
+      validation: Rule => Rule.max(160),
     },
     {
       name: 'ogImage',
       title: 'Social Share Image',
       type: 'image',
       group: 'seo',
-      description: 'Used for social media sharing. Recommended size: 1200x630px'
+      description:
+        'Used for social media sharing. Recommended size: 1200x630px',
     },
     {
       name: 'canonicalUrl',
       title: 'Canonical URL',
       type: 'url',
       group: 'seo',
-      description: 'Only set if this content exists elsewhere'
+      description: 'Only set if this content exists elsewhere',
     },
     {
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
       group: 'settings',
-      initialValue: () => new Date().toISOString()
+      initialValue: () => new Date().toISOString(),
     },
     {
       name: 'status',
@@ -411,20 +423,22 @@ export const postArticleSchema = {
           { title: 'Draft', value: 'draft' },
           { title: 'In Review', value: 'review' },
           { title: 'Published', value: 'published' },
-          { title: 'Archived', value: 'archived' }
-        ]
+          { title: 'Archived', value: 'archived' },
+        ],
       },
-      initialValue: 'draft'
+      initialValue: 'draft',
     },
     {
       name: 'relatedHubs',
       title: 'Related Condition Hubs',
       type: 'array',
       group: 'settings',
-      of: [{
-        type: 'reference',
-        to: [{ type: 'postConditionHub' }]
-      }]
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'postConditionHub' }],
+        },
+      ],
     },
     {
       name: 'ctaSettings',
@@ -436,13 +450,13 @@ export const postArticleSchema = {
           name: 'showFmsCta',
           title: 'Show FMS CTA',
           type: 'boolean',
-          initialValue: true
+          initialValue: true,
         },
         {
           name: 'ctaText',
           title: 'CTA Text',
           type: 'string',
-          initialValue: 'Start Your Fitness Journey'
+          initialValue: 'Start Your Fitness Journey',
         },
         {
           name: 'ctaPosition',
@@ -453,33 +467,34 @@ export const postArticleSchema = {
               { title: 'After Introduction', value: 'intro' },
               { title: 'Middle of Article', value: 'middle' },
               { title: 'End of Article', value: 'end' },
-              { title: 'Sidebar', value: 'sidebar' }
-            ]
+              { title: 'Sidebar', value: 'sidebar' },
+            ],
           },
-          initialValue: 'end'
-        }
-      ]
-    }
+          initialValue: 'end',
+        },
+      ],
+    },
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'excerpt',
       media: 'featuredImage',
-      status: 'status'
+      status: 'status',
     },
     prepare({ title, subtitle, media, status }) {
       return {
         title: `${title} ${status === 'published' ? '✅' : status === 'review' ? '👀' : '📝'}`,
         subtitle,
-        media
-      };
-    }
-  }
-};
+        media,
+      }
+    },
+  },
+}
 ```
 
 ### Condition Hub Schema
+
 ```typescript
 // sanity/schemas/post-condition-hub.ts
 export const postConditionHubSchema = {
@@ -489,7 +504,7 @@ export const postConditionHubSchema = {
   groups: [
     { name: 'content', title: 'Content' },
     { name: 'seo', title: 'SEO' },
-    { name: 'settings', title: 'Settings' }
+    { name: 'settings', title: 'Settings' },
   ],
   fields: [
     {
@@ -497,21 +512,21 @@ export const postConditionHubSchema = {
       title: 'Hub Title',
       type: 'string',
       group: 'content',
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'condition',
       title: 'Condition Name',
       type: 'string',
       group: 'content',
-      description: 'e.g., "Shoulder Pain", "Lower Back Issues"'
+      description: 'e.g., "Shoulder Pain", "Lower Back Issues"',
     },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: { source: 'condition' }
+      options: { source: 'condition' },
     },
     {
       name: 'heroContent',
@@ -522,149 +537,154 @@ export const postConditionHubSchema = {
         {
           name: 'headline',
           title: 'Headline',
-          type: 'string'
+          type: 'string',
         },
         {
           name: 'subheadline',
           title: 'Subheadline',
           type: 'text',
-          rows: 2
+          rows: 2,
         },
         {
           name: 'heroImage',
           title: 'Hero Image',
           type: 'image',
-          options: { hotspot: true }
-        }
-      ]
+          options: { hotspot: true },
+        },
+      ],
     },
     {
       name: 'sections',
       title: 'Content Sections',
       type: 'array',
       group: 'content',
-      of: [{
-        type: 'object',
-        name: 'contentSection',
-        title: 'Content Section',
-        fields: [
-          {
-            name: 'title',
-            title: 'Section Title',
-            type: 'string'
-          },
-          {
-            name: 'type',
-            title: 'Section Type',
-            type: 'string',
-            options: {
-              list: [
-                { title: 'Understanding the Issue', value: 'understanding' },
-                { title: 'What TO Do', value: 'dos' },
-                { title: 'What NOT to Do', value: 'donts' },
-                { title: 'Movement Modifications', value: 'modifications' },
-                { title: 'Case Studies', value: 'casestudies' },
-                { title: 'Expert Tips', value: 'tips' }
-              ]
-            }
-          },
-          {
-            name: 'content',
-            title: 'Content',
-            type: 'array',
-            of: [{ type: 'block' }]
-          },
-          {
-            name: 'calloutBox',
-            title: 'Callout Box',
-            type: 'object',
-            fields: [
-              {
-                name: 'title',
-                title: 'Callout Title',
-                type: 'string'
+      of: [
+        {
+          type: 'object',
+          name: 'contentSection',
+          title: 'Content Section',
+          fields: [
+            {
+              name: 'title',
+              title: 'Section Title',
+              type: 'string',
+            },
+            {
+              name: 'type',
+              title: 'Section Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Understanding the Issue', value: 'understanding' },
+                  { title: 'What TO Do', value: 'dos' },
+                  { title: 'What NOT to Do', value: 'donts' },
+                  { title: 'Movement Modifications', value: 'modifications' },
+                  { title: 'Case Studies', value: 'casestudies' },
+                  { title: 'Expert Tips', value: 'tips' },
+                ],
               },
-              {
-                name: 'content',
-                title: 'Callout Content',
-                type: 'text'
-              },
-              {
-                name: 'style',
-                title: 'Style',
-                type: 'string',
-                options: {
-                  list: [
-                    { title: 'Info', value: 'info' },
-                    { title: 'Warning', value: 'warning' },
-                    { title: 'Success', value: 'success' },
-                    { title: 'Tip', value: 'tip' }
-                  ]
-                }
+            },
+            {
+              name: 'content',
+              title: 'Content',
+              type: 'array',
+              of: [{ type: 'block' }],
+            },
+            {
+              name: 'calloutBox',
+              title: 'Callout Box',
+              type: 'object',
+              fields: [
+                {
+                  name: 'title',
+                  title: 'Callout Title',
+                  type: 'string',
+                },
+                {
+                  name: 'content',
+                  title: 'Callout Content',
+                  type: 'text',
+                },
+                {
+                  name: 'style',
+                  title: 'Style',
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: 'Info', value: 'info' },
+                      { title: 'Warning', value: 'warning' },
+                      { title: 'Success', value: 'success' },
+                      { title: 'Tip', value: 'tip' },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              type: 'type',
+            },
+            prepare({ title, type }) {
+              return {
+                title: title || 'Untitled Section',
+                subtitle: type,
               }
-            ]
-          }
-        ],
-        preview: {
-          select: {
-            title: 'title',
-            type: 'type'
+            },
           },
-          prepare({ title, type }) {
-            return {
-              title: title || 'Untitled Section',
-              subtitle: type
-            };
-          }
-        }
-      }]
+        },
+      ],
     },
     {
       name: 'faqs',
       title: 'FAQ Section',
       type: 'array',
       group: 'content',
-      of: [{
-        type: 'object',
-        name: 'hubFaq',
-        fields: [
-          {
-            name: 'question',
-            title: 'Question',
-            type: 'string'
+      of: [
+        {
+          type: 'object',
+          name: 'hubFaq',
+          fields: [
+            {
+              name: 'question',
+              title: 'Question',
+              type: 'string',
+            },
+            {
+              name: 'answer',
+              title: 'Answer',
+              type: 'array',
+              of: [{ type: 'block' }],
+            },
+          ],
+          preview: {
+            select: {
+              title: 'question',
+            },
           },
-          {
-            name: 'answer',
-            title: 'Answer',
-            type: 'array',
-            of: [{ type: 'block' }]
-          }
-        ],
-        preview: {
-          select: {
-            title: 'question'
-          }
-        }
-      }]
-    }
+        },
+      ],
+    },
     // ... SEO and settings fields similar to article schema
-  ]
-};
+  ],
+}
 ```
 
 ### Next.js Integration
+
 ```typescript
 // lib/sanity/client.ts
-import { createClient } from '@sanity/client';
-import { apiVersion, dataset, projectId } from './env';
+import { createClient } from '@sanity/client'
+import { apiVersion, dataset, projectId } from './env'
 
 export const sanityClient = createClient({
   projectId,
   dataset,
   apiVersion,
   useCdn: process.env.NODE_ENV === 'production',
-  token: process.env.SANITY_API_TOKEN
-});
+  token: process.env.SANITY_API_TOKEN,
+})
 
 // Content queries
 export async function getAllArticles() {
@@ -683,11 +703,12 @@ export async function getAllArticles() {
       categories,
       tags
     }
-  `);
+  `)
 }
 
 export async function getArticleBySlug(slug: string) {
-  return sanityClient.fetch(`
+  return sanityClient.fetch(
+    `
     *[_type == "postArticle" && slug.current == $slug && status == "published"][0] {
       _id,
       title,
@@ -713,11 +734,14 @@ export async function getArticleBySlug(slug: string) {
       },
       ctaSettings
     }
-  `, { slug });
+  `,
+    { slug }
+  )
 }
 
 export async function getConditionHub(slug: string) {
-  return sanityClient.fetch(`
+  return sanityClient.fetch(
+    `
     *[_type == "postConditionHub" && slug.current == $slug][0] {
       _id,
       title,
@@ -735,13 +759,16 @@ export async function getConditionHub(slug: string) {
         publishedAt
       }
     }
-  `, { slug });
+  `,
+    { slug }
+  )
 }
 ```
 
 ## 📝 Content Creation Guidelines
 
 ### Article Writing Standards
+
 - [ ] **Structure Requirements:**
   - Introduction with hook and preview
   - 3-5 main sections with H2 headings
@@ -757,6 +784,7 @@ export async function getConditionHub(slug: string) {
   - Write meta descriptions under 160 characters
 
 ### Condition Hub Content Framework
+
 - [ ] **Hero Section:** Problem acknowledgment + expertise positioning
 - [ ] **Understanding:** Symptoms, causes, and common scenarios
 - [ ] **Safe Approaches:** What members should do

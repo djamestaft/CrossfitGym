@@ -26,7 +26,7 @@ export function PerformanceMonitor() {
         observer.observe({ entryTypes: ['largest-contentful-paint'] })
       } catch (e) {
         // Fallback for browsers that don't support the observer
-        console.log('Performance observer not supported')
+        // Performance observer not supported - silent fallback
       }
 
       // Monitor First Input Delay (FID)
@@ -52,7 +52,7 @@ export function PerformanceMonitor() {
       try {
         fidObserver.observe({ entryTypes: ['first-input'] })
       } catch (e) {
-        console.log('FID observer not supported')
+        // FID observer not supported - silent fallback
       }
 
       // Cleanup

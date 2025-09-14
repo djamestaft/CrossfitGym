@@ -5,16 +5,16 @@ name: Test CI/CD Pipeline
 
 on:
   push:
-    branches: [ test/ci-cd-pipeline-validation ]
+    branches: [test/ci-cd-pipeline-validation]
   pull_request:
-    branches: [ test/ci-cd-pipeline-validation ]
+    branches: [test/ci-cd-pipeline-validation]
 
 jobs:
   # Phase 1: Basic Setup Validation
   basic-validation:
     runs-on: ubuntu-latest
     name: Basic Setup Validation
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Quality Gates Validation
     needs: basic-validation
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Security Validation
     needs: quality-gates
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -130,7 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Environment Configuration Test
     needs: build-security
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -158,7 +158,7 @@ jobs:
     name: Deployment Simulation
     needs: environment-test
     if: github.event_name == 'pull_request'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -190,7 +190,7 @@ jobs:
     name: Pipeline Summary
     needs: [basic-validation, quality-gates, build-security, environment-test]
     if: always()
-    
+
     steps:
       - name: Generate Pipeline Report
         run: |

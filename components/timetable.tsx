@@ -382,7 +382,11 @@ export function Timetable() {
       setDataSource('fitbox')
       setLastUpdated(new Date())
     } catch (error) {
-      console.error('Fitbox API error:', error)
+      // Error logged for debugging in development
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.error('Fitbox API error:', error)
+      }
       setError('Unable to load live timetable data')
       // Fallback to CMS data
       setSchedule(cmsFallbackData)

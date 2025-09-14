@@ -21,10 +21,10 @@ Drive qualified FMS leads and convert them into first sessions efficiently and s
 
 ### MVP KPIs (First 4 weeks post-launch)
 
-* **Lead Gen & Conversion:** Week‑1 baseline; **+50%** FMS leads by Week‑4; form completion **≥70%**; FMS→first session **≥60%**; median **TTF ≤5 days**.
-* **Member Engagement:** ≥ **40%** of active members log into portal weekly.
-* **Content/SEO:** Publish **4** articles + **2** condition hubs; organic mix **≥20%**; Google Business Profile (GBP) actions **+20%** vs. pre‑launch.
-* **Quality/Performance:** Core Web Vitals thresholds (LCP ≤2.5s, CLS ≤0.1, INP ≤200ms) pass on **≥75%** of page views; **≥99.9%** uptime.
+- **Lead Gen & Conversion:** Week‑1 baseline; **+50%** FMS leads by Week‑4; form completion **≥70%**; FMS→first session **≥60%**; median **TTF ≤5 days**.
+- **Member Engagement:** ≥ **40%** of active members log into portal weekly.
+- **Content/SEO:** Publish **4** articles + **2** condition hubs; organic mix **≥20%**; Google Business Profile (GBP) actions **+20%** vs. pre‑launch.
+- **Quality/Performance:** Core Web Vitals thresholds (LCP ≤2.5s, CLS ≤0.1, INP ≤200ms) pass on **≥75%** of page views; **≥99.9%** uptime.
 
 ### Measurement Plan
 
@@ -46,12 +46,12 @@ Primary value props: assessment‑led onboarding (FMS) → personalized plan; ph
 
 ## 4) Key Features & Functionality (MVP)
 
-* **FMS Conversion Funnel:** Dedicated FMS landing; **two‑step form**; success page with next steps; admin notification + basic lead storage; GA4 events.
-* **Read‑Only Timetable:** Fitbox read or CMS fallback; responsive; timezone/holiday notes.
-* **Member Portal (Light):** Email/magic‑link gate; programming notes; movement library (≥12 videos); member FAQs.
-* **Content Engine:** 2 condition hubs + 4 articles; schema; internal links; SEO hygiene.
-* **Trust & Proof:** Testimonials (≥6), coach bios (≥3 with quals), safety/standards panel.
-* **Chat Toggle:** Tawk.to enabled via CMS toggle; default on in **Week +1**.
+- **FMS Conversion Funnel:** Dedicated FMS landing; **two‑step form**; success page with next steps; admin notification + basic lead storage; GA4 events.
+- **Read‑Only Timetable:** Fitbox read or CMS fallback; responsive; timezone/holiday notes.
+- **Member Portal (Light):** Email/magic‑link gate; programming notes; movement library (≥12 videos); member FAQs.
+- **Content Engine:** 2 condition hubs + 4 articles; schema; internal links; SEO hygiene.
+- **Trust & Proof:** Testimonials (≥6), coach bios (≥3 with quals), safety/standards panel.
+- **Chat Toggle:** Tawk.to enabled via CMS toggle; default on in **Week +1**.
 
 ---
 
@@ -104,11 +104,11 @@ Routing: shallow core routes; hubs at `/hubs/shoulder`, `/hubs/low-back`; intern
 
 ## 8) Tech Stack & Integrations
 
-* **Frontend:** Next.js (App Router), Tailwind, shadcn/ui; Next/Image; modest animations.
-* **CMS:** Sanity (role‑based access); schemas per content map.
-* **Hosting/CI:** Vercel (preview deploys; env vars; CDN; 1‑click rollback).
-* **Integrations:** Fitbox (read‑only timetable); Tawk.to (chat toggle); GA4 + GSC + GBP.
-* **Security/Privacy:** Cookie banner; privacy policy; consent on FMS form; Turnstile/ReCAPTCHA; minimal PII.
+- **Frontend:** Next.js (App Router), Tailwind, shadcn/ui; Next/Image; modest animations.
+- **CMS:** Sanity (role‑based access); schemas per content map.
+- **Hosting/CI:** Vercel (preview deploys; env vars; CDN; 1‑click rollback).
+- **Integrations:** Fitbox (read‑only timetable); Tawk.to (chat toggle); GA4 + GSC + GBP.
+- **Security/Privacy:** Cookie banner; privacy policy; consent on FMS form; Turnstile/ReCAPTCHA; minimal PII.
 
 Operational toggles (off by default): Cliniko booking embed, payments/trials, portal depth.
 
@@ -118,42 +118,42 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 ### FR‑1: FMS Landing & Two‑Step Form
 
-* **Structure:** Step 1 contact (name, email, phone, preferred time); Step 2 goals/context (experience, injury flags, objectives).
-* **Validation:** Required fields; email/phone format; sanitation; bot check (Turnstile/Recaptcha).
-* **Success:** Clear expectation copy; light FAQ; CMS‑driven content block.
-* **Notify/Store:** Admin email; lead logged to ops sheet or CMS; no online booking.
-* **Analytics:** `fms_start`, `fms_submit`; manual `first_session_booked`.
+- **Structure:** Step 1 contact (name, email, phone, preferred time); Step 2 goals/context (experience, injury flags, objectives).
+- **Validation:** Required fields; email/phone format; sanitation; bot check (Turnstile/Recaptcha).
+- **Success:** Clear expectation copy; light FAQ; CMS‑driven content block.
+- **Notify/Store:** Admin email; lead logged to ops sheet or CMS; no online booking.
+- **Analytics:** `fms_start`, `fms_submit`; manual `first_session_booked`.
   **Acceptance:** Mobile/desktop; inline errors; success renders; admin notified ≤1 min; lead persisted w/ timestamp & source; GA4 events recorded with step + UTM.
 
 ### FR‑2: Timetable (Read‑Only)
 
-* **Source:** Fitbox read or CMS manual fallback.
-* **Display:** Responsive grid; weekday filters; timezone/holiday notes via CMS.
+- **Source:** Fitbox read or CMS manual fallback.
+- **Display:** Responsive grid; weekday filters; timezone/holiday notes via CMS.
   **Acceptance:** Loads ≤2.5s cold/≤1s repeat; works under Fitbox outage (fallback); holiday note displays when set.
 
 ### FR‑3: Member Portal (Light)
 
-* **Auth:** Email gate or magic link.
-* **Content:** Programming notes; movement library (≥12 vids); member FAQ.
-* **Search:** Client‑side movement search ok.
-* **Analytics:** `portal_login`, `video_play`, `post_view`.
+- **Auth:** Email gate or magic link.
+- **Content:** Programming notes; movement library (≥12 vids); member FAQ.
+- **Search:** Client‑side movement search ok.
+- **Analytics:** `portal_login`, `video_play`, `post_view`.
   **Acceptance:** No public access; videos playable with captions; current week notes visible; GA4 events fire.
 
 ### FR‑4: Content Engine & SEO
 
-* **Types:** Articles, Condition Hubs, FAQs, Testimonials, Coach Bios.
-* **Schema:** LocalBusiness (Contact), Article/FAQ where applicable.
-* **Links:** Hubs → FMS; Articles ↔ Hubs.
+- **Types:** Articles, Condition Hubs, FAQs, Testimonials, Coach Bios.
+- **Schema:** LocalBusiness (Contact), Article/FAQ where applicable.
+- **Links:** Hubs → FMS; Articles ↔ Hubs.
   **Acceptance:** 4 articles + 2 hubs published pre‑launch; schema validates; breadcrumbs/links resolve.
 
 ### FR‑5: Trust & Proof
 
-* **Components:** Testimonials carousel (≥6), Safety/Standards panel, Coach bios (≥3 with quals).
+- **Components:** Testimonials carousel (≥6), Safety/Standards panel, Coach bios (≥3 with quals).
   **Acceptance:** Components render, are CMS‑editable, accessible; required counts met.
 
 ### FR‑6: Chat Toggle (Tawk.to)
 
-* **Toggle:** CMS boolean; default “on” in Week +1.
+- **Toggle:** CMS boolean; default “on” in Week +1.
   **Acceptance:** Toggle change reflects ≤5 min; chat loads only when enabled; no layout shift; `chat_open` event.
 
 ---
@@ -178,11 +178,11 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 ## 11) Analytics, Telemetry & QA
 
-* **Events:** Funnel (`fms_start` → `fms_submit` → first session); Engagement (`chat_open`, `call_click`, `map_click`, `portal_login`, `video_play`, `post_view`).
-* **Params:** `page_type`, `cta_variant`, `form_step`, `utm_*`.
-* **Dashboards:** Weekly KPIs (Leads, Conversion %, TTF, Portal WAU, Organic %, GBP actions); Content ops & quality (CWV, 404s).
-* **Quality:** CWV thresholds; a11y pass; schema validation; resilience (timetable fallback; chat toggle safe; graceful errors).
-* **Data Handling:** Email notification + ops sheet row; no PHI; minimal context only.
+- **Events:** Funnel (`fms_start` → `fms_submit` → first session); Engagement (`chat_open`, `call_click`, `map_click`, `portal_login`, `video_play`, `post_view`).
+- **Params:** `page_type`, `cta_variant`, `form_step`, `utm_*`.
+- **Dashboards:** Weekly KPIs (Leads, Conversion %, TTF, Portal WAU, Organic %, GBP actions); Content ops & quality (CWV, 404s).
+- **Quality:** CWV thresholds; a11y pass; schema validation; resilience (timetable fallback; chat toggle safe; graceful errors).
+- **Data Handling:** Email notification + ops sheet row; no PHI; minimal context only.
 
 ---
 
@@ -208,25 +208,24 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 **Revised timeline for optimal dependency management:**
 
-* **Week 0-1 (Sep 16–27): Foundation Phase**
+- **Week 0-1 (Sep 16–27): Foundation Phase**
   - Infrastructure & CI/CD pipeline (INFRA-001/002)
   - Analytics foundation with GA4 setup (ANALYTICS-001)
   - CMS schema and content infrastructure (CONTENT-001)
   - Core deployment and monitoring systems
-  
-* **Week 1-2 (Sep 28–Oct 4): Core Funnel Phase**
+- **Week 1-2 (Sep 28–Oct 4): Core Funnel Phase**
   - FMS landing page with trust elements (FMS-001)
   - Two-step form with validation (FMS-002)
   - Timetable CMS fallback system (TIMETABLE-001)
   - Performance monitoring active during development
 
-* **Week 2-3 (Oct 5–11): Engagement Phase**
+- **Week 2-3 (Oct 5–11): Engagement Phase**
   - Member portal authentication (PORTAL-001)
   - Trust components and testimonials (TRUST-001)
   - Success page and notifications (FMS-003)
   - Condition hubs content (CONTENT-002)
 
-* **Week 3-4 (Oct 12–18): Polish & Launch Phase**
+- **Week 3-4 (Oct 12–18): Polish & Launch Phase**
   - Movement library and portal completion (PORTAL-002)
   - Article publishing and SEO (CONTENT-003)
   - KPI dashboard and analytics (ANALYTICS-002)
@@ -241,23 +240,26 @@ Post‑Launch Week +1 (Oct 21–25): KPI review, copy tweaks, proof enhancements
 ## 14) Definition of Done (DoD) - REVISED for Foundation-First Launch
 
 ### **MVP Launch Ready (October 18, 2025):**
-* **✅ Frontend Complete:** All MVP pages built (Home, FMS, Portal, Timetable); responsive design; professional UI/UX
-* **✅ Core Functionality:** FMS 2‑step form with validation; portal with programming notes; testimonials & trust elements
-* **🔧 Backend Integration:** FMS form API with email notifications; lead storage system
-* **🔧 Navigation:** Header navigation and footer for site-wide user flow
-* **🔧 Deployment:** Vercel hosting with environment variables; production deployment
-* **✅ Analytics Foundation:** GA4 events configured; schema markup implemented
+
+- **✅ Frontend Complete:** All MVP pages built (Home, FMS, Portal, Timetable); responsive design; professional UI/UX
+- **✅ Core Functionality:** FMS 2‑step form with validation; portal with programming notes; testimonials & trust elements
+- **🔧 Backend Integration:** FMS form API with email notifications; lead storage system
+- **🔧 Navigation:** Header navigation and footer for site-wide user flow
+- **🔧 Deployment:** Vercel hosting with environment variables; production deployment
+- **✅ Analytics Foundation:** GA4 events configured; schema markup implemented
 
 ### **Post-Launch Content & Enhancement (Week 3-4):**
-* **Content Creation:** 2 condition hubs; 4 articles; coach bios; business pages
-* **CMS Integration:** Sanity workspace; dynamic content management
-* **Advanced Features:** Chat toggle; enhanced analytics; performance optimization
-* **SEO Polish:** GSC verification; sitemap optimization; internal linking
+
+- **Content Creation:** 2 condition hubs; 4 articles; coach bios; business pages
+- **CMS Integration:** Sanity workspace; dynamic content management
+- **Advanced Features:** Chat toggle; enhanced analytics; performance optimization
+- **SEO Polish:** GSC verification; sitemap optimization; internal linking
 
 ### **Quality Standards (Maintained):**
-* **Performance:** Core Web Vitals compliance; mobile-first responsive
-* **Accessibility:** WCAG 2.1 AA basics; keyboard navigation; screen reader support  
-* **Security:** Form validation; input sanitization; environment variable management
+
+- **Performance:** Core Web Vitals compliance; mobile-first responsive
+- **Accessibility:** WCAG 2.1 AA basics; keyboard navigation; screen reader support
+- **Security:** Form validation; input sanitization; environment variable management
 
 ---
 
@@ -284,13 +286,13 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 
 **RACI Highlights:**
 
-* **FMS Funnel:** R Dev, A PM, C Ops, I Owner
-* **Timetable:** R Dev, A PM, C Owner, I Ops
-* **Portal:** R Dev, A PM, C Content, I Ops
-* **Content:** R Content, A Owner, C PM, I Dev
-* **Analytics/Reporting:** R PM, A Owner, C Dev, I Ops
-* **SEO/Schema:** R PM+Dev, A PM, C Content, I Owner
-* **Chat Ops:** R Ops, A Owner, C PM, I Dev
+- **FMS Funnel:** R Dev, A PM, C Ops, I Owner
+- **Timetable:** R Dev, A PM, C Owner, I Ops
+- **Portal:** R Dev, A PM, C Content, I Ops
+- **Content:** R Content, A Owner, C PM, I Dev
+- **Analytics/Reporting:** R PM, A Owner, C Dev, I Ops
+- **SEO/Schema:** R PM+Dev, A PM, C Content, I Owner
+- **Chat Ops:** R Ops, A Owner, C PM, I Dev
 
 ---
 
@@ -344,19 +346,19 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 **Success:** +50% FMS leads by Week‑4; FMS→First Session ≥60%.
 
 1. **FMS Landing Page (Content + Proof)**
-   *As a cautious beginner, I want a clear FMS overview with trust cues so I feel safe to start.*
+   _As a cautious beginner, I want a clear FMS overview with trust cues so I feel safe to start._
    **AC:** Hero + primary CTA, proof bar, safety panel; internal links to hubs; LCP ≤2.5s; basic FAQ; SEO meta & schema.
 
 2. **Two‑Step FMS Form (Validate + Anti‑spam)**
-   *As a visitor, I want an easy 2‑step form so I can request an assessment without friction.*
+   _As a visitor, I want an easy 2‑step form so I can request an assessment without friction._
    **AC:** Step 1: name/email/phone/preferred time; Step 2: goals/injury flags/experience; inline errors; Turnstile/ReCAPTCHA; `fms_start`/`fms_submit` GA4 events; responsive.
 
 3. **Success Page + Admin Notifications**
-   *As staff, I need instant notification and context so I can follow up within 1 business day.*
+   _As staff, I need instant notification and context so I can follow up within 1 business day._
    **AC:** Success page promise + next steps; ops email ≤1 min; lead persisted (ops sheet/CMS) with timestamp/UTM; accessible confirmation.
 
 4. **First‑Session Tracking (Manual MVP)**
-   *As PM, I need a reliable way to mark first sessions to compute conversion and TTF.*
+   _As PM, I need a reliable way to mark first sessions to compute conversion and TTF._
    **AC:** Ops sheet field + guidance; weekly cohort sheet; median TTF auto‑calculated; dashboard tile shows FMS→First Session %.
 
 ### Epic 2 — Timetable (Read‑Only)
@@ -364,11 +366,11 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 **Goal:** Satisfy discovery without booking complexity.
 
 1. **CMS Timetable Block (Fallback)**
-   *As a visitor, I want a readable timetable so I can see class options quickly.*
+   _As a visitor, I want a readable timetable so I can see class options quickly._
    **AC:** Responsive grid, weekday filter, cache; holiday/timezone note; loads ≤2.5s cold/≤1s warm.
 
 2. **Fitbox Read Integration (Optional)**
-   *As staff, I want automatic timetable updates so content stays accurate.*
+   _As staff, I want automatic timetable updates so content stays accurate._
    **AC:** Read‑only pull; graceful error → CMS fallback; toggleable source.
 
 ### Epic 3 — Member Portal (Light)
@@ -376,15 +378,15 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 **Goal:** Improve stickiness via programming clarity and movement help.
 
 1. **Auth Gate / Magic Link**
-   *As a member, I want simple access so I can see member content securely.*
+   _As a member, I want simple access so I can see member content securely._
    **AC:** Email gate or magic link; no public access; `portal_login` event.
 
 2. **Programming Notes & Movement Library (≥12 videos)**
-   *As a member, I want concise notes and demos so I can scale safely.*
+   _As a member, I want concise notes and demos so I can scale safely._
    **AC:** Weekly notes; searchable movement list; captions on videos; `video_play` events.
 
 3. **Member FAQ**
-   *As a member, I want quick answers so I can self‑serve common questions.*
+   _As a member, I want quick answers so I can self‑serve common questions._
    **AC:** CMS‑editable; searchable; linked from portal and contact.
 
 ### Epic 4 — Content Engine & SEO
@@ -392,15 +394,15 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 **Goal:** Capture high‑intent traffic and route to FMS.
 
 1. **Sanity Schemas & Templates**
-   *As an editor, I want structured content so I can publish consistently.*
+   _As an editor, I want structured content so I can publish consistently._
    **AC:** `post_article`, `post_condition_hub`, `kb_faq`, testimonials, coach bios; preview.
 
 2. **Condition Hubs x2 (Shoulder, Low‑Back)**
-   *As a searcher, I want specific guidance so I can decide if training is safe.*
+   _As a searcher, I want specific guidance so I can decide if training is safe._
    **AC:** H2 sections (symptoms, dos/don’ts, drills, case snippets), FAQ schema, internal links to FMS/articles.
 
 3. **Articles x4 + SEO Hygiene**
-   *As a visitor, I want credible articles so I trust the brand and next step.*
+   _As a visitor, I want credible articles so I trust the brand and next step._
    **AC:** 800–1,200 words; OG/Twitter cards; Article schema; sitemap/robots; breadcrumbs.
 
 ### Epic 5 — Trust & Proof
@@ -417,7 +419,7 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 **Goal:** Offer help without overloading launch.
 
 1. **CMS Toggle + Week +1 Enable**
-   *As ops, I want to turn chat on/off without deploy.*
+   _As ops, I want to turn chat on/off without deploy._
    **AC:** Boolean toggle; cache invalidation ≤5 min; loads only when enabled; `chat_open` event.
 
 ### Epic 7 — Analytics, QA & Observability
@@ -439,9 +441,9 @@ Principles: activate only if they improve **FMS → First Session** or reduce **
 
 ## 21) Appendices (Optional Next)
 
-* GA4 Event & Param Dictionary (names, types, examples)
-* Traceability Matrix (Persona/Journey ↔ FR ↔ Epic/Story ↔ KPI)
-* Env Var Inventory & Deploy/Rollback Playbook
-* Launch Checklist (preflight + go/no‑go)
+- GA4 Event & Param Dictionary (names, types, examples)
+- Traceability Matrix (Persona/Journey ↔ FR ↔ Epic/Story ↔ KPI)
+- Env Var Inventory & Deploy/Rollback Playbook
+- Launch Checklist (preflight + go/no‑go)
 
 > **Document Ownership:** PM is the owner of this PRD. Update after each approval gate.

@@ -5,13 +5,14 @@
 **Business Value:** Reliable delivery and operations  
 **Technical Complexity:** Medium  
 **Effort Estimate:** 6-8 story points  
-**Sprint Target:** Week 0-1  
+**Sprint Target:** Week 0-1
 
 ## 🎯 Epic Goal
 
 Establish robust, scalable infrastructure foundation that enables safe deployments, reliable operations, and efficient development workflows.
 
 **Success Metrics:**
+
 - ≥99.9% uptime throughout MVP period
 - <5 minute deployment times with zero-downtime
 - 1-click rollback capability verified and documented
@@ -20,11 +21,13 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
 ## 👥 User Stories
 
 ### Story INFRA-001: Vercel Project & CI/CD Pipeline
+
 **As a** Development Team  
 **I need** automated deployment infrastructure  
-**So that** I can deploy safely and roll back quickly if issues occur  
+**So that** I can deploy safely and roll back quickly if issues occur
 
 **Acceptance Criteria:**
+
 - [ ] **Vercel Project Setup** with optimized Next.js configuration
 - [ ] **Environment Management:**
   - Production environment with custom domain
@@ -49,12 +52,14 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
   - Bundle analysis and size monitoring
 
 **Dependencies:**
+
 - Repository setup and branch protection rules
 - Domain registration and DNS configuration
 - Team access management and permissions
 - Environment variable inventory and security review
 
 **Definition of Done:**
+
 - [ ] All deployment environments functional and tested
 - [ ] Rollback procedure tested and documented
 - [ ] Environment variables properly secured
@@ -64,11 +69,13 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
 ---
 
 ### Story INFRA-002: Monitoring & Health Checks
+
 **As a** Operations Team  
 **I need** comprehensive monitoring  
-**So that** I can detect and respond to issues before they impact users  
+**So that** I can detect and respond to issues before they impact users
 
 **Acceptance Criteria:**
+
 - [ ] **Uptime Monitoring** with geographical distribution:
   - Homepage and critical path monitoring
   - FMS form submission endpoint monitoring
@@ -97,12 +104,14 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
   - Revenue-impacting error detection
 
 **Dependencies:**
+
 - Monitoring service selection and configuration
 - Alert channel setup (Slack, email, SMS)
 - Incident response procedure documentation
 - Escalation contact list and on-call rotation
 
 **Definition of Done:**
+
 - [ ] 24/7 monitoring coverage for all critical systems
 - [ ] Alert thresholds calibrated to minimize false positives
 - [ ] Incident response procedures tested
@@ -112,12 +121,14 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
 ## 🔗 Epic Dependencies
 
 **Upstream Dependencies:**
+
 - Repository and version control setup
 - Domain registration and DNS management
 - Team access and permission management
 - Security policies and procedures
 
 **Downstream Dependencies:**
+
 - All other epics depend on reliable infrastructure
 - Deployment pipeline enables safe feature delivery
 - Monitoring provides visibility into all MVP functionality
@@ -125,6 +136,7 @@ Establish robust, scalable infrastructure foundation that enables safe deploymen
 ## 🏗️ Architecture Overview
 
 ### Hosting Stack
+
 ```
 Production Architecture:
 ┌─────────────────────────────────────────────────┐
@@ -146,6 +158,7 @@ Production Architecture:
 ```
 
 ### Environment Strategy
+
 ```
 Environment Hierarchy:
 Production (geelongmovement.com)
@@ -170,6 +183,7 @@ Development (localhost:3000)
 ## 🚀 CI/CD Pipeline Configuration
 
 ### GitHub Actions Workflow
+
 ```yaml
 # .github/workflows/main.yml
 name: CI/CD Pipeline
@@ -186,31 +200,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Type checking
         run: npm run type-check
-      
+
       - name: Linting
         run: npm run lint
-      
+
       - name: Unit tests
         run: npm run test
-      
+
       - name: Build verification
         run: npm run build
-      
+
       - name: Performance budget check
         run: npm run build-analyze
-      
+
       - name: Security audit
         run: npm audit --audit-level moderate
 
@@ -223,6 +237,7 @@ jobs:
 ```
 
 ### Vercel Configuration
+
 ```json
 // vercel.json
 {
@@ -270,6 +285,7 @@ jobs:
 ## 📊 Monitoring Configuration
 
 ### Uptime Monitoring
+
 ```javascript
 // monitoring/uptime-checks.js
 const uptimeChecks = [
@@ -278,68 +294,70 @@ const uptimeChecks = [
     url: 'https://geelongmovement.com',
     interval: '5min',
     timeout: '10s',
-    expectedStatus: 200
+    expectedStatus: 200,
   },
   {
     name: 'FMS Form',
     url: 'https://geelongmovement.com/fms',
     interval: '5min',
     timeout: '10s',
-    expectedStatus: 200
+    expectedStatus: 200,
   },
   {
     name: 'Portal Login',
     url: 'https://geelongmovement.com/portal',
     interval: '10min',
     timeout: '15s',
-    expectedStatus: 200
+    expectedStatus: 200,
   },
   {
     name: 'Sanity API',
     url: 'https://[project-id].api.sanity.io/v1/data/query/production',
     interval: '5min',
     timeout: '10s',
-    expectedStatus: 200
-  }
-];
+    expectedStatus: 200,
+  },
+]
 ```
 
 ### Alert Configuration
+
 ```yaml
 # monitoring/alerts.yml
 alerts:
   critical:
-    - name: "Site Down"
-      condition: "uptime < 99%"
-      channels: ["slack-critical", "email-oncall", "sms-oncall"]
-      
-    - name: "FMS Form Failures"
-      condition: "form_success_rate < 90%"
-      channels: ["slack-critical", "email-product"]
-      
+    - name: 'Site Down'
+      condition: 'uptime < 99%'
+      channels: ['slack-critical', 'email-oncall', 'sms-oncall']
+
+    - name: 'FMS Form Failures'
+      condition: 'form_success_rate < 90%'
+      channels: ['slack-critical', 'email-product']
+
   warning:
-    - name: "Performance Degradation"
-      condition: "response_time > 3s"
-      channels: ["slack-dev"]
-      
-    - name: "Error Rate Spike"
-      condition: "error_rate > 5%"
-      channels: ["slack-dev", "email-dev"]
+    - name: 'Performance Degradation'
+      condition: 'response_time > 3s'
+      channels: ['slack-dev']
+
+    - name: 'Error Rate Spike'
+      condition: 'error_rate > 5%'
+      channels: ['slack-dev', 'email-dev']
 
 notification_channels:
   slack-critical:
-    webhook: "${SLACK_WEBHOOK_CRITICAL}"
-    
+    webhook: '${SLACK_WEBHOOK_CRITICAL}'
+
   email-oncall:
-    addresses: ["oncall@geelongmovement.com"]
-    
+    addresses: ['oncall@geelongmovement.com']
+
   sms-oncall:
-    numbers: ["+61XXXXXXXXX"]
+    numbers: ['+61XXXXXXXXX']
 ```
 
 ## 🔒 Security Configuration
 
 ### Environment Variables Management
+
 ```bash
 # Production Environment Variables
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
@@ -356,6 +374,7 @@ CSP_REPORT_URI=https://monitoring.service.com/csp-report
 ```
 
 ### SSL and Domain Security
+
 ```javascript
 // next.config.mjs
 const nextConfig = {
@@ -366,34 +385,38 @@ const nextConfig = {
         headers: [
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload'
+            value: 'max-age=31536000; includeSubDomains; preload',
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' *.google-analytics.com *.googletagmanager.com; style-src 'self' 'unsafe-inline'"
-          }
-        ]
-      }
-    ];
-  }
-};
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' *.google-analytics.com *.googletagmanager.com; style-src 'self' 'unsafe-inline'",
+          },
+        ],
+      },
+    ]
+  },
+}
 ```
 
 ## 📈 Success Criteria
 
 ### Reliability Targets
+
 - **Uptime:** ≥99.9% availability (max 43 minutes downtime/month)
 - **Response Time:** <2s for static pages, <3s for dynamic content
 - **Error Rate:** <1% of requests result in errors
 - **Deployment Success:** >95% of deployments succeed without rollback
 
 ### Performance Targets
+
 - **Build Time:** <5 minutes for full CI/CD pipeline
 - **Deployment Time:** <3 minutes from merge to live
 - **Rollback Time:** <1 minute to previous version
 - **Cache Hit Rate:** >90% for static assets
 
 ### Operational Excellence
+
 - **Incident Detection:** <5 minutes to alert for critical issues
 - **Incident Response:** <15 minutes to first response
 - **Resolution Time:** <1 hour for critical issues
@@ -401,17 +424,18 @@ const nextConfig = {
 
 ## 🚨 Risks & Mitigations
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Vercel service outage | Complete site unavailability | Multi-region deployment, status page monitoring |
-| DNS failure | Site inaccessible | Multiple DNS providers, TTL optimization |
-| SSL certificate expiry | Security warnings | Automated renewal, expiry monitoring |
-| Environment variable leak | Security compromise | Proper secrets management, access auditing |
-| Deployment failure | Feature delivery delays | Comprehensive testing, automated rollback |
+| Risk                      | Impact                       | Mitigation                                      |
+| ------------------------- | ---------------------------- | ----------------------------------------------- |
+| Vercel service outage     | Complete site unavailability | Multi-region deployment, status page monitoring |
+| DNS failure               | Site inaccessible            | Multiple DNS providers, TTL optimization        |
+| SSL certificate expiry    | Security warnings            | Automated renewal, expiry monitoring            |
+| Environment variable leak | Security compromise          | Proper secrets management, access auditing      |
+| Deployment failure        | Feature delivery delays      | Comprehensive testing, automated rollback       |
 
 ## 🔧 Operational Procedures
 
 ### Deployment Checklist
+
 - [ ] Feature branch tested and reviewed
 - [ ] All CI/CD checks passing
 - [ ] Performance impact assessed
@@ -420,6 +444,7 @@ const nextConfig = {
 - [ ] Stakeholder notification if needed
 
 ### Incident Response Workflow
+
 1. **Detection:** Automated alerts or manual reporting
 2. **Assessment:** Determine severity and impact
 3. **Response:** Immediate mitigation steps
@@ -428,19 +453,20 @@ const nextConfig = {
 6. **Follow-up:** Post-incident review and improvements
 
 ### Backup and Recovery
+
 ```javascript
 // backup/recovery-procedures.js
 const backupProcedures = {
   code: 'Git repository with branch protection',
   content: 'Sanity automatic backups + manual exports',
   configuration: 'Environment variables documented and versioned',
-  monitoring: 'Configuration as code in repository'
-};
+  monitoring: 'Configuration as code in repository',
+}
 
 const recoveryTargets = {
   RTO: '15 minutes', // Recovery Time Objective
-  RPO: '1 hour'      // Recovery Point Objective
-};
+  RPO: '1 hour', // Recovery Point Objective
+}
 ```
 
 **Epic Owner:** DevOps Lead  

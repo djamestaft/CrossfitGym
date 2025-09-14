@@ -4,17 +4,18 @@
 **Story ID:** ANALYTICS-003  
 **Priority:** High  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 1-2 (parallel with FMS development)  
+**Sprint Target:** Week 1-2 (parallel with FMS development)
 
 ## 📋 User Story
 
 **As a** Development Lead and operations team  
 **I need** automated performance monitoring and quality gates  
-**So that** I can maintain high user experience standards, detect issues quickly, and prevent performance regressions  
+**So that** I can maintain high user experience standards, detect issues quickly, and prevent performance regressions
 
 ## ✅ Acceptance Criteria
 
 ### Core Web Vitals Monitoring
+
 - [ ] **Largest Contentful Paint (LCP) Monitoring:**
   - Target: ≤2.5 seconds for all critical pages
   - Automated monitoring for homepage, FMS landing, condition hubs, articles
@@ -48,6 +49,7 @@
   - Resource loading waterfall analysis
 
 ### Lighthouse CI Integration
+
 - [ ] **Automated Testing Pipeline:**
   - Lighthouse CI integration in GitHub Actions workflow
   - Performance audits on every pull request
@@ -73,6 +75,7 @@
   - Cross-browser compatibility verification
 
 ### Accessibility Baseline & Testing
+
 - [ ] **WCAG AA Compliance Monitoring:**
   - Automated accessibility testing in CI/CD pipeline
   - Screen reader compatibility verification
@@ -98,6 +101,7 @@
   - Form accessibility and validation feedback
 
 ### Error Monitoring & Alerting
+
 - [ ] **HTTP Error Tracking:**
   - 404 error monitoring with broken link detection
   - 500 server error tracking and alerting
@@ -123,6 +127,7 @@
   - Recovery monitoring and validation
 
 ### Uptime & Availability Monitoring
+
 - [ ] **24/7 Uptime Monitoring:**
   - Multi-location monitoring (Sydney, Melbourne, Brisbane)
   - Critical user journey monitoring (homepage → FMS → success)
@@ -148,6 +153,7 @@
   - Status communication automation to stakeholders
 
 ### Alert System & Escalation
+
 - [ ] **Intelligent Alert Configuration:**
   - Performance threshold alerts with smart grouping
   - Error spike detection with contextual information
@@ -175,18 +181,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] CI/CD pipeline infrastructure (INFRA-001) operational
 - [ ] Website deployment and hosting platform ready
 - [ ] Monitoring service accounts and integrations configured
 - [ ] Team notification channels (Slack, email) established
 
 **Technical Dependencies:**
+
 - [ ] Lighthouse CI setup and configuration
 - [ ] Performance monitoring service selection and setup
 - [ ] Error tracking service integration (Sentry, LogRocket, etc.)
 - [ ] Uptime monitoring service configuration
 
 **Process Dependencies:**
+
 - [ ] Incident response procedures documented
 - [ ] On-call rotation and escalation procedures
 - [ ] Performance budget agreements with stakeholders
@@ -250,29 +259,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| False positive alerts overwhelming team | Medium | High | Intelligent thresholds, alert grouping, machine learning |
-| Critical performance issues undetected | High | Low | Multiple monitoring layers, redundant checks |
-| Monitoring service outages | Medium | Medium | Multiple monitoring providers, internal fallbacks |
-| Performance budget too restrictive | Medium | Medium | Gradual implementation, stakeholder education |
-| Team alert fatigue | Medium | High | Smart filtering, customizable notification preferences |
+| Risk                                    | Impact | Probability | Mitigation                                               |
+| --------------------------------------- | ------ | ----------- | -------------------------------------------------------- |
+| False positive alerts overwhelming team | Medium | High        | Intelligent thresholds, alert grouping, machine learning |
+| Critical performance issues undetected  | High   | Low         | Multiple monitoring layers, redundant checks             |
+| Monitoring service outages              | Medium | Medium      | Multiple monitoring providers, internal fallbacks        |
+| Performance budget too restrictive      | Medium | Medium      | Gradual implementation, stakeholder education            |
+| Team alert fatigue                      | Medium | High        | Smart filtering, customizable notification preferences   |
 
 ## 📈 Success Metrics
 
 **Performance Standards:**
+
 - **Core Web Vitals:** 100% of critical pages meet targets
 - **Lighthouse Scores:** >90% deployments pass quality gates
 - **Error Detection:** <5 minutes average time to alert
 - **Uptime Achievement:** >99.9% availability maintained
 
 **Monitoring Effectiveness:**
+
 - **Alert Accuracy:** <10% false positive rate
 - **Response Time:** <15 minutes average incident response
 - **Issue Resolution:** <1 hour average resolution for critical issues
 - **Regression Prevention:** 0 performance regressions deployed
 
 **Team Efficiency:**
+
 - **Tool Adoption:** >95% team uses monitoring dashboards
 - **Process Compliance:** >90% incidents follow response procedures
 - **Knowledge Sharing:** 100% incidents documented for learning
@@ -281,6 +293,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Lighthouse CI Configuration
+
 ```yaml
 # .github/workflows/lighthouse-ci.yml
 name: Lighthouse CI
@@ -296,25 +309,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build project
         run: npm run build
-        
+
       - name: Start server
         run: npm start &
-        
+
       - name: Wait for server
         run: npx wait-on http://localhost:3000
-        
+
       - name: Run Lighthouse CI
         run: |
           npm install -g @lhci/cli
@@ -324,6 +337,7 @@ jobs:
 ```
 
 ### Lighthouse Configuration
+
 ```javascript
 // .lighthouserc.js
 module.exports = {
@@ -335,7 +349,7 @@ module.exports = {
         'http://localhost:3000/hubs/shoulder',
         'http://localhost:3000/articles/injury-safe-scaling',
         'http://localhost:3000/portal',
-        'http://localhost:3000/timetable'
+        'http://localhost:3000/timetable',
       ],
       numberOfRuns: 3,
       settings: {
@@ -346,10 +360,10 @@ module.exports = {
           cpuSlowdownMultiplier: 1,
           requestLatencyMs: 0,
           downloadThroughputKbps: 0,
-          uploadThroughputKbps: 0
+          uploadThroughputKbps: 0,
         },
-        emulatedFormFactor: 'mobile'
-      }
+        emulatedFormFactor: 'mobile',
+      },
     },
     assert: {
       assertions: {
@@ -361,62 +375,63 @@ module.exports = {
         'largest-contentful-paint': ['error', { maxNumericValue: 2500 }],
         'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
         'total-blocking-time': ['warn', { maxNumericValue: 300 }],
-        'interactive': ['warn', { maxNumericValue: 3000 }]
-      }
+        interactive: ['warn', { maxNumericValue: 3000 }],
+      },
     },
     upload: {
       target: 'filesystem',
-      outputDir: './lighthouse-reports'
+      outputDir: './lighthouse-reports',
     },
     server: {
       port: 9001,
       storage: {
         storageMethod: 'sql',
         sqlDialect: 'sqlite',
-        sqlDatabasePath: './lighthouse-ci.db'
-      }
-    }
-  }
-};
+        sqlDatabasePath: './lighthouse-ci.db',
+      },
+    },
+  },
+}
 ```
 
 ### Web Vitals Monitoring
+
 ```typescript
 // lib/monitoring/web-vitals.ts
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals'
 
 interface WebVitalsMetric {
-  name: string;
-  value: number;
-  id: string;
-  delta: number;
-  entries: PerformanceEntry[];
+  name: string
+  value: number
+  id: string
+  delta: number
+  entries: PerformanceEntry[]
 }
 
 class WebVitalsMonitor {
-  private metrics: Map<string, WebVitalsMetric> = new Map();
-  private reportingEndpoint: string;
+  private metrics: Map<string, WebVitalsMetric> = new Map()
+  private reportingEndpoint: string
 
   constructor(reportingEndpoint: string) {
-    this.reportingEndpoint = reportingEndpoint;
-    this.initializeMonitoring();
+    this.reportingEndpoint = reportingEndpoint
+    this.initializeMonitoring()
   }
 
   private initializeMonitoring() {
     // Core Web Vitals
-    getCLS(this.handleMetric.bind(this));
-    getFID(this.handleMetric.bind(this));
-    getFCP(this.handleMetric.bind(this));
-    getLCP(this.handleMetric.bind(this));
-    getTTFB(this.handleMetric.bind(this));
+    getCLS(this.handleMetric.bind(this))
+    getFID(this.handleMetric.bind(this))
+    getFCP(this.handleMetric.bind(this))
+    getLCP(this.handleMetric.bind(this))
+    getTTFB(this.handleMetric.bind(this))
 
     // Additional performance metrics
-    this.monitorCustomMetrics();
+    this.monitorCustomMetrics()
   }
 
   private handleMetric(metric: WebVitalsMetric) {
-    this.metrics.set(metric.name, metric);
-    
+    this.metrics.set(metric.name, metric)
+
     // Send to analytics
     if (typeof gtag !== 'undefined') {
       gtag('event', 'web_vitals', {
@@ -424,15 +439,15 @@ class WebVitalsMonitor {
         metric_value: Math.round(metric.value),
         metric_id: metric.id,
         page_type: this.getPageType(),
-        device_type: this.getDeviceType()
-      });
+        device_type: this.getDeviceType(),
+      })
     }
 
     // Send to monitoring service
-    this.reportToMonitoringService(metric);
+    this.reportToMonitoringService(metric)
 
     // Check thresholds and alert if needed
-    this.checkThresholds(metric);
+    this.checkThresholds(metric)
   }
 
   private async reportToMonitoringService(metric: WebVitalsMetric) {
@@ -440,7 +455,7 @@ class WebVitalsMonitor {
       await fetch(this.reportingEndpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           metric: metric.name,
@@ -448,32 +463,34 @@ class WebVitalsMonitor {
           timestamp: Date.now(),
           url: window.location.href,
           userAgent: navigator.userAgent,
-          connection: this.getConnectionInfo()
-        })
-      });
+          connection: this.getConnectionInfo(),
+        }),
+      })
     } catch (error) {
-      console.warn('Failed to report web vitals:', error);
+      console.warn('Failed to report web vitals:', error)
     }
   }
 
   private checkThresholds(metric: WebVitalsMetric) {
     const thresholds = {
-      'CLS': 0.1,
-      'FID': 100,
-      'LCP': 2500,
-      'FCP': 1800,
-      'TTFB': 600
-    };
+      CLS: 0.1,
+      FID: 100,
+      LCP: 2500,
+      FCP: 1800,
+      TTFB: 600,
+    }
 
-    const threshold = thresholds[metric.name as keyof typeof thresholds];
+    const threshold = thresholds[metric.name as keyof typeof thresholds]
     if (threshold && metric.value > threshold) {
-      this.triggerPerformanceAlert(metric, threshold);
+      this.triggerPerformanceAlert(metric, threshold)
     }
   }
 
   private triggerPerformanceAlert(metric: WebVitalsMetric, threshold: number) {
-    console.warn(`Performance threshold exceeded: ${metric.name} = ${metric.value}ms (threshold: ${threshold}ms)`);
-    
+    console.warn(
+      `Performance threshold exceeded: ${metric.name} = ${metric.value}ms (threshold: ${threshold}ms)`
+    )
+
     // Report to error tracking service
     if (typeof Sentry !== 'undefined') {
       Sentry.captureMessage(`Performance threshold exceeded: ${metric.name}`, {
@@ -482,9 +499,9 @@ class WebVitalsMonitor {
           metric: metric.name,
           value: metric.value,
           threshold: threshold,
-          url: window.location.href
-        }
-      });
+          url: window.location.href,
+        },
+      })
     }
   }
 
@@ -492,29 +509,44 @@ class WebVitalsMonitor {
     // Monitor specific page load events
     window.addEventListener('load', () => {
       setTimeout(() => {
-        const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        
+        const navigation = performance.getEntriesByType(
+          'navigation'
+        )[0] as PerformanceNavigationTiming
+
         if (navigation) {
-          this.reportCustomMetric('page_load_complete', navigation.loadEventEnd - navigation.fetchStart);
-          this.reportCustomMetric('dom_interactive', navigation.domInteractive - navigation.fetchStart);
-          this.reportCustomMetric('dom_content_loaded', navigation.domContentLoadedEventEnd - navigation.fetchStart);
+          this.reportCustomMetric(
+            'page_load_complete',
+            navigation.loadEventEnd - navigation.fetchStart
+          )
+          this.reportCustomMetric(
+            'dom_interactive',
+            navigation.domInteractive - navigation.fetchStart
+          )
+          this.reportCustomMetric(
+            'dom_content_loaded',
+            navigation.domContentLoadedEventEnd - navigation.fetchStart
+          )
         }
-      }, 0);
-    });
+      }, 0)
+    })
 
     // Monitor resource loading
-    new PerformanceObserver((list) => {
+    new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'resource') {
-          const resourceEntry = entry as PerformanceResourceTiming;
-          
+          const resourceEntry = entry as PerformanceResourceTiming
+
           // Monitor large resource loads
-          if (resourceEntry.transferSize > 1000000) { // > 1MB
-            this.reportCustomMetric('large_resource_load', resourceEntry.duration);
+          if (resourceEntry.transferSize > 1000000) {
+            // > 1MB
+            this.reportCustomMetric(
+              'large_resource_load',
+              resourceEntry.duration
+            )
           }
         }
       }
-    }).observe({ entryTypes: ['resource'] });
+    }).observe({ entryTypes: ['resource'] })
   }
 
   private reportCustomMetric(name: string, value: number) {
@@ -522,53 +554,54 @@ class WebVitalsMonitor {
       gtag('event', 'custom_performance_metric', {
         metric_name: name,
         metric_value: Math.round(value),
-        page_type: this.getPageType()
-      });
+        page_type: this.getPageType(),
+      })
     }
   }
 
   private getPageType(): string {
-    const path = window.location.pathname;
-    if (path === '/') return 'homepage';
-    if (path === '/fms') return 'fms';
-    if (path.startsWith('/hubs/')) return 'hub';
-    if (path.startsWith('/articles/')) return 'article';
-    if (path.startsWith('/portal/')) return 'portal';
-    return 'other';
+    const path = window.location.pathname
+    if (path === '/') return 'homepage'
+    if (path === '/fms') return 'fms'
+    if (path.startsWith('/hubs/')) return 'hub'
+    if (path.startsWith('/articles/')) return 'article'
+    if (path.startsWith('/portal/')) return 'portal'
+    return 'other'
   }
 
   private getDeviceType(): string {
-    const width = window.innerWidth;
-    if (width < 768) return 'mobile';
-    if (width < 1024) return 'tablet';
-    return 'desktop';
+    const width = window.innerWidth
+    if (width < 768) return 'mobile'
+    if (width < 1024) return 'tablet'
+    return 'desktop'
   }
 
   private getConnectionInfo() {
-    const connection = (navigator as any).connection;
+    const connection = (navigator as any).connection
     if (connection) {
       return {
         effectiveType: connection.effectiveType,
         downlink: connection.downlink,
-        rtt: connection.rtt
-      };
+        rtt: connection.rtt,
+      }
     }
-    return null;
+    return null
   }
 
   // Public method to get current metrics
   getMetrics(): Map<string, WebVitalsMetric> {
-    return new Map(this.metrics);
+    return new Map(this.metrics)
   }
 }
 
 // Initialize monitoring
 if (typeof window !== 'undefined') {
-  new WebVitalsMonitor('/api/monitoring/web-vitals');
+  new WebVitalsMonitor('/api/monitoring/web-vitals')
 }
 ```
 
 ### Error Monitoring Integration
+
 ```typescript
 // lib/monitoring/error-tracking.ts
 import * as Sentry from '@sentry/nextjs';
@@ -578,32 +611,32 @@ export function initializeErrorMonitoring() {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     environment: process.env.NODE_ENV,
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-    
+
     beforeSend(event, hint) {
       // Filter out noise and non-critical errors
       const error = hint.originalException;
-      
+
       // Skip network errors that are likely user-related
       if (error instanceof TypeError && error.message.includes('fetch')) {
-        const isUserNetworkIssue = error.message.includes('NetworkError') || 
+        const isUserNetworkIssue = error.message.includes('NetworkError') ||
                                   error.message.includes('Failed to fetch');
         if (isUserNetworkIssue) {
           return null;
         }
       }
-      
+
       // Skip errors from browser extensions
       if (event.exception?.values?.[0]?.stacktrace?.frames) {
         const frames = event.exception.values[0].stacktrace.frames;
-        const hasExtensionFrame = frames.some(frame => 
-          frame.filename?.includes('extension://') || 
+        const hasExtensionFrame = frames.some(frame =>
+          frame.filename?.includes('extension://') ||
           frame.filename?.includes('moz-extension://')
         );
         if (hasExtensionFrame) {
           return null;
         }
       }
-      
+
       return event;
     },
 
@@ -617,7 +650,7 @@ export function initializeErrorMonitoring() {
   // Global error handler for unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {
     Sentry.captureException(event.reason);
-    
+
     // Also send to analytics
     if (typeof gtag !== 'undefined') {
       gtag('event', 'javascript_error', {
@@ -644,7 +677,7 @@ export function initializeErrorMonitoring() {
         }
       }
     });
-    
+
     perfObserver.observe({ entryTypes: ['measure'] });
   }
 }
@@ -677,63 +710,67 @@ function DefaultErrorFallback({ error, resetError }: any) {
 ```
 
 ### Uptime Monitoring Setup
+
 ```typescript
 // lib/monitoring/uptime.ts
 export class UptimeMonitor {
-  private endpoints: string[];
-  private interval: number;
-  private timeoutMs: number;
+  private endpoints: string[]
+  private interval: number
+  private timeoutMs: number
 
   constructor(endpoints: string[], interval = 60000, timeoutMs = 10000) {
-    this.endpoints = endpoints;
-    this.interval = interval;
-    this.timeoutMs = timeoutMs;
+    this.endpoints = endpoints
+    this.interval = interval
+    this.timeoutMs = timeoutMs
   }
 
   start() {
-    this.checkAllEndpoints();
-    setInterval(() => this.checkAllEndpoints(), this.interval);
+    this.checkAllEndpoints()
+    setInterval(() => this.checkAllEndpoints(), this.interval)
   }
 
   private async checkAllEndpoints() {
-    const checks = this.endpoints.map(endpoint => this.checkEndpoint(endpoint));
-    await Promise.allSettled(checks);
+    const checks = this.endpoints.map(endpoint => this.checkEndpoint(endpoint))
+    await Promise.allSettled(checks)
   }
 
   private async checkEndpoint(url: string) {
-    const startTime = Date.now();
-    
+    const startTime = Date.now()
+
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
-      
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs)
+
       const response = await fetch(url, {
         signal: controller.signal,
-        method: 'HEAD' // Use HEAD for efficiency
-      });
-      
-      clearTimeout(timeoutId);
-      const responseTime = Date.now() - startTime;
-      
-      await this.recordSuccess(url, responseTime, response.status);
-      
+        method: 'HEAD', // Use HEAD for efficiency
+      })
+
+      clearTimeout(timeoutId)
+      const responseTime = Date.now() - startTime
+
+      await this.recordSuccess(url, responseTime, response.status)
     } catch (error) {
-      const responseTime = Date.now() - startTime;
-      await this.recordFailure(url, responseTime, error);
+      const responseTime = Date.now() - startTime
+      await this.recordFailure(url, responseTime, error)
     }
   }
 
-  private async recordSuccess(url: string, responseTime: number, status: number) {
+  private async recordSuccess(
+    url: string,
+    responseTime: number,
+    status: number
+  ) {
     const metric = {
       url,
       status: 'up',
       responseTime,
       httpStatus: status,
-      timestamp: new Date().toISOString()
-    };
+      timestamp: new Date().toISOString(),
+    }
 
     // Send to monitoring service
-    await this.sendToMonitoring(metric);
+    await this.sendToMonitoring(metric)
 
     // Send to analytics
     if (typeof gtag !== 'undefined') {
@@ -741,8 +778,8 @@ export class UptimeMonitor {
         endpoint: url,
         status: 'success',
         response_time: responseTime,
-        http_status: status
-      });
+        http_status: status,
+      })
     }
   }
 
@@ -752,14 +789,14 @@ export class UptimeMonitor {
       status: 'down',
       responseTime,
       error: error.message,
-      timestamp: new Date().toISOString()
-    };
+      timestamp: new Date().toISOString(),
+    }
 
     // Send to monitoring service
-    await this.sendToMonitoring(metric);
+    await this.sendToMonitoring(metric)
 
     // Send alert
-    await this.sendAlert(url, error);
+    await this.sendAlert(url, error)
 
     // Send to analytics
     if (typeof gtag !== 'undefined') {
@@ -767,8 +804,8 @@ export class UptimeMonitor {
         endpoint: url,
         status: 'failure',
         response_time: responseTime,
-        error_type: error.name
-      });
+        error_type: error.name,
+      })
     }
   }
 
@@ -777,45 +814,41 @@ export class UptimeMonitor {
       await fetch('/api/monitoring/uptime', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(metric)
-      });
+        body: JSON.stringify(metric),
+      })
     } catch (error) {
-      console.error('Failed to send uptime metric:', error);
+      console.error('Failed to send uptime metric:', error)
     }
   }
 
   private async sendAlert(url: string, error: any) {
     // Implementation depends on alerting service
-    console.error(`Uptime check failed for ${url}:`, error);
-    
+    console.error(`Uptime check failed for ${url}:`, error)
+
     // Send to error tracking
     if (typeof Sentry !== 'undefined') {
       Sentry.captureException(error, {
         tags: {
           type: 'uptime_check_failure',
-          endpoint: url
-        }
-      });
+          endpoint: url,
+        },
+      })
     }
   }
 }
 
 // Initialize uptime monitoring in production
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-  const monitor = new UptimeMonitor([
-    '/',
-    '/fms',
-    '/api/health',
-    '/portal'
-  ]);
-  
-  monitor.start();
+  const monitor = new UptimeMonitor(['/', '/fms', '/api/health', '/portal'])
+
+  monitor.start()
 }
 ```
 
 ## 📝 Performance Budget Configuration
 
 ### Resource Budgets
+
 ```json
 {
   "budgets": [
@@ -857,6 +890,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
 ```
 
 ### Quality Gates Checklist
+
 - [ ] **Pre-Deployment:**
   - Lighthouse CI performance score ≥85
   - All Core Web Vitals meet targets

@@ -9,12 +9,14 @@ This guide covers the complete deployment infrastructure setup for the Geelong M
 ### Vercel Project Setup
 
 **Production Environment:**
+
 - **Domain:** geelongmovement.com (custom domain with SSL)
 - **Auto-deployment:** From `main` branch
 - **Performance monitoring:** Enabled via Vercel Analytics
 - **Security headers:** Configured via `vercel.json`
 
 **Preview Environments:**
+
 - **Trigger:** All pull requests automatically
 - **URL Pattern:** `https://gmc-pr-[number].vercel.app`
 - **Cleanup:** Automatic removal after PR merge/close
@@ -100,11 +102,13 @@ LHCI_GITHUB_APP_TOKEN=xxxxxxxxxxxxxxxxxx
 ### Feature Development
 
 1. **Create Feature Branch:**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
 
 2. **Development & Testing:**
+
    ```bash
    npm run dev        # Local development
    npm run test       # Run tests
@@ -134,12 +138,14 @@ LHCI_GITHUB_APP_TOKEN=xxxxxxxxxxxxxxxxxx
 ### Rollback Procedure
 
 **Option 1: Vercel Dashboard (Fastest)**
+
 1. Open [Vercel Dashboard](https://vercel.com/dashboard)
 2. Navigate to project deployments
 3. Click "Promote to Production" on previous stable deployment
 4. Rollback completes in < 1 minute
 
 **Option 2: Git Revert**
+
 1. Identify commit to revert: `git log --oneline`
 2. Create revert: `git revert [commit-hash]`
 3. Push to main: `git push origin main`
@@ -150,6 +156,7 @@ LHCI_GITHUB_APP_TOKEN=xxxxxxxxxxxxxxxxxx
 Monitor application health: `https://geelongmovement.com/api/health`
 
 **Expected Response:**
+
 ```json
 {
   "status": "healthy",
@@ -206,16 +213,19 @@ Automatically applied via `vercel.json`:
 ### Common Issues
 
 **Build Failures:**
+
 - Check TypeScript errors: `npm run type-check`
 - Check lint errors: `npm run lint`
 - Check test failures: `npm run test`
 
 **Deployment Issues:**
+
 - Verify environment variables in Vercel dashboard
 - Check build logs in Vercel deployment details
 - Verify GitHub secrets configuration
 
 **Performance Issues:**
+
 - Run bundle analyzer: `npm run analyze`
 - Check Lighthouse CI reports in PR comments
 - Monitor Core Web Vitals in Vercel Analytics
@@ -231,4 +241,3 @@ Automatically applied via `vercel.json`:
 **Last Updated:** September 14, 2025  
 **Version:** 1.0.0  
 **Status:** Active
-

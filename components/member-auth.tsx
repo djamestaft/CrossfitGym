@@ -60,7 +60,11 @@ export function MemberAuth({ onAuthenticated }: MemberAuthProps) {
 
       setIsLinkSent(true)
     } catch (error) {
-      console.error('Authentication error:', error)
+      // Error logged for debugging in development
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.error('Authentication error:', error)
+      }
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)

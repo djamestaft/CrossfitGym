@@ -4,17 +4,18 @@
 **Story ID:** FMS-003  
 **Priority:** Critical Path ⭐  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 1-2  
+**Sprint Target:** Week 1-2
 
 ## 📋 User Story
 
 **As a** staff member  
 **I need** instant notification with complete prospect context  
-**So that** I can follow up professionally within 1 business day and convert leads effectively  
+**So that** I can follow up professionally within 1 business day and convert leads effectively
 
 ## ✅ Acceptance Criteria
 
 ### User Success Page Experience
+
 - [ ] **Success Confirmation:**
   - Clear "Assessment Request Submitted!" headline with success icon
   - Unique confirmation number displayed prominently (e.g., "FMS-2025-001234")
@@ -37,6 +38,7 @@
   - "Your information is secure" privacy messaging
 
 ### Admin Notification System
+
 - [ ] **Instant Email Alert (<1 minute):**
   - Email sent to operations team within 60 seconds
   - Subject line: "NEW FMS Lead - [Name] - [Confirmation#] - [Preferred Time]"
@@ -59,6 +61,7 @@
   - Weekly summary report of all leads generated
 
 ### Data Management & Storage
+
 - [ ] **Primary Storage:**
   - Lead data immediately saved to Sanity CMS or Google Sheets
   - All form fields captured with proper data types
@@ -76,18 +79,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Form submission system (FMS-002) fully functional
 - [ ] Email service configuration (SendGrid, AWS SES, or similar)
 - [ ] Data storage solution setup (Sanity CMS or Google Sheets API)
 - [ ] Operations team email addresses and preferences
 
 **Technical Dependencies:**
+
 - [ ] Email template design and HTML coding
 - [ ] Error handling and retry logic for failed notifications
 - [ ] Backup notification systems configuration
 - [ ] Lead tracking spreadsheet or CRM setup
 
 **Content Dependencies:**
+
 - [ ] Success page copy and messaging
 - [ ] Email notification template content
 - [ ] "What happens next" timeline content
@@ -151,29 +157,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Email delivery failure | High | Low | Multiple backup notification systems |
-| Data storage failure | High | Low | Redundant storage, regular backups |
-| Success page downtime | Medium | Low | Static page hosting, CDN distribution |
-| Staff notification overload | Medium | Medium | Smart filtering, batched notifications |
-| Lead data corruption | High | Low | Validation, monitoring, backup systems |
+| Risk                        | Impact | Probability | Mitigation                             |
+| --------------------------- | ------ | ----------- | -------------------------------------- |
+| Email delivery failure      | High   | Low         | Multiple backup notification systems   |
+| Data storage failure        | High   | Low         | Redundant storage, regular backups     |
+| Success page downtime       | Medium | Low         | Static page hosting, CDN distribution  |
+| Staff notification overload | Medium | Medium      | Smart filtering, batched notifications |
+| Lead data corruption        | High   | Low         | Validation, monitoring, backup systems |
 
 ## 📈 Success Metrics
 
 **Notification Performance:**
+
 - **Delivery Time:** <60 seconds for 99% of notifications
 - **Delivery Success Rate:** >99.5% email delivery
 - **Data Accuracy:** 100% form data captured correctly
 - **System Uptime:** >99.9% availability
 
 **Operations Efficiency:**
+
 - **Response Time:** Staff contacts lead within 24 hours
 - **Lead Quality:** >90% leads provide valid contact information
 - **Conversion Tracking:** 100% leads tracked through funnel
 - **Follow-up Rate:** >95% leads receive timely follow-up
 
 **User Experience:**
+
 - **Success Page Bounce Rate:** <30%
 - **Time on Success Page:** >45 seconds average
 - **Resource Link Clicks:** >40% users explore additional resources
@@ -182,22 +191,24 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Success Page Component
+
 ```tsx
 // app/fms/success/page.tsx
 interface SuccessPageProps {
   searchParams: {
-    confirmation?: string;
-    timestamp?: string;
-  };
+    confirmation?: string
+    timestamp?: string
+  }
 }
 
 export default function FMSSuccessPage({ searchParams }: SuccessPageProps) {
-  const confirmationNumber = searchParams.confirmation || generateConfirmationNumber();
-  const submissionTime = searchParams.timestamp || new Date().toISOString();
+  const confirmationNumber =
+    searchParams.confirmation || generateConfirmationNumber()
+  const submissionTime = searchParams.timestamp || new Date().toISOString()
 
   return (
-    <div className="success-page">
-      <SuccessHero 
+    <div className='success-page'>
+      <SuccessHero
         confirmationNumber={confirmationNumber}
         submissionTime={submissionTime}
       />
@@ -205,18 +216,19 @@ export default function FMSSuccessPage({ searchParams }: SuccessPageProps) {
       <ResourcesSection />
       <ContactSection />
     </div>
-  );
+  )
 }
 ```
 
 ### Email Notification System
+
 ```typescript
 // lib/notifications/fms-lead.ts
 interface FMSLeadData {
-  contact: ContactInfo;
-  assessment: AssessmentInfo;
-  marketing: MarketingAttribution;
-  technical: TechnicalMetadata;
+  contact: ContactInfo
+  assessment: AssessmentInfo
+  marketing: MarketingAttribution
+  technical: TechnicalMetadata
 }
 
 export async function sendFMSLeadNotification(leadData: FMSLeadData) {
@@ -224,145 +236,182 @@ export async function sendFMSLeadNotification(leadData: FMSLeadData) {
     to: process.env.OPERATIONS_EMAIL!.split(','),
     subject: `NEW FMS Lead - ${leadData.contact.firstName} ${leadData.contact.lastName} - ${leadData.confirmationNumber}`,
     template: 'fms-lead-notification',
-    data: leadData
-  });
+    data: leadData,
+  })
 
   const slackPromise = sendSlackNotification({
     channel: '#leads',
-    message: formatLeadForSlack(leadData)
-  });
+    message: formatLeadForSlack(leadData),
+  })
 
-  const storagePromise = storeLead(leadData);
+  const storagePromise = storeLead(leadData)
 
   // Run all notifications in parallel
   const [emailResult, slackResult, storageResult] = await Promise.allSettled([
     emailPromise,
     slackPromise,
-    storagePromise
-  ]);
+    storagePromise,
+  ])
 
   // Handle any failures with backup systems
   if (emailResult.status === 'rejected') {
-    await sendBackupNotification(leadData);
+    await sendBackupNotification(leadData)
   }
 
   return {
     emailSent: emailResult.status === 'fulfilled',
     slackSent: slackResult.status === 'fulfilled',
-    dataStored: storageResult.status === 'fulfilled'
-  };
+    dataStored: storageResult.status === 'fulfilled',
+  }
 }
 ```
 
 ### Email Template
+
 ```html
 <!-- templates/fms-lead-notification.html -->
 <html>
-<head>
-  <title>New FMS Lead - {{contact.firstName}} {{contact.lastName}}</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <h1 style="color: #2563eb;">🎯 New FMS Assessment Request</h1>
-    
-    <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <h2>Contact Information</h2>
-      <p><strong>Name:</strong> {{contact.firstName}} {{contact.lastName}}</p>
-      <p><strong>Email:</strong> <a href="mailto:{{contact.email}}">{{contact.email}}</a></p>
-      <p><strong>Phone:</strong> <a href="tel:{{contact.phone}}">{{contact.phone}}</a></p>
-      <p><strong>Preferred Contact Time:</strong> {{contact.preferredTime}}</p>
-    </div>
+  <head>
+    <title>New FMS Lead - {{contact.firstName}} {{contact.lastName}}</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h1 style="color: #2563eb;">🎯 New FMS Assessment Request</h1>
 
-    <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <h2>Assessment Context</h2>
-      <p><strong>Primary Goal:</strong> {{assessment.fitnessGoal}}</p>
-      <p><strong>Current Activity Level:</strong> {{assessment.activityLevel}}/5</p>
-      <p><strong>Exercise Experience:</strong> {{assessment.experience}}</p>
-      <p><strong>Injuries/Concerns:</strong> {{assessment.injuries}}</p>
-      {{#if assessment.injuryDetails}}
-      <p><strong>Injury Details:</strong> {{assessment.injuryDetails}}</p>
+      <div
+        style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;"
+      >
+        <h2>Contact Information</h2>
+        <p><strong>Name:</strong> {{contact.firstName}} {{contact.lastName}}</p>
+        <p>
+          <strong>Email:</strong>
+          <a href="mailto:{{contact.email}}">{{contact.email}}</a>
+        </p>
+        <p>
+          <strong>Phone:</strong>
+          <a href="tel:{{contact.phone}}">{{contact.phone}}</a>
+        </p>
+        <p>
+          <strong>Preferred Contact Time:</strong> {{contact.preferredTime}}
+        </p>
+      </div>
+
+      <div
+        style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;"
+      >
+        <h2>Assessment Context</h2>
+        <p><strong>Primary Goal:</strong> {{assessment.fitnessGoal}}</p>
+        <p>
+          <strong>Current Activity Level:</strong>
+          {{assessment.activityLevel}}/5
+        </p>
+        <p><strong>Exercise Experience:</strong> {{assessment.experience}}</p>
+        <p><strong>Injuries/Concerns:</strong> {{assessment.injuries}}</p>
+        {{#if assessment.injuryDetails}}
+        <p><strong>Injury Details:</strong> {{assessment.injuryDetails}}</p>
+        {{/if}}
+        <p>
+          <strong>Preferred Start Date:</strong>
+          {{assessment.preferredStartDate}}
+        </p>
+      </div>
+
+      <div
+        style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;"
+      >
+        <h2>Marketing Attribution</h2>
+        <p>
+          <strong>How they heard about us:</strong> {{marketing.hearAboutUs}}
+        </p>
+        <p><strong>UTM Source:</strong> {{marketing.utmSource}}</p>
+        <p><strong>UTM Campaign:</strong> {{marketing.utmCampaign}}</p>
+        <p><strong>Referrer:</strong> {{marketing.referrer}}</p>
+      </div>
+
+      <div
+        style="background: #e0e7ff; padding: 15px; border-radius: 8px; margin: 20px 0;"
+      >
+        <h2>Follow-up Action Required</h2>
+        <p><strong>⏰ Contact within 1 business day</strong></p>
+        <p>
+          <strong>📝 Confirmation #:</strong> {{technical.confirmationNumber}}
+        </p>
+        <p><strong>🕒 Submitted:</strong> {{technical.submissionTime}}</p>
+        <p>
+          <a
+            href="{{technical.leadManagementUrl}}"
+            style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
+            >Update Lead Status</a
+          >
+        </p>
+      </div>
+
+      {{#if assessment.comments}}
+      <div
+        style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;"
+      >
+        <h2>Additional Comments</h2>
+        <p>{{assessment.comments}}</p>
+      </div>
       {{/if}}
-      <p><strong>Preferred Start Date:</strong> {{assessment.preferredStartDate}}</p>
     </div>
-
-    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <h2>Marketing Attribution</h2>
-      <p><strong>How they heard about us:</strong> {{marketing.hearAboutUs}}</p>
-      <p><strong>UTM Source:</strong> {{marketing.utmSource}}</p>
-      <p><strong>UTM Campaign:</strong> {{marketing.utmCampaign}}</p>
-      <p><strong>Referrer:</strong> {{marketing.referrer}}</p>
-    </div>
-
-    <div style="background: #e0e7ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <h2>Follow-up Action Required</h2>
-      <p><strong>⏰ Contact within 1 business day</strong></p>
-      <p><strong>📝 Confirmation #:</strong> {{technical.confirmationNumber}}</p>
-      <p><strong>🕒 Submitted:</strong> {{technical.submissionTime}}</p>
-      <p><a href="{{technical.leadManagementUrl}}" style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Update Lead Status</a></p>
-    </div>
-
-    {{#if assessment.comments}}
-    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <h2>Additional Comments</h2>
-      <p>{{assessment.comments}}</p>
-    </div>
-    {{/if}}
-  </div>
-</body>
+  </body>
 </html>
 ```
 
 ### Data Storage Schema
+
 ```typescript
 // lib/storage/fms-lead.ts
 interface FMSLeadRecord {
-  id: string;
-  confirmationNumber: string;
-  submissionTimestamp: Date;
-  
+  id: string
+  confirmationNumber: string
+  submissionTimestamp: Date
+
   // Contact Information
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  preferredContactTime: 'morning' | 'afternoon' | 'evening';
-  
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  preferredContactTime: 'morning' | 'afternoon' | 'evening'
+
   // Assessment Context
-  fitnessGoal: string;
-  activityLevel: number;
-  exerciseExperience: string;
-  currentInjuries: string[];
-  injuryDetails?: string;
-  preferredStartDate: Date;
-  additionalComments?: string;
-  
+  fitnessGoal: string
+  activityLevel: number
+  exerciseExperience: string
+  currentInjuries: string[]
+  injuryDetails?: string
+  preferredStartDate: Date
+  additionalComments?: string
+
   // Marketing Attribution
-  hearAboutUs: string;
-  utmSource?: string;
-  utmMedium?: string;
-  utmCampaign?: string;
-  utmContent?: string;
-  referrer?: string;
-  
+  hearAboutUs: string
+  utmSource?: string
+  utmMedium?: string
+  utmCampaign?: string
+  utmContent?: string
+  referrer?: string
+
   // Follow-up Tracking
-  followupStatus: 'new' | 'contacted' | 'scheduled' | 'completed' | 'lost';
-  followupNotes?: string;
-  firstContactDate?: Date;
-  assessmentScheduledDate?: Date;
-  assessmentCompletedDate?: Date;
-  
+  followupStatus: 'new' | 'contacted' | 'scheduled' | 'completed' | 'lost'
+  followupNotes?: string
+  firstContactDate?: Date
+  assessmentScheduledDate?: Date
+  assessmentCompletedDate?: Date
+
   // Conversion Tracking
-  firstSessionBooked?: boolean;
-  firstSessionDate?: Date;
-  membershipSold?: boolean;
-  membershipStartDate?: Date;
-  lifetimeValue?: number;
+  firstSessionBooked?: boolean
+  firstSessionDate?: Date
+  membershipSold?: boolean
+  membershipStartDate?: Date
+  lifetimeValue?: number
 }
 ```
 
 ## 📝 Content Requirements
 
 ### Success Page Content
+
 - [ ] **Hero Section:**
   - "🎉 Assessment Request Submitted Successfully!"
   - "Your confirmation number is: [NUMBER]"
@@ -381,6 +430,7 @@ interface FMSLeadRecord {
   - "Our Injury-Aware Approach"
 
 ### Email Notification Content
+
 - [ ] **Subject Lines:**
   - Primary: "🎯 NEW FMS Lead - [Name] - [Preferred Time]"
   - Backup: "Action Required: FMS Assessment Request"

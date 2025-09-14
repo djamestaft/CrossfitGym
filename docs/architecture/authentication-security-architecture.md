@@ -1,6 +1,7 @@
 # 🔐 Authentication & Security Architecture
 
 ### NextAuth.js Configuration with Magic Links
+
 ```typescript
 // lib/auth.ts
 export const authConfig: NextAuthConfig = {
@@ -17,33 +18,34 @@ export const authConfig: NextAuthConfig = {
       from: process.env.EMAIL_FROM,
     }),
   ],
-  
+
   callbacks: {
     async signIn({ user, account, profile }) {
       // Verify member email against CMS member list
-      const isMember = await verifyMemberEmail(user.email);
-      return isMember;
+      const isMember = await verifyMemberEmail(user.email)
+      return isMember
     },
-    
+
     async session({ session, token }) {
       return {
         ...session,
         user: {
           ...session.user,
-          isMember: true
-        }
-      };
-    }
+          isMember: true,
+        },
+      }
+    },
   },
-  
+
   pages: {
     signIn: '/portal/signin',
     verifyRequest: '/portal/verify',
-  }
-};
+  },
+}
 ```
 
 ### Security Measures
+
 ```typescript
 // Security implementation layers
 export const securityConfig = {
@@ -52,24 +54,23 @@ export const securityConfig = {
     turnstile: process.env.TURNSTILE_SECRET_KEY,
     rateLimit: '5 submissions per 15 minutes',
     validation: 'server-side + client-side',
-    sanitization: 'DOMPurify + server validation'
+    sanitization: 'DOMPurify + server validation',
   },
-  
+
   // Content security
   contentSecurity: {
     headers: 'Strict CSP headers',
     sanity: 'Read-only tokens for public content',
-    preview: 'Authenticated preview mode only'
+    preview: 'Authenticated preview mode only',
   },
-  
-  // Infrastructure security  
+
+  // Infrastructure security
   infrastructure: {
     vercel: 'Automatic HTTPS + edge protection',
     environment: 'Production secrets via Vercel env vars',
-    monitoring: 'Error tracking + performance monitoring'
-  }
-};
+    monitoring: 'Error tracking + performance monitoring',
+  },
+}
 ```
 
 ---
-

@@ -5,7 +5,11 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 declare global {
   interface Window {
-    gtag: (command: string, targetId: string, config?: any) => void
+    gtag: (
+      command: string,
+      targetId: string,
+      config?: Record<string, unknown>
+    ) => void
   }
 }
 
@@ -27,7 +31,7 @@ export function Analytics() {
 // Analytics event tracking functions
 export const trackEvent = (
   eventName: string,
-  parameters?: Record<string, any>
+  parameters?: Record<string, unknown>
 ) => {
   if (typeof window.gtag !== 'undefined') {
     window.gtag('event', eventName, parameters)

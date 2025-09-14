@@ -7,7 +7,11 @@ import { trackChatEngagement } from '@/lib/gtag'
 
 declare global {
   interface Window {
-    Tawk_API?: any
+    Tawk_API?: {
+      toggle?: () => void
+      hideWidget?: () => void
+      showWidget?: () => void
+    }
     Tawk_LoadStart?: Date
   }
 }

@@ -4,17 +4,18 @@
 **Story ID:** CONTENT-003  
 **Priority:** High  
 **Effort Estimate:** 4 story points  
-**Sprint Target:** Week 3-4  
+**Sprint Target:** Week 3-4
 
 ## 📋 User Story
 
 **As a** potential member researching fitness topics  
 **I want** credible, helpful articles that demonstrate expertise  
-**So that** I trust this gym's knowledge and consider joining their community  
+**So that** I trust this gym's knowledge and consider joining their community
 
 ## ✅ Acceptance Criteria
 
 ### Article Content Creation (4 Articles)
+
 - [ ] **Article 1: "Injury-Safe Scaling: How to Modify Any Workout"**
   - Understanding individual limitations and capabilities
   - Step-by-step scaling methodology for common movements
@@ -48,6 +49,7 @@
   - Building sustainable habits
 
 ### Technical SEO Implementation
+
 - [ ] **On-Page Optimization:**
   - Article schema markup with author and organization
   - Optimized title tags with target keywords
@@ -73,6 +75,7 @@
   - Social proof integration (share counts)
 
 ### Content Performance Features
+
 - [ ] **User Experience Enhancements:**
   - Estimated reading time display
   - Table of contents with anchor links
@@ -90,6 +93,7 @@
   - Search keyword performance monitoring
 
 ### Content Distribution & Promotion
+
 - [ ] **Search Engine Submission:**
   - Google Search Console sitemap submission
   - Bing Webmaster Tools setup and submission
@@ -109,12 +113,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Sanity CMS schema and workflow (CONTENT-001) functional
 - [ ] Content creation team trained and onboarded
 - [ ] SEO keyword research and content calendar
 - [ ] Editorial review and approval process established
 
 **Content Creation Dependencies:**
+
 - [ ] Subject matter expert consultation for technical accuracy
 - [ ] Professional photography for article illustrations
 - [ ] Video content creation for movement demonstrations
@@ -122,6 +128,7 @@
 - [ ] Competitor analysis for content differentiation
 
 **Technical Dependencies:**
+
 - [ ] SEO tooling and analytics configuration
 - [ ] Image optimization and CDN setup
 - [ ] Social media account setup for content sharing
@@ -186,35 +193,39 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Content creation delays | Medium | Medium | Early writer assignment, template approach |
-| Low search rankings | Medium | Medium | Long-tail keyword focus, local optimization |
-| Poor article engagement | Medium | Low | User testing, compelling introductions |
-| Technical SEO issues | Medium | Low | Automated testing, SEO checklist |
-| Content accuracy concerns | High | Low | Expert review, conservative claims |
+| Risk                      | Impact | Probability | Mitigation                                  |
+| ------------------------- | ------ | ----------- | ------------------------------------------- |
+| Content creation delays   | Medium | Medium      | Early writer assignment, template approach  |
+| Low search rankings       | Medium | Medium      | Long-tail keyword focus, local optimization |
+| Poor article engagement   | Medium | Low         | User testing, compelling introductions      |
+| Technical SEO issues      | Medium | Low         | Automated testing, SEO checklist            |
+| Content accuracy concerns | High   | Low         | Expert review, conservative claims          |
 
 ## 📈 Success Metrics
 
 **Content Performance:**
+
 - **Average Time on Page:** >3 minutes per article
 - **Scroll Depth:** >60% users reach article conclusion
 - **Bounce Rate:** <50% for article pages
 - **Return Visitors:** >30% within 30 days
 
 **SEO Performance:**
+
 - **Organic Traffic:** >1,000 monthly visits to articles by Month 3
 - **Keyword Rankings:** Top 10 for target long-tail keywords
 - **Featured Snippets:** Capture 2+ featured snippets
 - **Local Visibility:** Improved local pack rankings
 
 **Conversion Metrics:**
+
 - **Article → FMS Rate:** ≥8% conversion to assessment booking
 - **Email Signups:** >50 newsletter signups per article per month
 - **Social Sharing:** >100 total shares across all articles
 - **Brand Awareness:** 25% increase in branded search volume
 
 **Business Impact:**
+
 - **Lead Quality:** Article-sourced leads convert at ≥20% to membership
 - **Content ROI:** Positive ROI within 6 months
 - **Customer Education:** Reduced coaching questions about covered topics
@@ -223,6 +234,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Article Schema Markup
+
 ```typescript
 // components/Article/ArticleSchema.tsx
 interface ArticleSchemaProps {
@@ -278,104 +290,107 @@ export function ArticleSchema({ article }: ArticleSchemaProps) {
 ```
 
 ### SEO Meta Tags Component
+
 ```tsx
 // components/SEO/ArticleMeta.tsx
 interface ArticleMetaProps {
-  title: string;
-  description: string;
-  image?: string;
-  publishedAt: string;
-  author: string;
-  slug: string;
+  title: string
+  description: string
+  image?: string
+  publishedAt: string
+  author: string
+  slug: string
 }
 
-export function ArticleMeta({ 
-  title, 
-  description, 
-  image, 
-  publishedAt, 
-  author, 
-  slug 
+export function ArticleMeta({
+  title,
+  description,
+  image,
+  publishedAt,
+  author,
+  slug,
 }: ArticleMetaProps) {
-  const url = `https://geelongmovement.com/articles/${slug}`;
-  
+  const url = `https://geelongmovement.com/articles/${slug}`
+
   return (
     <Head>
       <title>{title} | Geelong Movement Co</title>
-      <meta name="description" content={description} />
-      <meta name="author" content={author} />
-      <meta name="article:published_time" content={publishedAt} />
-      
+      <meta name='description' content={description} />
+      <meta name='author' content={author} />
+      <meta name='article:published_time' content={publishedAt} />
+
       {/* Open Graph */}
-      <meta property="og:type" content="article" />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={url} />
-      <meta property="og:site_name" content="Geelong Movement Co" />
-      {image && <meta property="og:image" content={image} />}
-      
+      <meta property='og:type' content='article' />
+      <meta property='og:title' content={title} />
+      <meta property='og:description' content={description} />
+      <meta property='og:url' content={url} />
+      <meta property='og:site_name' content='Geelong Movement Co' />
+      {image && <meta property='og:image' content={image} />}
+
       {/* Twitter Cards */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      {image && <meta name="twitter:image" content={image} />}
-      
+      <meta name='twitter:card' content='summary_large_image' />
+      <meta name='twitter:title' content={title} />
+      <meta name='twitter:description' content={description} />
+      {image && <meta name='twitter:image' content={image} />}
+
       {/* Canonical URL */}
-      <link rel="canonical" href={url} />
+      <link rel='canonical' href={url} />
     </Head>
-  );
+  )
 }
 ```
 
 ### Reading Progress Tracking
+
 ```typescript
 // hooks/useReadingProgress.ts
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 export function useReadingProgress() {
-  const [progress, setProgress] = useState(0);
-  const [milestones, setMilestones] = useState<Set<number>>(new Set());
+  const [progress, setProgress] = useState(0)
+  const [milestones, setMilestones] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     const updateProgress = () => {
-      const scrolled = window.scrollY;
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.round((scrolled / total) * 100);
-      
-      setProgress(progress);
-      
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      const progress = Math.round((scrolled / total) * 100)
+
+      setProgress(progress)
+
       // Track reading milestones
-      const currentMilestones = new Set(milestones);
-      [25, 50, 75, 100].forEach(milestone => {
+      const currentMilestones = new Set(milestones)
+      ;[25, 50, 75, 100].forEach(milestone => {
         if (progress >= milestone && !currentMilestones.has(milestone)) {
-          currentMilestones.add(milestone);
-          setMilestones(currentMilestones);
-          
+          currentMilestones.add(milestone)
+          setMilestones(currentMilestones)
+
           // Track analytics event
           gtag('event', 'article_reading_progress', {
             event_category: 'content_engagement',
             event_label: `${milestone}%_complete`,
-            value: milestone
-          });
+            value: milestone,
+          })
         }
-      });
-    };
+      })
+    }
 
-    window.addEventListener('scroll', updateProgress);
-    return () => window.removeEventListener('scroll', updateProgress);
-  }, [milestones]);
+    window.addEventListener('scroll', updateProgress)
+    return () => window.removeEventListener('scroll', updateProgress)
+  }, [milestones])
 
-  return { progress, milestones };
+  return { progress, milestones }
 }
 ```
 
 ### Internal Linking Strategy
+
 ```typescript
 // lib/content/internal-linking.ts
 interface InternalLink {
-  text: string;
-  url: string;
-  context: 'related' | 'definition' | 'deep-dive' | 'cta';
+  text: string
+  url: string
+  context: 'related' | 'definition' | 'deep-dive' | 'cta'
 }
 
 export const internalLinkingStrategy = {
@@ -384,60 +399,61 @@ export const internalLinkingStrategy = {
     {
       text: 'movement assessment',
       url: '/fms',
-      context: 'cta'
+      context: 'cta',
     },
     {
       text: 'warm-up principles',
       url: '/articles/warm-up-principles',
-      context: 'related'
+      context: 'related',
     },
     {
       text: 'shoulder-safe modifications',
       url: '/hubs/shoulder',
-      context: 'deep-dive'
-    }
+      context: 'deep-dive',
+    },
   ],
-  
+
   // Article 2: Warm-Up Principles
   'warm-up-principles': [
     {
       text: 'mobility basics',
       url: '/articles/mobility-basics',
-      context: 'related'
+      context: 'related',
     },
     {
       text: 'injury prevention',
       url: '/articles/injury-safe-scaling',
-      context: 'related'
+      context: 'related',
     },
     {
       text: 'movement screen',
       url: '/fms',
-      context: 'cta'
-    }
+      context: 'cta',
+    },
   ],
-  
+
   // Cross-linking matrix for SEO authority
   generateCrossLinks: (currentSlug: string) => {
     const allArticles = [
       'injury-safe-scaling',
-      'warm-up-principles', 
+      'warm-up-principles',
       'mobility-basics',
-      'beginner-foundations'
-    ];
-    
+      'beginner-foundations',
+    ]
+
     return allArticles
       .filter(slug => slug !== currentSlug)
       .map(slug => ({
         text: getArticleTitle(slug),
         url: `/articles/${slug}`,
-        context: 'related' as const
-      }));
-  }
-};
+        context: 'related' as const,
+      }))
+  },
+}
 ```
 
 ### Performance Optimization
+
 ```typescript
 // next.config.mjs
 const nextConfig = {
@@ -447,7 +463,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/webp', 'image/avif'],
   },
-  
+
   // SEO optimizations
   async headers() {
     return [
@@ -456,11 +472,11 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=3600, stale-while-revalidate=86400'
-          }
-        ]
-      }
-    ];
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+    ]
   },
 
   // Sitemap generation
@@ -468,28 +484,27 @@ const nextConfig = {
     return [
       {
         source: '/sitemap.xml',
-        destination: '/api/sitemap'
-      }
-    ];
-  }
-};
+        destination: '/api/sitemap',
+      },
+    ]
+  },
+}
 ```
 
 ## 📝 Content Requirements
 
 ### Article Writing Standards
+
 - [ ] **Structure Template:**
   1. **Hook Introduction** (150-200 words)
      - Compelling opening that relates to reader's pain point
      - Preview of what they'll learn
      - Credibility indicator (expertise/experience)
-  
   2. **Main Content** (600-800 words)
      - 3-5 main sections with descriptive H2 headings
      - Actionable tips and practical advice
      - Examples and case studies
      - Visual aids (images, lists, callouts)
-  
   3. **Conclusion & CTA** (100-150 words)
      - Key takeaways summary
      - Next steps or action items
@@ -503,6 +518,7 @@ const nextConfig = {
   - Use question-based H2/H3 headings
 
 ### Visual Content Requirements
+
 - [ ] **Hero Images:**
   - Professional gym photography
   - People demonstrating correct form
@@ -516,6 +532,7 @@ const nextConfig = {
   - Equipment setup demonstrations
 
 ### Content Calendar & Publishing
+
 - [ ] **Week 3 Publishing Schedule:**
   - Monday: "Injury-Safe Scaling" article
   - Wednesday: "Warm-Up Principles" article
@@ -527,6 +544,7 @@ const nextConfig = {
   - Friday: Email newsletter featuring all articles
 
 ### Promotion & Distribution
+
 - [ ] **Social Media Content:**
   - Article teaser graphics for Instagram
   - Key quotes for Twitter/LinkedIn

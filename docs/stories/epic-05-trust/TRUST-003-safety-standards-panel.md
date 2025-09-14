@@ -4,17 +4,18 @@
 **Story ID:** TRUST-003  
 **Priority:** High  
 **Effort Estimate:** 2 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 2-3
 
 ## 📋 User Story
 
 **As a** person concerned about injury risk and gym safety  
 **I want** clear information about the gym's safety standards and protocols  
-**So that** I feel confident about training safely and understand their commitment to injury prevention  
+**So that** I feel confident about training safely and understand their commitment to injury prevention
 
 ## ✅ Acceptance Criteria
 
 ### Content Development & Messaging
+
 - [ ] **Safety Standards Documentation:**
   - Clear explanation of injury-aware coaching philosophy
   - Specific safety protocols and implementation standards
@@ -40,6 +41,7 @@
   - Progressive loading and movement quality standards
 
 ### Visual Design & Integration
+
 - [ ] **Panel Design:**
   - Professional, trust-building visual design
   - Clear hierarchy emphasizing key safety messages
@@ -65,6 +67,7 @@
   - Contact information for questions or concerns
 
 ### Content Management & Updates
+
 - [ ] **CMS Integration:**
   - Editable content through Sanity CMS
   - Version control for safety policy updates
@@ -82,6 +85,7 @@
   - Emergency contact information maintenance
 
 ### Legal Compliance & Risk Management
+
 - [ ] **Legal Review Requirements:**
   - Comprehensive legal review of all safety claims
   - Compliance with fitness industry regulations
@@ -99,6 +103,7 @@
   - Regular legal compliance audits
 
 ### Analytics & Performance Tracking
+
 - [ ] **Engagement Metrics:**
   - Time spent reading safety panel content
   - Interaction rates with safety-related CTAs
@@ -118,12 +123,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Legal review and approval process establishment
 - [ ] Safety protocol documentation and verification
 - [ ] Staff qualification verification and documentation
 - [ ] Insurance and liability review completion
 
 **Content Dependencies:**
+
 - [ ] Safety policy documentation collection
 - [ ] Staff certification and training record review
 - [ ] Emergency protocol documentation
@@ -131,6 +138,7 @@
 - [ ] Competitor safety messaging analysis
 
 **Technical Dependencies:**
+
 - [ ] CMS content management system setup
 - [ ] Legal disclaimer and policy page framework
 - [ ] Analytics tracking configuration
@@ -194,29 +202,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Legal liability from safety claims | High | Low | Conservative messaging, comprehensive legal review |
-| Outdated safety information | Medium | Medium | Regular review schedule, CMS update workflow |
-| Over-promising on safety | High | Low | Evidence-based claims, professional boundaries |
-| Creating fear or anxiety | Medium | Low | Balanced messaging, focus on empowerment |
-| Staff qualification changes | Medium | Medium | Regular updates, verification procedures |
+| Risk                               | Impact | Probability | Mitigation                                         |
+| ---------------------------------- | ------ | ----------- | -------------------------------------------------- |
+| Legal liability from safety claims | High   | Low         | Conservative messaging, comprehensive legal review |
+| Outdated safety information        | Medium | Medium      | Regular review schedule, CMS update workflow       |
+| Over-promising on safety           | High   | Low         | Evidence-based claims, professional boundaries     |
+| Creating fear or anxiety           | Medium | Low         | Balanced messaging, focus on empowerment           |
+| Staff qualification changes        | Medium | Medium      | Regular updates, verification procedures           |
 
 ## 📈 Success Metrics
 
 **Trust Building Metrics:**
+
 - **Panel Engagement:** >45 seconds average time viewing safety content
 - **Conversion Impact:** +12% improvement in FMS form completion after viewing panel
 - **User Feedback:** Safety mentioned in >30% of positive member testimonials
 - **Contact Quality:** >20% increase in informed, qualified inquiries
 
 **Content Performance:**
+
 - **Readability:** >80% users scroll through entire safety panel
 - **Information Retention:** Safety standards referenced in member feedback
 - **CTA Effectiveness:** >8% click-through rate from safety panel to FMS booking
 - **Mobile Engagement:** >70% mobile users fully engage with safety content
 
 **Business Impact:**
+
 - **Trust Indicators:** Reduced safety-related objections in sales conversations
 - **Member Confidence:** Improved onboarding experience and member retention
 - **Competitive Advantage:** Safety standards cited as differentiator
@@ -225,6 +236,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Sanity CMS Schema
+
 ```typescript
 // sanity/schemas/safety-panel.ts
 export const safetyPanelSchema = {
@@ -236,57 +248,59 @@ export const safetyPanelSchema = {
       name: 'title',
       title: 'Panel Title',
       type: 'string',
-      initialValue: 'Your Safety is Our Priority'
+      initialValue: 'Your Safety is Our Priority',
     },
     {
       name: 'subtitle',
       title: 'Subtitle',
       type: 'string',
-      initialValue: 'Training Smart, Not Just Hard'
+      initialValue: 'Training Smart, Not Just Hard',
     },
     {
       name: 'mainMessage',
       title: 'Main Safety Message',
       type: 'text',
       rows: 3,
-      description: 'Primary safety philosophy and commitment'
+      description: 'Primary safety philosophy and commitment',
     },
     {
       name: 'safetyStandards',
       title: 'Safety Standards',
       type: 'array',
-      of: [{
-        type: 'object',
-        name: 'safetyStandard',
-        fields: [
-          {
-            name: 'title',
-            title: 'Standard Title',
-            type: 'string'
-          },
-          {
-            name: 'description',
-            title: 'Description',
-            type: 'text',
-            rows: 2
-          },
-          {
-            name: 'icon',
-            title: 'Icon',
-            type: 'string',
-            options: {
-              list: [
-                { title: '👥 Supervision', value: 'supervision' },
-                { title: '🔧 Equipment', value: 'equipment' },
-                { title: '📋 Assessment', value: 'assessment' },
-                { title: '🚨 Emergency', value: 'emergency' },
-                { title: '📈 Progression', value: 'progression' },
-                { title: '🎯 Modification', value: 'modification' }
-              ]
-            }
-          }
-        ]
-      }]
+      of: [
+        {
+          type: 'object',
+          name: 'safetyStandard',
+          fields: [
+            {
+              name: 'title',
+              title: 'Standard Title',
+              type: 'string',
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            },
+            {
+              name: 'icon',
+              title: 'Icon',
+              type: 'string',
+              options: {
+                list: [
+                  { title: '👥 Supervision', value: 'supervision' },
+                  { title: '🔧 Equipment', value: 'equipment' },
+                  { title: '📋 Assessment', value: 'assessment' },
+                  { title: '🚨 Emergency', value: 'emergency' },
+                  { title: '📈 Progression', value: 'progression' },
+                  { title: '🎯 Modification', value: 'modification' },
+                ],
+              },
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'coachingRatios',
@@ -297,28 +311,28 @@ export const safetyPanelSchema = {
           name: 'groupClasses',
           title: 'Group Classes',
           type: 'string',
-          initialValue: '1 coach per 12 members maximum'
+          initialValue: '1 coach per 12 members maximum',
         },
         {
           name: 'beginnerClasses',
           title: 'Beginner Classes',
           type: 'string',
-          initialValue: '1 coach per 8 members maximum'
+          initialValue: '1 coach per 8 members maximum',
         },
         {
           name: 'personalTraining',
           title: 'Personal Training',
           type: 'string',
-          initialValue: '1-on-1 dedicated attention'
-        }
-      ]
+          initialValue: '1-on-1 dedicated attention',
+        },
+      ],
     },
     {
       name: 'certificationHighlights',
       title: 'Staff Certification Highlights',
       type: 'array',
       of: [{ type: 'string' }],
-      description: 'Key staff qualifications and certifications'
+      description: 'Key staff qualifications and certifications',
     },
     {
       name: 'emergencyProtocols',
@@ -329,21 +343,21 @@ export const safetyPanelSchema = {
           name: 'firstAidCertified',
           title: 'First Aid Certified Staff',
           type: 'boolean',
-          initialValue: true
+          initialValue: true,
         },
         {
           name: 'emergencyContacts',
           title: 'Emergency Response Plan',
           type: 'text',
-          rows: 2
+          rows: 2,
         },
         {
           name: 'incidentReporting',
           title: 'Incident Reporting Process',
           type: 'text',
-          rows: 2
-        }
-      ]
+          rows: 2,
+        },
+      ],
     },
     {
       name: 'ctaSection',
@@ -354,175 +368,179 @@ export const safetyPanelSchema = {
           name: 'headline',
           title: 'CTA Headline',
           type: 'string',
-          initialValue: 'Start Your Fitness Journey Safely'
+          initialValue: 'Start Your Fitness Journey Safely',
         },
         {
           name: 'description',
           title: 'CTA Description',
           type: 'text',
           rows: 2,
-          initialValue: 'Begin with a comprehensive movement assessment'
+          initialValue: 'Begin with a comprehensive movement assessment',
         },
         {
           name: 'buttonText',
           title: 'Button Text',
           type: 'string',
-          initialValue: 'Book Your Assessment'
+          initialValue: 'Book Your Assessment',
         },
         {
           name: 'buttonUrl',
           title: 'Button URL',
           type: 'string',
-          initialValue: '/fms'
-        }
-      ]
+          initialValue: '/fms',
+        },
+      ],
     },
     {
       name: 'legalDisclaimer',
       title: 'Legal Disclaimer',
       type: 'text',
       rows: 3,
-      description: 'Legal disclaimer and limitation statements'
+      description: 'Legal disclaimer and limitation statements',
     },
     {
       name: 'lastReviewed',
       title: 'Last Legal Review Date',
-      type: 'date'
+      type: 'date',
     },
     {
       name: 'isActive',
       title: 'Panel Active',
       type: 'boolean',
-      initialValue: true
-    }
+      initialValue: true,
+    },
   ],
   preview: {
     prepare() {
       return {
         title: 'Safety Standards Panel',
-        subtitle: 'Site-wide safety messaging'
-      };
-    }
-  }
-};
+        subtitle: 'Site-wide safety messaging',
+      }
+    },
+  },
+}
 ```
 
 ### Safety Panel Component
+
 ```tsx
 // components/SafetyPanel.tsx
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { CheckCircleIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { CheckCircleIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 interface SafetyPanelProps {
   safetyData: {
-    title: string;
-    subtitle: string;
-    mainMessage: string;
+    title: string
+    subtitle: string
+    mainMessage: string
     safetyStandards: Array<{
-      title: string;
-      description: string;
-      icon: string;
-    }>;
+      title: string
+      description: string
+      icon: string
+    }>
     coachingRatios: {
-      groupClasses: string;
-      beginnerClasses: string;
-      personalTraining: string;
-    };
-    certificationHighlights: string[];
+      groupClasses: string
+      beginnerClasses: string
+      personalTraining: string
+    }
+    certificationHighlights: string[]
     ctaSection: {
-      headline: string;
-      description: string;
-      buttonText: string;
-      buttonUrl: string;
-    };
-  };
-  placement?: 'homepage' | 'fms' | 'programs';
+      headline: string
+      description: string
+      buttonText: string
+      buttonUrl: string
+    }
+  }
+  placement?: 'homepage' | 'fms' | 'programs'
 }
 
-export function SafetyPanel({ safetyData, placement = 'homepage' }: SafetyPanelProps) {
+export function SafetyPanel({
+  safetyData,
+  placement = 'homepage',
+}: SafetyPanelProps) {
   const handleCTAClick = () => {
-    trackSafetyPanelEvent('cta_click', placement);
-  };
+    trackSafetyPanelEvent('cta_click', placement)
+  }
 
   const handlePanelView = () => {
-    trackSafetyPanelEvent('panel_view', placement);
-  };
+    trackSafetyPanelEvent('panel_view', placement)
+  }
 
   useEffect(() => {
-    handlePanelView();
-  }, []);
+    handlePanelView()
+  }, [])
 
   return (
-    <section className="safety-panel" id="safety-standards">
-      <div className="panel-container">
-        <div className="panel-header">
-          <div className="header-icon">
-            <ShieldCheckIcon className="w-12 h-12 text-primary" />
+    <section className='safety-panel' id='safety-standards'>
+      <div className='panel-container'>
+        <div className='panel-header'>
+          <div className='header-icon'>
+            <ShieldCheckIcon className='w-12 h-12 text-primary' />
           </div>
-          <h2 className="panel-title">{safetyData.title}</h2>
-          <p className="panel-subtitle">{safetyData.subtitle}</p>
+          <h2 className='panel-title'>{safetyData.title}</h2>
+          <p className='panel-subtitle'>{safetyData.subtitle}</p>
         </div>
 
-        <div className="main-message">
-          <p className="message-text">{safetyData.mainMessage}</p>
+        <div className='main-message'>
+          <p className='message-text'>{safetyData.mainMessage}</p>
         </div>
 
-        <div className="safety-standards-grid">
+        <div className='safety-standards-grid'>
           {safetyData.safetyStandards.map((standard, index) => (
-            <div key={index} className="safety-standard-card">
-              <div className="standard-icon">
+            <div key={index} className='safety-standard-card'>
+              <div className='standard-icon'>
                 {getIconComponent(standard.icon)}
               </div>
-              <h3 className="standard-title">{standard.title}</h3>
-              <p className="standard-description">{standard.description}</p>
+              <h3 className='standard-title'>{standard.title}</h3>
+              <p className='standard-description'>{standard.description}</p>
             </div>
           ))}
         </div>
 
-        <div className="coaching-ratios">
-          <h3 className="ratios-title">Our Coaching Standards</h3>
-          <div className="ratios-grid">
-            <div className="ratio-item">
-              <CheckCircleIcon className="w-5 h-5 text-green-600" />
+        <div className='coaching-ratios'>
+          <h3 className='ratios-title'>Our Coaching Standards</h3>
+          <div className='ratios-grid'>
+            <div className='ratio-item'>
+              <CheckCircleIcon className='w-5 h-5 text-green-600' />
               <span>{safetyData.coachingRatios.groupClasses}</span>
             </div>
-            <div className="ratio-item">
-              <CheckCircleIcon className="w-5 h-5 text-green-600" />
+            <div className='ratio-item'>
+              <CheckCircleIcon className='w-5 h-5 text-green-600' />
               <span>{safetyData.coachingRatios.beginnerClasses}</span>
             </div>
-            <div className="ratio-item">
-              <CheckCircleIcon className="w-5 h-5 text-green-600" />
+            <div className='ratio-item'>
+              <CheckCircleIcon className='w-5 h-5 text-green-600' />
               <span>{safetyData.coachingRatios.personalTraining}</span>
             </div>
           </div>
         </div>
 
-        <div className="certifications-section">
-          <h3 className="certifications-title">Our Team's Qualifications</h3>
-          <div className="certification-badges">
+        <div className='certifications-section'>
+          <h3 className='certifications-title'>Our Team's Qualifications</h3>
+          <div className='certification-badges'>
             {safetyData.certificationHighlights.map((cert, index) => (
-              <Badge key={index} variant="secondary" className="certification-badge">
+              <Badge
+                key={index}
+                variant='secondary'
+                className='certification-badge'
+              >
                 {cert}
               </Badge>
             ))}
           </div>
         </div>
 
-        <div className="cta-section">
-          <h3 className="cta-headline">{safetyData.ctaSection.headline}</h3>
-          <p className="cta-description">{safetyData.ctaSection.description}</p>
-          <Button 
-            onClick={handleCTAClick}
-            className="cta-button"
-            size="lg"
-          >
+        <div className='cta-section'>
+          <h3 className='cta-headline'>{safetyData.ctaSection.headline}</h3>
+          <p className='cta-description'>{safetyData.ctaSection.description}</p>
+          <Button onClick={handleCTAClick} className='cta-button' size='lg'>
             {safetyData.ctaSection.buttonText}
           </Button>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 // Icon mapping function
@@ -533,10 +551,10 @@ function getIconComponent(iconType: string) {
     assessment: '📋',
     emergency: '🚨',
     progression: '📈',
-    modification: '🎯'
-  };
-  
-  return <span className="safety-icon">{iconMap[iconType] || '✓'}</span>;
+    modification: '🎯',
+  }
+
+  return <span className='safety-icon'>{iconMap[iconType] || '✓'}</span>
 }
 
 // Analytics tracking
@@ -545,13 +563,14 @@ function trackSafetyPanelEvent(action: string, placement: string) {
     gtag('event', 'safety_panel_interaction', {
       event_category: 'trust_elements',
       event_label: action,
-      panel_placement: placement
-    });
+      panel_placement: placement,
+    })
   }
 }
 ```
 
 ### CSS Styling
+
 ```css
 /* styles/components/safety-panel.css */
 .safety-panel {
@@ -659,19 +678,19 @@ function trackSafetyPanelEvent(action: string, placement: string) {
   .safety-panel {
     @apply py-12 px-4;
   }
-  
+
   .panel-title {
     @apply text-2xl;
   }
-  
+
   .message-text {
     @apply text-base;
   }
-  
+
   .safety-standards-grid {
     @apply grid-cols-1 gap-6;
   }
-  
+
   .ratios-grid {
     @apply grid-cols-1 gap-3;
   }
@@ -681,6 +700,7 @@ function trackSafetyPanelEvent(action: string, placement: string) {
 ## 📝 Content Requirements
 
 ### Safety Standards Messaging
+
 - [ ] **Assessment-First Approach:**
   - "Every member begins with a comprehensive movement assessment"
   - "We identify limitations before they become injuries"
@@ -702,6 +722,7 @@ function trackSafetyPanelEvent(action: string, placement: string) {
   - "Direct partnerships with local medical professionals"
 
 ### Professional Messaging Framework
+
 - [ ] **Evidence-Based Claims:**
   - Focus on specific protocols and procedures
   - Reference industry standards and certifications
@@ -715,6 +736,7 @@ function trackSafetyPanelEvent(action: string, placement: string) {
   - Focus on empowerment rather than fear
 
 ### Legal Compliance Requirements
+
 - [ ] **Appropriate Disclaimers:**
   - "Fitness activities involve inherent risks"
   - "Members assume responsibility for following instructions"

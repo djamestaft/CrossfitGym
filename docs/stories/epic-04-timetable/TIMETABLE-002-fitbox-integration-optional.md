@@ -4,17 +4,18 @@
 **Story ID:** TIMETABLE-002  
 **Priority:** Medium (Optional Enhancement)  
 **Effort Estimate:** 4 story points  
-**Sprint Target:** Week 1-2  
+**Sprint Target:** Week 1-2
 
 ## 📋 User Story
 
 **As a** gym operations manager  
 **I want** automatic schedule updates from our Fitbox booking system  
-**So that** the website always shows current class information without manual intervention  
+**So that** the website always shows current class information without manual intervention
 
 ## ✅ Acceptance Criteria
 
 ### API Integration Implementation
+
 - [ ] **Read-Only Fitbox API Connection:**
   - Secure API authentication with proper credential management
   - Rate limiting compliance with Fitbox API requirements
@@ -37,6 +38,7 @@
   - Feature flag for enabling/disabling Fitbox integration
 
 ### Fallback & Error Handling
+
 - [ ] **Graceful Degradation:**
   - Automatic fallback to CMS data when Fitbox unavailable
   - Seamless switching between data sources without user impact
@@ -59,6 +61,7 @@
   - Rollback capability for corrupted data imports
 
 ### Performance & Reliability
+
 - [ ] **Caching Strategy:**
   - Multi-layer caching (memory, Redis, CDN)
   - Intelligent cache invalidation on data updates
@@ -81,6 +84,7 @@
   - Automated incident escalation for critical failures
 
 ### Administrative Controls
+
 - [ ] **Data Source Management:**
   - CMS toggle for switching between Fitbox and manual data
   - Override capabilities for specific classes or time periods
@@ -98,18 +102,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] CMS timetable fallback system (TIMETABLE-001) functional
 - [ ] Fitbox API access credentials and documentation
 - [ ] Infrastructure monitoring and alerting systems
 - [ ] Redis caching layer setup for data storage
 
 **Technical Dependencies:**
+
 - [ ] API rate limiting and security configuration
 - [ ] Background job processing system (cron/queue)
 - [ ] Error tracking and logging infrastructure
 - [ ] Performance monitoring dashboards
 
 **Operational Dependencies:**
+
 - [ ] Fitbox system administrator coordination
 - [ ] Operations team training on data source management
 - [ ] Incident response procedures for API failures
@@ -173,29 +180,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Fitbox API unreliability | High | Medium | Robust fallback to CMS, comprehensive monitoring |
-| Data synchronization errors | Medium | Medium | Validation layer, manual override capability |
-| API rate limiting issues | Medium | Low | Respect limits, implement exponential backoff |
-| Performance degradation | Medium | Low | Caching strategy, background processing |
-| Security vulnerabilities | High | Low | Secure credential management, API security review |
+| Risk                        | Impact | Probability | Mitigation                                        |
+| --------------------------- | ------ | ----------- | ------------------------------------------------- |
+| Fitbox API unreliability    | High   | Medium      | Robust fallback to CMS, comprehensive monitoring  |
+| Data synchronization errors | Medium | Medium      | Validation layer, manual override capability      |
+| API rate limiting issues    | Medium | Low         | Respect limits, implement exponential backoff     |
+| Performance degradation     | Medium | Low         | Caching strategy, background processing           |
+| Security vulnerabilities    | High   | Low         | Secure credential management, API security review |
 
 ## 📈 Success Metrics
 
 **API Performance:**
+
 - **Response Time:** <500ms for 95% of API calls
 - **Success Rate:** >99% successful API interactions
 - **Fallback Activation:** <5% of operating time
 - **Data Freshness:** <15 minutes delay for schedule updates
 
 **System Reliability:**
+
 - **Uptime:** >99.9% timetable availability regardless of Fitbox status
 - **Error Rate:** <0.1% of data sync operations fail
 - **Recovery Time:** <5 minutes from API outage to fallback activation
 - **Data Accuracy:** >99.5% accuracy between Fitbox and display
 
 **Operational Efficiency:**
+
 - **Manual Updates:** >80% reduction in manual schedule updates
 - **Support Tickets:** >50% reduction in schedule-related inquiries
 - **Team Productivity:** <30 minutes weekly for schedule management
@@ -204,76 +214,79 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Fitbox API Service
+
 ```typescript
 // lib/integrations/fitbox-service.ts
 export class FitboxService {
-  private apiKey: string;
-  private baseUrl: string;
-  private rateLimiter: RateLimiter;
-  private circuitBreaker: CircuitBreaker;
+  private apiKey: string
+  private baseUrl: string
+  private rateLimiter: RateLimiter
+  private circuitBreaker: CircuitBreaker
 
   constructor() {
-    this.apiKey = process.env.FITBOX_API_KEY!;
-    this.baseUrl = process.env.FITBOX_API_URL!;
-    this.rateLimiter = new RateLimiter({ requests: 60, window: 60000 }); // 60 req/min
+    this.apiKey = process.env.FITBOX_API_KEY!
+    this.baseUrl = process.env.FITBOX_API_URL!
+    this.rateLimiter = new RateLimiter({ requests: 60, window: 60000 }) // 60 req/min
     this.circuitBreaker = new CircuitBreaker(this.fetchFromFitbox.bind(this), {
       timeout: 10000,
       errorThresholdPercentage: 50,
-      resetTimeout: 30000
-    });
+      resetTimeout: 30000,
+    })
   }
 
   async getScheduleData(): Promise<ScheduleData | null> {
     try {
       // Check if we should use Fitbox or fallback
-      const usesFitbox = await this.isFitboxEnabled();
+      const usesFitbox = await this.isFitboxEnabled()
       if (!usesFitbox) {
-        return this.getCMSFallback();
+        return this.getCMSFallback()
       }
 
       // Attempt to get data from Fitbox with circuit breaker
-      const data = await this.circuitBreaker.fire();
-      
+      const data = await this.circuitBreaker.fire()
+
       // Validate and transform the data
-      const transformedData = this.transformFitboxData(data);
-      const validatedData = this.validateScheduleData(transformedData);
-      
+      const transformedData = this.transformFitboxData(data)
+      const validatedData = this.validateScheduleData(transformedData)
+
       // Cache the successful result
-      await this.cacheScheduleData(validatedData);
-      
-      return validatedData;
+      await this.cacheScheduleData(validatedData)
+
+      return validatedData
     } catch (error) {
-      console.error('Fitbox API error:', error);
-      
+      console.error('Fitbox API error:', error)
+
       // Try to return cached data first
-      const cachedData = await this.getCachedScheduleData();
+      const cachedData = await this.getCachedScheduleData()
       if (cachedData && this.isCacheValid(cachedData)) {
-        return cachedData;
+        return cachedData
       }
-      
+
       // Fallback to CMS data
-      return this.getCMSFallback();
+      return this.getCMSFallback()
     }
   }
 
   private async fetchFromFitbox(): Promise<any> {
-    await this.rateLimiter.acquire();
-    
+    await this.rateLimiter.acquire()
+
     const response = await fetch(`${this.baseUrl}/api/v1/schedule`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'GeelongMovement/1.0'
+        'User-Agent': 'GeelongMovement/1.0',
       },
-      timeout: 10000
-    });
+      timeout: 10000,
+    })
 
     if (!response.ok) {
-      throw new Error(`Fitbox API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Fitbox API error: ${response.status} ${response.statusText}`
+      )
     }
 
-    return response.json();
+    return response.json()
   }
 
   private transformFitboxData(fitboxData: any): ScheduleData {
@@ -288,118 +301,125 @@ export class FitboxService {
         coach: {
           id: cls.instructor.id,
           name: cls.instructor.name,
-          image: cls.instructor.photo_url
+          image: cls.instructor.photo_url,
         },
         capacity: cls.max_capacity,
         currentBookings: cls.current_bookings,
         notes: cls.special_notes,
-        isActive: cls.status === 'active'
-      }))
-    };
+        isActive: cls.status === 'active',
+      })),
+    }
   }
 
   private validateScheduleData(data: ScheduleData): ScheduleData {
     // Validate data integrity
     const validatedSchedule = data.schedule.filter(slot => {
-      return slot.day && 
-             slot.time && 
-             slot.classType && 
-             slot.capacity > 0 && 
-             slot.currentBookings >= 0 &&
-             slot.currentBookings <= slot.capacity;
-    });
+      return (
+        slot.day &&
+        slot.time &&
+        slot.classType &&
+        slot.capacity > 0 &&
+        slot.currentBookings >= 0 &&
+        slot.currentBookings <= slot.capacity
+      )
+    })
 
     // Check for anomalies
     if (validatedSchedule.length < data.schedule.length * 0.8) {
-      throw new Error('Too many invalid schedule items detected');
+      throw new Error('Too many invalid schedule items detected')
     }
 
     return {
       ...data,
-      schedule: validatedSchedule
-    };
+      schedule: validatedSchedule,
+    }
   }
 
   private async isFitboxEnabled(): Promise<boolean> {
     // Check CMS setting for data source preference
-    const settings = await sanityClient.fetch(`*[_type == "timetableSettings"][0]`);
-    return settings?.useFitboxData ?? false;
+    const settings = await sanityClient.fetch(
+      `*[_type == "timetableSettings"][0]`
+    )
+    return settings?.useFitboxData ?? false
   }
 
   private async getCMSFallback(): Promise<ScheduleData> {
-    const cmsData = await sanityClient.fetch(`*[_type == "timetable"][0]`);
+    const cmsData = await sanityClient.fetch(`*[_type == "timetable"][0]`)
     return {
       lastUpdated: cmsData.lastUpdated,
       source: 'cms',
-      schedule: cmsData.weeklySchedule
-    };
+      schedule: cmsData.weeklySchedule,
+    }
   }
 
   private async cacheScheduleData(data: ScheduleData): Promise<void> {
-    const cacheKey = 'timetable:schedule';
-    await redis.setex(cacheKey, 900, JSON.stringify(data)); // 15 min TTL
+    const cacheKey = 'timetable:schedule'
+    await redis.setex(cacheKey, 900, JSON.stringify(data)) // 15 min TTL
   }
 
   private async getCachedScheduleData(): Promise<ScheduleData | null> {
-    const cacheKey = 'timetable:schedule';
-    const cached = await redis.get(cacheKey);
-    return cached ? JSON.parse(cached) : null;
+    const cacheKey = 'timetable:schedule'
+    const cached = await redis.get(cacheKey)
+    return cached ? JSON.parse(cached) : null
   }
 
   private isCacheValid(data: ScheduleData): boolean {
-    const maxAge = 3600000; // 1 hour in milliseconds
-    const dataAge = Date.now() - new Date(data.lastUpdated).getTime();
-    return dataAge < maxAge;
+    const maxAge = 3600000 // 1 hour in milliseconds
+    const dataAge = Date.now() - new Date(data.lastUpdated).getTime()
+    return dataAge < maxAge
   }
 }
 ```
 
 ### Background Sync Job
+
 ```typescript
 // lib/jobs/schedule-sync.ts
 export class ScheduleSyncJob {
-  private fitboxService: FitboxService;
-  private isRunning: boolean = false;
+  private fitboxService: FitboxService
+  private isRunning: boolean = false
 
   constructor() {
-    this.fitboxService = new FitboxService();
+    this.fitboxService = new FitboxService()
   }
 
   async execute(): Promise<void> {
     if (this.isRunning) {
-      console.log('Schedule sync already running, skipping...');
-      return;
+      console.log('Schedule sync already running, skipping...')
+      return
     }
 
-    this.isRunning = true;
-    
+    this.isRunning = true
+
     try {
-      console.log('Starting schedule sync...');
-      
-      const scheduleData = await this.fitboxService.getScheduleData();
-      
+      console.log('Starting schedule sync...')
+
+      const scheduleData = await this.fitboxService.getScheduleData()
+
       if (scheduleData) {
         // Update the cache and trigger ISR revalidation
-        await this.updateCache(scheduleData);
-        await this.triggerRevalidation();
-        
+        await this.updateCache(scheduleData)
+        await this.triggerRevalidation()
+
         // Log success metrics
-        await this.logSyncMetrics('success', scheduleData);
-        
-        console.log(`Schedule sync completed successfully. Source: ${scheduleData.source}`);
+        await this.logSyncMetrics('success', scheduleData)
+
+        console.log(
+          `Schedule sync completed successfully. Source: ${scheduleData.source}`
+        )
       } else {
-        throw new Error('No schedule data received');
+        throw new Error('No schedule data received')
       }
     } catch (error) {
-      console.error('Schedule sync failed:', error);
-      
+      console.error('Schedule sync failed:', error)
+
       // Log failure metrics
-      await this.logSyncMetrics('failure', null, error);
-      
+      await this.logSyncMetrics('failure', null, error)
+
       // Send alert if this is a persistent failure
-      await this.checkAndAlert(error);
+      await this.checkAndAlert(error)
     } finally {
-      this.isRunning = false;
+      this.isRunning = false
     }
   }
 
@@ -407,132 +427,139 @@ export class ScheduleSyncJob {
     // Update multiple cache layers
     await Promise.all([
       redis.setex('timetable:current', 900, JSON.stringify(data)),
-      redis.setex('timetable:backup', 3600, JSON.stringify(data))
-    ]);
+      redis.setex('timetable:backup', 3600, JSON.stringify(data)),
+    ])
   }
 
   private async triggerRevalidation(): Promise<void> {
     // Trigger Next.js ISR revalidation
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/revalidate?path=/timetable&secret=${process.env.REVALIDATE_SECRET}`);
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/revalidate?path=/timetable&secret=${process.env.REVALIDATE_SECRET}`
+      )
     } catch (error) {
-      console.warn('Failed to trigger revalidation:', error);
+      console.warn('Failed to trigger revalidation:', error)
     }
   }
 
-  private async logSyncMetrics(status: 'success' | 'failure', data: ScheduleData | null, error?: Error): Promise<void> {
+  private async logSyncMetrics(
+    status: 'success' | 'failure',
+    data: ScheduleData | null,
+    error?: Error
+  ): Promise<void> {
     const metrics = {
       timestamp: new Date().toISOString(),
       status,
       source: data?.source || 'unknown',
       scheduleCount: data?.schedule.length || 0,
-      error: error?.message
-    };
+      error: error?.message,
+    }
 
     // Log to monitoring system
-    await this.sendToMonitoring(metrics);
+    await this.sendToMonitoring(metrics)
   }
 
   private async checkAndAlert(error: Error): Promise<void> {
     // Check failure frequency
-    const recentFailures = await this.getRecentFailures();
-    
+    const recentFailures = await this.getRecentFailures()
+
     if (recentFailures >= 3) {
       // Send alert to operations team
       await this.sendAlert({
         level: 'critical',
         message: 'Fitbox schedule sync has failed multiple times',
         error: error.message,
-        timestamp: new Date().toISOString()
-      });
+        timestamp: new Date().toISOString(),
+      })
     }
   }
 }
 
 // Cron job setup
 export function setupScheduleSync() {
-  const job = new ScheduleSyncJob();
-  
+  const job = new ScheduleSyncJob()
+
   // Run every 15 minutes
   cron.schedule('*/15 * * * *', () => {
-    job.execute().catch(console.error);
-  });
-  
-  console.log('Schedule sync job scheduled for every 15 minutes');
+    job.execute().catch(console.error)
+  })
+
+  console.log('Schedule sync job scheduled for every 15 minutes')
 }
 ```
 
 ### Data Source Toggle Component
+
 ```tsx
 // components/admin/DataSourceToggle.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export function DataSourceToggle() {
-  const [dataSource, setDataSource] = useState<'cms' | 'fitbox'>('cms');
-  const [isLoading, setIsLoading] = useState(false);
-  const [lastSync, setLastSync] = useState<string>('');
+  const [dataSource, setDataSource] = useState<'cms' | 'fitbox'>('cms')
+  const [isLoading, setIsLoading] = useState(false)
+  const [lastSync, setLastSync] = useState<string>('')
 
   useEffect(() => {
-    fetchCurrentSettings();
-  }, []);
+    fetchCurrentSettings()
+  }, [])
 
   const fetchCurrentSettings = async () => {
     try {
-      const response = await fetch('/api/admin/timetable-settings');
-      const settings = await response.json();
-      setDataSource(settings.dataSource);
-      setLastSync(settings.lastSync);
+      const response = await fetch('/api/admin/timetable-settings')
+      const settings = await response.json()
+      setDataSource(settings.dataSource)
+      setLastSync(settings.lastSync)
     } catch (error) {
-      console.error('Failed to fetch settings:', error);
+      console.error('Failed to fetch settings:', error)
     }
-  };
+  }
 
   const handleToggle = async (newSource: 'cms' | 'fitbox') => {
-    setIsLoading(true);
-    
+    setIsLoading(true)
+
     try {
       const response = await fetch('/api/admin/timetable-settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dataSource: newSource })
-      });
+        body: JSON.stringify({ dataSource: newSource }),
+      })
 
       if (response.ok) {
-        setDataSource(newSource);
-        
+        setDataSource(newSource)
+
         // Trigger immediate sync if switching to Fitbox
         if (newSource === 'fitbox') {
-          await triggerManualSync();
+          await triggerManualSync()
         }
       } else {
-        throw new Error('Failed to update settings');
+        throw new Error('Failed to update settings')
       }
     } catch (error) {
-      console.error('Failed to toggle data source:', error);
-      alert('Failed to update data source. Please try again.');
+      console.error('Failed to toggle data source:', error)
+      alert('Failed to update data source. Please try again.')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const triggerManualSync = async () => {
     try {
-      await fetch('/api/admin/trigger-sync', { method: 'POST' });
-      await fetchCurrentSettings(); // Refresh last sync time
+      await fetch('/api/admin/trigger-sync', { method: 'POST' })
+      await fetchCurrentSettings() // Refresh last sync time
     } catch (error) {
-      console.error('Failed to trigger sync:', error);
+      console.error('Failed to trigger sync:', error)
     }
-  };
+  }
 
   return (
-    <div className="data-source-toggle">
+    <div className='data-source-toggle'>
       <h3>Timetable Data Source</h3>
-      
-      <div className="toggle-options">
+
+      <div className='toggle-options'>
         <label className={`option ${dataSource === 'cms' ? 'active' : ''}`}>
           <input
-            type="radio"
-            value="cms"
+            type='radio'
+            value='cms'
             checked={dataSource === 'cms'}
             onChange={() => handleToggle('cms')}
             disabled={isLoading}
@@ -540,11 +567,11 @@ export function DataSourceToggle() {
           <span>Manual CMS</span>
           <small>Manually managed schedule data</small>
         </label>
-        
+
         <label className={`option ${dataSource === 'fitbox' ? 'active' : ''}`}>
           <input
-            type="radio"
-            value="fitbox"
+            type='radio'
+            value='fitbox'
             checked={dataSource === 'fitbox'}
             onChange={() => handleToggle('fitbox')}
             disabled={isLoading}
@@ -555,12 +582,15 @@ export function DataSourceToggle() {
       </div>
 
       {dataSource === 'fitbox' && (
-        <div className="sync-info">
-          <p>Last sync: {lastSync ? new Date(lastSync).toLocaleString() : 'Never'}</p>
-          <button 
+        <div className='sync-info'>
+          <p>
+            Last sync:{' '}
+            {lastSync ? new Date(lastSync).toLocaleString() : 'Never'}
+          </p>
+          <button
             onClick={triggerManualSync}
             disabled={isLoading}
-            className="sync-button"
+            className='sync-button'
           >
             {isLoading ? 'Syncing...' : 'Sync Now'}
           </button>
@@ -568,18 +598,17 @@ export function DataSourceToggle() {
       )}
 
       {isLoading && (
-        <div className="loading-indicator">
-          Updating data source...
-        </div>
+        <div className='loading-indicator'>Updating data source...</div>
       )}
     </div>
-  );
+  )
 }
 ```
 
 ## 📝 Operational Requirements
 
 ### Fitbox API Configuration
+
 - [ ] **API Credentials:**
   - Secure storage of API keys and endpoints
   - Environment-specific configuration management
@@ -593,6 +622,7 @@ export function DataSourceToggle() {
   - Cache aggressively to reduce API calls
 
 ### Monitoring & Alerting Setup
+
 - [ ] **API Health Monitoring:**
   - Response time and success rate tracking
   - Circuit breaker status and failure patterns
@@ -606,6 +636,7 @@ export function DataSourceToggle() {
   - Performance degradation notifications
 
 ### Documentation & Training
+
 - [ ] **Technical Documentation:**
   - API integration architecture and data flow
   - Troubleshooting guide for common issues

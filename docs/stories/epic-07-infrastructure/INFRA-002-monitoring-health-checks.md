@@ -4,17 +4,18 @@
 **Story ID:** INFRA-002  
 **Priority:** Critical Foundation  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 0-1  
+**Sprint Target:** Week 0-1
 
 ## 📋 User Story
 
 **As an** Operations Team  
 **I need** comprehensive monitoring and alerting  
-**So that** I can detect and respond to issues before they impact users  
+**So that** I can detect and respond to issues before they impact users
 
 ## ✅ Acceptance Criteria
 
 ### Uptime Monitoring
+
 - [ ] **Critical Path Monitoring:**
   - Homepage (/) response time and availability
   - FMS form page (/fms) functionality and submissions
@@ -30,6 +31,7 @@
   - SSL certificate validity and expiry tracking
 
 ### Error Tracking & Alerting
+
 - [ ] **Application Error Monitoring:**
   - JavaScript runtime errors with stack traces
   - 404/500 HTTP error rate monitoring with thresholds
@@ -45,6 +47,7 @@
   - SMS on-call for production emergencies
 
 ### Performance Monitoring
+
 - [ ] **Core Web Vitals Tracking:**
   - Largest Contentful Paint (LCP) <2.5s target
   - Cumulative Layout Shift (CLS) <0.1 target
@@ -60,6 +63,7 @@
   - Cache hit/miss ratios for optimization
 
 ### Security Monitoring
+
 - [ ] **Security Event Detection:**
   - Suspicious traffic pattern analysis
   - Failed authentication attempt monitoring
@@ -75,6 +79,7 @@
   - Access log analysis for suspicious activity
 
 ### Business Metrics Monitoring
+
 - [ ] **Conversion Funnel Tracking:**
   - FMS form start vs completion rates
   - Form abandonment point identification
@@ -85,12 +90,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Vercel project and hosting infrastructure (INFRA-001)
 - [ ] Google Analytics 4 setup for business metrics
 - [ ] Monitoring service selection and configuration
 - [ ] Alert channels setup (Slack, email, SMS)
 
 **Downstream Dependencies:**
+
 - [ ] All feature epics depend on monitoring visibility
 - [ ] Performance optimization requires baseline metrics
 - [ ] Business KPI tracking depends on monitoring data
@@ -143,12 +150,12 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Monitoring service outage | High | Low | Multi-provider setup, redundant monitoring |
-| False positive alerts | Medium | Medium | Proper threshold tuning, alert fatigue prevention |
-| Missed critical events | High | Low | Comprehensive coverage, redundant checks |
-| Alert escalation failure | High | Low | Multiple notification channels, backup procedures |
+| Risk                      | Impact | Probability | Mitigation                                        |
+| ------------------------- | ------ | ----------- | ------------------------------------------------- |
+| Monitoring service outage | High   | Low         | Multi-provider setup, redundant monitoring        |
+| False positive alerts     | Medium | Medium      | Proper threshold tuning, alert fatigue prevention |
+| Missed critical events    | High   | Low         | Comprehensive coverage, redundant checks          |
+| Alert escalation failure  | High   | Low         | Multiple notification channels, backup procedures |
 
 ## 📈 Success Metrics
 
@@ -161,6 +168,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Monitoring Stack Configuration
+
 ```javascript
 // Recommended monitoring services
 const monitoringStack = {
@@ -168,34 +176,36 @@ const monitoringStack = {
   performance: 'Vercel Analytics + Lighthouse CI',
   errors: 'Sentry or LogRocket',
   business: 'Google Analytics 4',
-  infrastructure: 'Vercel Function Logs'
-};
+  infrastructure: 'Vercel Function Logs',
+}
 ```
 
 ### Alert Configuration
+
 ```yaml
 # monitoring/alerts.yml
 alerts:
   critical:
-    - name: "Site Down"
-      condition: "uptime < 99%"
-      channels: ["slack-critical", "email-oncall", "sms-oncall"]
-      
-    - name: "FMS Form Failures"
-      condition: "form_success_rate < 90%"
-      channels: ["slack-critical", "email-product"]
-      
+    - name: 'Site Down'
+      condition: 'uptime < 99%'
+      channels: ['slack-critical', 'email-oncall', 'sms-oncall']
+
+    - name: 'FMS Form Failures'
+      condition: 'form_success_rate < 90%'
+      channels: ['slack-critical', 'email-product']
+
   warning:
-    - name: "Performance Degradation"
-      condition: "response_time > 3s"
-      channels: ["slack-dev"]
-      
-    - name: "Error Rate Spike"
-      condition: "error_rate > 5%"
-      channels: ["slack-dev", "email-dev"]
+    - name: 'Performance Degradation'
+      condition: 'response_time > 3s'
+      channels: ['slack-dev']
+
+    - name: 'Error Rate Spike'
+      condition: 'error_rate > 5%'
+      channels: ['slack-dev', 'email-dev']
 ```
 
 ### Health Check Endpoints
+
 ```javascript
 // api/health/route.ts
 export async function GET() {
@@ -203,22 +213,26 @@ export async function GET() {
     checkDatabase(),
     checkSanityCMS(),
     checkFitboxAPI(),
-    checkEmailService()
-  ]);
-  
-  const allHealthy = checks.every(check => check.status === 'healthy');
-  
-  return Response.json({
-    status: allHealthy ? 'healthy' : 'degraded',
-    timestamp: new Date().toISOString(),
-    checks: checks
-  }, { 
-    status: allHealthy ? 200 : 503 
-  });
+    checkEmailService(),
+  ])
+
+  const allHealthy = checks.every(check => check.status === 'healthy')
+
+  return Response.json(
+    {
+      status: allHealthy ? 'healthy' : 'degraded',
+      timestamp: new Date().toISOString(),
+      checks: checks,
+    },
+    {
+      status: allHealthy ? 200 : 503,
+    }
+  )
 }
 ```
 
 ### Uptime Check Configuration
+
 ```javascript
 // monitoring/uptime-checks.js
 const uptimeChecks = [
@@ -228,7 +242,7 @@ const uptimeChecks = [
     interval: '5min',
     timeout: '10s',
     expectedStatus: 200,
-    expectedContent: 'FMS Assessment'
+    expectedContent: 'FMS Assessment',
   },
   {
     name: 'FMS Form',
@@ -236,21 +250,22 @@ const uptimeChecks = [
     interval: '5min',
     timeout: '10s',
     expectedStatus: 200,
-    expectedContent: 'Contact Details'
+    expectedContent: 'Contact Details',
   },
   {
     name: 'Portal Authentication',
     url: 'https://geelongmovement.com/portal',
     interval: '10min',
     timeout: '15s',
-    expectedStatus: 200
-  }
-];
+    expectedStatus: 200,
+  },
+]
 ```
 
 ## 📝 Operational Procedures
 
 ### Incident Response Workflow
+
 1. **Detection:** Automated alert or manual report received
 2. **Assessment:** Determine severity (Critical/High/Medium/Low)
 3. **Response:** Immediate mitigation steps initiated
@@ -259,12 +274,14 @@ const uptimeChecks = [
 6. **Follow-up:** Post-incident review and improvement plan
 
 ### Monitoring Dashboard Setup
+
 - **Production Dashboard:** Real-time metrics, current status
 - **Performance Dashboard:** Core Web Vitals, response times
 - **Business Dashboard:** Conversion rates, user journeys
 - **Security Dashboard:** Failed logins, suspicious activity
 
 ### Weekly Monitoring Review
+
 - [ ] Review alert trends and false positive rates
 - [ ] Analyze performance trend data
 - [ ] Update monitoring thresholds based on baseline shifts

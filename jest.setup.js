@@ -78,11 +78,11 @@ global.Response = class Response {
     this.statusText = init?.statusText || 'OK'
     this.headers = new Headers(init?.headers)
   }
-  
+
   json() {
     return Promise.resolve(JSON.parse(this.body))
   }
-  
+
   text() {
     return Promise.resolve(this.body)
   }
@@ -97,15 +97,15 @@ global.Headers = class Headers {
       }
     }
   }
-  
+
   set(name, value) {
     this.headers.set(name.toLowerCase(), value)
   }
-  
+
   get(name) {
     return this.headers.get(name.toLowerCase())
   }
-  
+
   has(name) {
     return this.headers.has(name.toLowerCase())
   }

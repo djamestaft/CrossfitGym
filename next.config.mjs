@@ -54,13 +54,16 @@ const nextConfig = {
     // Optimize bundle splitting
     if (!isServer) {
       // Ensure splitChunks is an object
-      if (!config.optimization.splitChunks || typeof config.optimization.splitChunks !== 'object') {
+      if (
+        !config.optimization.splitChunks ||
+        typeof config.optimization.splitChunks !== 'object'
+      ) {
         config.optimization.splitChunks = {
           chunks: 'all',
-          cacheGroups: {}
+          cacheGroups: {},
         }
       }
-      
+
       config.optimization.splitChunks.cacheGroups = {
         ...config.optimization.splitChunks.cacheGroups,
         vendor: {

@@ -5,9 +5,9 @@ name: Production CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 # Set permissions for GITHUB_TOKEN
 permissions:
@@ -20,7 +20,7 @@ jobs:
   quality-gates:
     runs-on: ubuntu-latest
     name: Quality Gates
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Security & Performance
     needs: quality-gates
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -113,7 +113,7 @@ jobs:
     needs: [quality-gates, security-performance]
     if: github.ref == 'refs/heads/main'
     environment: production
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -149,7 +149,7 @@ jobs:
     name: Deploy Preview
     needs: [quality-gates, security-performance]
     if: github.event_name == 'pull_request'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -187,19 +187,19 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            
+
             const botComment = comments.find(comment => 
               comment.user.type === 'Bot' && comment.body.includes('🚀 Preview Deployment')
             );
-            
+
             const body = `🚀 **Preview Deployment Ready!**
-            
+
             ✅ Your changes have been deployed to: ${{ steps.vercel-preview.outputs.preview-url }}
-            
+
             🔗 [View Preview](${{ steps.vercel-preview.outputs.preview-url }})
-            
+
             This preview will be updated automatically with new commits.`;
-            
+
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
@@ -222,7 +222,7 @@ jobs:
     name: Health Check
     needs: deploy-production
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
       - name: Wait for deployment
         run: sleep 30
@@ -232,7 +232,7 @@ jobs:
           echo "🏥 Running health check..."
           # Replace with your actual domain
           HEALTH_URL="https://geelongmovement.com/api/health"
-          
+
           # Try to get health status
           if curl -f -s "$HEALTH_URL" > /dev/null; then
             echo "✅ Health check passed"

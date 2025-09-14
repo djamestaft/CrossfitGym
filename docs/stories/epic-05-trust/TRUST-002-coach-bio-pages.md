@@ -4,17 +4,18 @@
 **Story ID:** TRUST-002  
 **Priority:** High  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 2-3
 
 ## 📋 User Story
 
 **As a** potential member concerned about coaching quality and safety  
 **I want** to learn about the coaches' qualifications, experience, and approach  
-**So that** I trust their expertise to guide my fitness journey safely and effectively  
+**So that** I trust their expertise to guide my fitness journey safely and effectively
 
 ## ✅ Acceptance Criteria
 
 ### Content Structure & Management
+
 - [ ] **Individual Coach Bio Pages:**
   - Dedicated page for each active coach with unique URL
   - Professional headshot and action/training photos
@@ -40,6 +41,7 @@
   - Years coaching and client success metrics
 
 ### Professional Photography
+
 - [ ] **Photo Requirements:**
   - High-quality professional headshots (studio or gym setting)
   - Action shots demonstrating coaching or exercise execution
@@ -57,6 +59,7 @@
   - Consistent brand colors and gym environment
 
 ### Page Layout & Design
+
 - [ ] **Desktop Layout:**
   - Hero section with large headshot and key credentials
   - Two-column layout with photo and qualification details
@@ -82,6 +85,7 @@
   - Semantic HTML structure
 
 ### SEO & Technical Implementation
+
 - [ ] **Search Optimization:**
   - Individual meta titles and descriptions
   - Schema markup for Person and professional credentials
@@ -99,6 +103,7 @@
   - Efficient caching strategies
 
 ### Integration Points
+
 - [ ] **Cross-Site Linking:**
   - Coach cards on team/about page linking to full bios
   - References from program pages to relevant coaches
@@ -110,12 +115,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Sanity CMS setup and configuration (CONTENT-001)
 - [ ] Professional photography session coordination
 - [ ] Coach information collection and verification
 - [ ] Design system components and page templates
 
 **Content Creation Dependencies:**
+
 - [ ] Coach interviews and content gathering sessions
 - [ ] Credential verification and documentation
 - [ ] Professional photography shoot planning
@@ -123,6 +130,7 @@
 - [ ] Legal review of qualification claims
 
 **Technical Dependencies:**
+
 - [ ] Image optimization and CDN configuration
 - [ ] SEO schema markup implementation
 - [ ] Page routing and URL structure setup
@@ -186,29 +194,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Coach departure affecting content | Medium | Medium | Regular content audits, inactive status controls |
-| Qualification verification issues | High | Low | Thorough verification process, conservative claims |
-| Photo quality inconsistencies | Medium | Low | Professional photography guidelines, batch shoots |
-| SEO competition for coach names | Low | Medium | Local SEO focus, specific qualification targeting |
-| Content maintenance burden | Medium | Medium | CMS workflow optimization, batch update processes |
+| Risk                              | Impact | Probability | Mitigation                                         |
+| --------------------------------- | ------ | ----------- | -------------------------------------------------- |
+| Coach departure affecting content | Medium | Medium      | Regular content audits, inactive status controls   |
+| Qualification verification issues | High   | Low         | Thorough verification process, conservative claims |
+| Photo quality inconsistencies     | Medium | Low         | Professional photography guidelines, batch shoots  |
+| SEO competition for coach names   | Low    | Medium      | Local SEO focus, specific qualification targeting  |
+| Content maintenance burden        | Medium | Medium      | CMS workflow optimization, batch update processes  |
 
 ## 📈 Success Metrics
 
 **Trust Building Metrics:**
+
 - **Page Engagement:** >2 minutes average time on coach bio pages
 - **Cross-Page Navigation:** >40% users view multiple coach bios
 - **Conversion Impact:** +15% contact form submissions mentioning specific coaches
 - **Trust Indicators:** Coach qualification mentions in user feedback
 
 **Technical Performance:**
+
 - **Page Load Speed:** <2 seconds for all coach bio pages
 - **Image Optimization:** >60% file size reduction from original photos
 - **SEO Performance:** Ranking in top 10 for "CrossFit coaches Geelong"
 - **Accessibility Score:** 100% WCAG AA compliance
 
 **Business Impact:**
+
 - **Coach Credibility:** Improved mention of qualifications in member feedback
 - **Service Differentiation:** Coaching quality cited as decision factor
 - **Local Authority:** Increased local search visibility for expertise
@@ -217,6 +228,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Sanity CMS Schema
+
 ```typescript
 // sanity/schemas/coach-bio.ts
 export const coachBioSchema = {
@@ -228,20 +240,20 @@ export const coachBioSchema = {
       name: 'name',
       title: 'Full Name',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'slug',
       title: 'URL Slug',
       type: 'slug',
       options: { source: 'name', maxLength: 50 },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'jobTitle',
       title: 'Job Title',
       type: 'string',
-      description: 'e.g., "Head Coach", "Lead Trainer", "Owner & Coach"'
+      description: 'e.g., "Head Coach", "Lead Trainer", "Owner & Coach"',
     },
     {
       name: 'headshot',
@@ -253,10 +265,10 @@ export const coachBioSchema = {
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
-          validation: Rule => Rule.required()
-        }
+          validation: Rule => Rule.required(),
+        },
       ],
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'actionShot',
@@ -268,96 +280,100 @@ export const coachBioSchema = {
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
-          validation: Rule => Rule.required()
-        }
-      ]
+          validation: Rule => Rule.required(),
+        },
+      ],
     },
     {
       name: 'yearsExperience',
       title: 'Years of Coaching Experience',
       type: 'number',
-      validation: Rule => Rule.required().min(0).max(50)
+      validation: Rule => Rule.required().min(0).max(50),
     },
     {
       name: 'certifications',
       title: 'Certifications',
       type: 'array',
-      of: [{
-        type: 'object',
-        name: 'certification',
-        fields: [
-          {
-            name: 'name',
-            title: 'Certification Name',
-            type: 'string'
+      of: [
+        {
+          type: 'object',
+          name: 'certification',
+          fields: [
+            {
+              name: 'name',
+              title: 'Certification Name',
+              type: 'string',
+            },
+            {
+              name: 'organization',
+              title: 'Certifying Organization',
+              type: 'string',
+            },
+            {
+              name: 'level',
+              title: 'Level/Type',
+              type: 'string',
+            },
+            {
+              name: 'yearObtained',
+              title: 'Year Obtained',
+              type: 'number',
+            },
+            {
+              name: 'verified',
+              title: 'Verification Status',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'organization',
+              verified: 'verified',
+            },
+            prepare({ title, subtitle, verified }) {
+              return {
+                title: `${title} ${verified ? '✓' : '⚠️'}`,
+                subtitle,
+              }
+            },
           },
-          {
-            name: 'organization',
-            title: 'Certifying Organization',
-            type: 'string'
-          },
-          {
-            name: 'level',
-            title: 'Level/Type',
-            type: 'string'
-          },
-          {
-            name: 'yearObtained',
-            title: 'Year Obtained',
-            type: 'number'
-          },
-          {
-            name: 'verified',
-            title: 'Verification Status',
-            type: 'boolean',
-            initialValue: false
-          }
-        ],
-        preview: {
-          select: {
-            title: 'name',
-            subtitle: 'organization',
-            verified: 'verified'
-          },
-          prepare({ title, subtitle, verified }) {
-            return {
-              title: `${title} ${verified ? '✓' : '⚠️'}`,
-              subtitle
-            };
-          }
-        }
-      }]
+        },
+      ],
     },
     {
       name: 'education',
       title: 'Educational Background',
       type: 'array',
-      of: [{
-        type: 'object',
-        name: 'education',
-        fields: [
-          {
-            name: 'degree',
-            title: 'Degree/Qualification',
-            type: 'string'
-          },
-          {
-            name: 'institution',
-            title: 'Institution',
-            type: 'string'
-          },
-          {
-            name: 'year',
-            title: 'Year Completed',
-            type: 'number'
-          },
-          {
-            name: 'field',
-            title: 'Field of Study',
-            type: 'string'
-          }
-        ]
-      }]
+      of: [
+        {
+          type: 'object',
+          name: 'education',
+          fields: [
+            {
+              name: 'degree',
+              title: 'Degree/Qualification',
+              type: 'string',
+            },
+            {
+              name: 'institution',
+              title: 'Institution',
+              type: 'string',
+            },
+            {
+              name: 'year',
+              title: 'Year Completed',
+              type: 'number',
+            },
+            {
+              name: 'field',
+              title: 'Field of Study',
+              type: 'string',
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'specialties',
@@ -375,58 +391,59 @@ export const coachBioSchema = {
           { title: 'Nutrition Coaching', value: 'nutrition' },
           { title: 'Youth Training', value: 'youth' },
           { title: 'Masters Athletes (50+)', value: 'masters' },
-          { title: 'Beginner Development', value: 'beginners' }
-        ]
-      }
+          { title: 'Beginner Development', value: 'beginners' },
+        ],
+      },
     },
     {
       name: 'personalStory',
       title: 'Personal Fitness Journey',
       type: 'text',
       rows: 4,
-      description: 'How the coach got into fitness/CrossFit'
+      description: 'How the coach got into fitness/CrossFit',
     },
     {
       name: 'coachingPhilosophy',
       title: 'Coaching Philosophy',
       type: 'text',
       rows: 4,
-      description: 'Approach to coaching and member development'
+      description: 'Approach to coaching and member development',
     },
     {
       name: 'biography',
       title: 'Detailed Biography',
       type: 'array',
       of: [
-        { 
+        {
           type: 'block',
           styles: [
             { title: 'Normal', value: 'normal' },
             { title: 'H3', value: 'h3' },
-            { title: 'H4', value: 'h4' }
-          ]
-        }
-      ]
+            { title: 'H4', value: 'h4' },
+          ],
+        },
+      ],
     },
     {
       name: 'athleticBackground',
       title: 'Athletic Background',
       type: 'text',
       rows: 3,
-      description: 'Sports history, competitive experience, personal achievements'
+      description:
+        'Sports history, competitive experience, personal achievements',
     },
     {
       name: 'continuingEducation',
       title: 'Continuing Education',
       type: 'array',
       of: [{ type: 'string' }],
-      description: 'Recent courses, workshops, additional training'
+      description: 'Recent courses, workshops, additional training',
     },
     {
       name: 'isActive',
       title: 'Currently Active Coach',
       type: 'boolean',
-      initialValue: true
+      initialValue: true,
     },
     {
       name: 'socialMedia',
@@ -436,245 +453,258 @@ export const coachBioSchema = {
         {
           name: 'instagram',
           title: 'Instagram Handle',
-          type: 'string'
+          type: 'string',
         },
         {
           name: 'linkedin',
           title: 'LinkedIn Profile',
-          type: 'url'
-        }
-      ]
+          type: 'url',
+        },
+      ],
     },
     {
       name: 'seoTitle',
       title: 'SEO Title',
       type: 'string',
-      validation: Rule => Rule.max(60)
+      validation: Rule => Rule.max(60),
     },
     {
       name: 'metaDescription',
       title: 'Meta Description',
       type: 'text',
       rows: 2,
-      validation: Rule => Rule.max(160)
-    }
+      validation: Rule => Rule.max(160),
+    },
   ],
   preview: {
     select: {
       title: 'name',
       subtitle: 'jobTitle',
       media: 'headshot',
-      active: 'isActive'
+      active: 'isActive',
     },
     prepare({ title, subtitle, media, active }) {
       return {
         title: `${title} ${active ? '✅' : '❌'}`,
         subtitle,
-        media
-      };
-    }
-  }
-};
+        media,
+      }
+    },
+  },
+}
 ```
 
 ### Coach Bio Page Component
+
 ```tsx
 // app/coaches/[slug]/page.tsx
-import { getCoachBySlug, getAllCoaches } from '@/lib/sanity/queries';
-import { CoachBioHero } from '@/components/coaches/CoachBioHero';
-import { CoachCredentials } from '@/components/coaches/CoachCredentials';
-import { CoachStory } from '@/components/coaches/CoachStory';
-import { CoachSpecialties } from '@/components/coaches/CoachSpecialties';
-import { RelatedContent } from '@/components/coaches/RelatedContent';
+import { getCoachBySlug, getAllCoaches } from '@/lib/sanity/queries'
+import { CoachBioHero } from '@/components/coaches/CoachBioHero'
+import { CoachCredentials } from '@/components/coaches/CoachCredentials'
+import { CoachStory } from '@/components/coaches/CoachStory'
+import { CoachSpecialties } from '@/components/coaches/CoachSpecialties'
+import { RelatedContent } from '@/components/coaches/RelatedContent'
 
 interface CoachPageProps {
-  params: { slug: string };
+  params: { slug: string }
 }
 
 export async function generateStaticParams() {
-  const coaches = await getAllCoaches();
+  const coaches = await getAllCoaches()
   return coaches.map(coach => ({
-    slug: coach.slug.current
-  }));
+    slug: coach.slug.current,
+  }))
 }
 
 export async function generateMetadata({ params }: CoachPageProps) {
-  const coach = await getCoachBySlug(params.slug);
-  
+  const coach = await getCoachBySlug(params.slug)
+
   if (!coach) {
     return {
       title: 'Coach Not Found',
-      description: 'The requested coach profile could not be found.'
-    };
+      description: 'The requested coach profile could not be found.',
+    }
   }
 
   return {
-    title: coach.seoTitle || `${coach.name} - ${coach.jobTitle} | Geelong Movement Co`,
-    description: coach.metaDescription || `Meet ${coach.name}, ${coach.jobTitle} at Geelong Movement Co. ${coach.yearsExperience} years experience in CrossFit coaching.`,
+    title:
+      coach.seoTitle ||
+      `${coach.name} - ${coach.jobTitle} | Geelong Movement Co`,
+    description:
+      coach.metaDescription ||
+      `Meet ${coach.name}, ${coach.jobTitle} at Geelong Movement Co. ${coach.yearsExperience} years experience in CrossFit coaching.`,
     openGraph: {
       title: `${coach.name} - ${coach.jobTitle}`,
       description: coach.metaDescription,
       images: coach.headshot ? [coach.headshot.url] : [],
-      type: 'profile'
-    }
-  };
+      type: 'profile',
+    },
+  }
 }
 
 export default async function CoachPage({ params }: CoachPageProps) {
-  const coach = await getCoachBySlug(params.slug);
+  const coach = await getCoachBySlug(params.slug)
 
   if (!coach || !coach.isActive) {
     return (
-      <div className="coach-not-found">
+      <div className='coach-not-found'>
         <h1>Coach Not Found</h1>
         <p>The requested coach profile is not available.</p>
       </div>
-    );
+    )
   }
 
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": coach.name,
-    "jobTitle": coach.jobTitle,
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Geelong Movement Co"
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: coach.name,
+    jobTitle: coach.jobTitle,
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Geelong Movement Co',
     },
-    "image": coach.headshot?.url,
-    "description": coach.metaDescription,
-    "url": `https://geelongmovement.com/coaches/${params.slug}`,
-    "knowsAbout": coach.specialties || [],
-    "hasCredential": coach.certifications?.map(cert => ({
-      "@type": "EducationalOccupationalCredential",
-      "name": cert.name,
-      "credentialCategory": "certification",
-      "educationalLevel": cert.level,
-      "recognizedBy": {
-        "@type": "Organization",
-        "name": cert.organization
-      }
-    })) || []
-  };
+    image: coach.headshot?.url,
+    description: coach.metaDescription,
+    url: `https://geelongmovement.com/coaches/${params.slug}`,
+    knowsAbout: coach.specialties || [],
+    hasCredential:
+      coach.certifications?.map(cert => ({
+        '@type': 'EducationalOccupationalCredential',
+        name: cert.name,
+        credentialCategory: 'certification',
+        educationalLevel: cert.level,
+        recognizedBy: {
+          '@type': 'Organization',
+          name: cert.organization,
+        },
+      })) || [],
+  }
 
   return (
     <>
       <script
-        type="application/ld+json"
+        type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
-      <article className="coach-bio-page">
+
+      <article className='coach-bio-page'>
         <CoachBioHero coach={coach} />
-        
-        <div className="coach-content">
-          <div className="coach-main">
-            <CoachCredentials 
+
+        <div className='coach-content'>
+          <div className='coach-main'>
+            <CoachCredentials
               certifications={coach.certifications}
               education={coach.education}
               yearsExperience={coach.yearsExperience}
             />
-            
+
             <CoachSpecialties specialties={coach.specialties} />
-            
-            <CoachStory 
+
+            <CoachStory
               personalStory={coach.personalStory}
               athleticBackground={coach.athleticBackground}
               coachingPhilosophy={coach.coachingPhilosophy}
             />
           </div>
-          
-          <aside className="coach-sidebar">
+
+          <aside className='coach-sidebar'>
             <RelatedContent coachSlug={params.slug} />
           </aside>
         </div>
       </article>
     </>
-  );
+  )
 }
 ```
 
 ### Coach Bio Hero Component
+
 ```tsx
 // components/coaches/CoachBioHero.tsx
-import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
+import Image from 'next/image'
+import { Badge } from '@/components/ui/badge'
 
 interface CoachBioHeroProps {
   coach: {
-    name: string;
-    jobTitle: string;
+    name: string
+    jobTitle: string
     headshot: {
-      url: string;
-      alt: string;
-    };
+      url: string
+      alt: string
+    }
     actionShot?: {
-      url: string;
-      alt: string;
-    };
-    yearsExperience: number;
-    specialties: string[];
+      url: string
+      alt: string
+    }
+    yearsExperience: number
+    specialties: string[]
     certifications: Array<{
-      name: string;
-      organization: string;
-      level?: string;
-    }>;
-  };
+      name: string
+      organization: string
+      level?: string
+    }>
+  }
 }
 
 export function CoachBioHero({ coach }: CoachBioHeroProps) {
   const primaryCertifications = coach.certifications
-    .filter(cert => cert.organization === 'CrossFit' || cert.name.includes('Level'))
-    .slice(0, 3);
+    .filter(
+      cert => cert.organization === 'CrossFit' || cert.name.includes('Level')
+    )
+    .slice(0, 3)
 
   return (
-    <section className="coach-bio-hero">
-      <div className="hero-content">
-        <div className="coach-photos">
-          <div className="headshot-container">
+    <section className='coach-bio-hero'>
+      <div className='hero-content'>
+        <div className='coach-photos'>
+          <div className='headshot-container'>
             <Image
               src={coach.headshot.url}
               alt={coach.headshot.alt}
               width={300}
               height={300}
-              className="coach-headshot"
+              className='coach-headshot'
               priority
             />
           </div>
-          
+
           {coach.actionShot && (
-            <div className="action-shot-container">
+            <div className='action-shot-container'>
               <Image
                 src={coach.actionShot.url}
                 alt={coach.actionShot.alt}
                 width={400}
                 height={300}
-                className="coach-action-shot"
+                className='coach-action-shot'
               />
             </div>
           )}
         </div>
 
-        <div className="coach-info">
-          <h1 className="coach-name">{coach.name}</h1>
-          <h2 className="coach-title">{coach.jobTitle}</h2>
-          
-          <div className="experience-highlight">
-            <span className="experience-number">{coach.yearsExperience}</span>
-            <span className="experience-label">Years Experience</span>
+        <div className='coach-info'>
+          <h1 className='coach-name'>{coach.name}</h1>
+          <h2 className='coach-title'>{coach.jobTitle}</h2>
+
+          <div className='experience-highlight'>
+            <span className='experience-number'>{coach.yearsExperience}</span>
+            <span className='experience-label'>Years Experience</span>
           </div>
 
-          <div className="primary-credentials">
+          <div className='primary-credentials'>
             {primaryCertifications.map((cert, index) => (
-              <Badge key={index} variant="secondary" className="credential-badge">
+              <Badge
+                key={index}
+                variant='secondary'
+                className='credential-badge'
+              >
                 {cert.name}
               </Badge>
             ))}
           </div>
 
-          <div className="specialties-preview">
+          <div className='specialties-preview'>
             <h3>Specializes in:</h3>
-            <ul className="specialties-list">
+            <ul className='specialties-list'>
               {coach.specialties.slice(0, 3).map((specialty, index) => (
                 <li key={index}>{specialty}</li>
               ))}
@@ -686,11 +716,12 @@ export function CoachBioHero({ coach }: CoachBioHeroProps) {
         </div>
       </div>
     </section>
-  );
+  )
 }
 ```
 
 ### Analytics Tracking
+
 ```typescript
 // lib/analytics/coach-bio-events.ts
 export const trackCoachBioEvents = {
@@ -698,47 +729,50 @@ export const trackCoachBioEvents = {
     gtag('event', 'coach_bio_view', {
       event_category: 'trust_elements',
       event_label: coachName,
-      coach_slug: coachSlug
-    });
+      coach_slug: coachSlug,
+    })
   },
 
   credentialExpansion: (coachName: string, credentialType: string) => {
     gtag('event', 'coach_credential_view', {
       event_category: 'trust_elements',
       event_label: `${coachName}_${credentialType}`,
-      coach_name: coachName
-    });
+      coach_name: coachName,
+    })
   },
 
   contactClick: (coachName: string, contactType: string) => {
     gtag('event', 'coach_contact_click', {
       event_category: 'conversion',
       event_label: contactType,
-      coach_name: coachName
-    });
+      coach_name: coachName,
+    })
   },
 
   photoInteraction: (coachName: string, photoType: string) => {
     gtag('event', 'coach_photo_interaction', {
       event_category: 'trust_elements',
-      event_label: `${coachName}_${photoType}`
-    });
-  }
-};
+      event_label: `${coachName}_${photoType}`,
+    })
+  },
+}
 ```
 
 ## 📝 Content Requirements
 
 ### Coach Information Collection Template
+
 For each coach, collect the following information:
 
 **Basic Information:**
+
 - [ ] Full name and preferred title
 - [ ] Current job title/role
 - [ ] Years of coaching experience
 - [ ] Contact preferences (if applicable)
 
 **Professional Qualifications:**
+
 - [ ] CrossFit certifications (L1, L2, specialty)
 - [ ] Educational degrees and institutions
 - [ ] Other fitness certifications (FMS, PN, etc.)
@@ -746,12 +780,14 @@ For each coach, collect the following information:
 - [ ] Verification documentation
 
 **Personal Story:**
+
 - [ ] How they got into fitness/CrossFit
 - [ ] Athletic background and achievements
 - [ ] What drives their passion for coaching
 - [ ] Personal fitness journey and challenges overcome
 
 **Coaching Approach:**
+
 - [ ] Training philosophy and methodology
 - [ ] Specialties and areas of expertise
 - [ ] Approach to working with beginners
@@ -759,6 +795,7 @@ For each coach, collect the following information:
 - [ ] Member development strategies
 
 ### Photography Specifications
+
 - [ ] **Headshot Requirements:**
   - Professional lighting (studio or well-lit gym)
   - Neutral or gym-branded background

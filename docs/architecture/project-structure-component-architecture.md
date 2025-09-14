@@ -1,6 +1,7 @@
 # 📁 Project Structure & Component Architecture
 
 ### Directory Architecture
+
 ```
 app/
 ├── (routes)/
@@ -47,6 +48,7 @@ app/
 ### Component Hierarchy & Reusability
 
 #### Atomic Design Pattern
+
 ```
 Atoms (Base UI)
 ├── Button, Input, Label, Badge
@@ -82,4 +84,3 @@ Pages (Route Components)
 ```
 
 ---
-

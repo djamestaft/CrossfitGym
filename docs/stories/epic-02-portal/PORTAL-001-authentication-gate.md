@@ -5,17 +5,18 @@
 **Priority:** High  
 **Effort Estimate:** 3 story points  
 **Sprint Target:** Week 2-3  
-**Current Status:** 60% Complete - Portal UI implemented, authentication mock in place  
+**Current Status:** 60% Complete - Portal UI implemented, authentication mock in place
 
 ## 📋 User Story
 
 **As a** current gym member  
 **I want** simple and secure access to member-only content  
-**So that** I can view programming and resources without hassle while ensuring only members have access  
+**So that** I can view programming and resources without hassle while ensuring only members have access
 
 ## ✅ Acceptance Criteria
 
 ### Authentication Flow
+
 - [x] **Portal UI Structure (COMPLETED):**
   - Portal page layout implemented ✅
   - Member content sections created ✅
@@ -45,6 +46,7 @@
   - Multiple device login support
 
 ### Security Implementation
+
 - [ ] **Access Control:**
   - Zero unauthorized access to portal routes
   - Server-side session validation on all protected pages
@@ -60,6 +62,7 @@
   - Audit logging for authentication events
 
 ### User Experience
+
 - [ ] **Mobile-First Design:**
   - Touch-optimized login form on mobile devices
   - Responsive design across all screen sizes
@@ -75,6 +78,7 @@
   - Network error recovery with retry options
 
 ### Analytics & Monitoring
+
 - [ ] **Event Tracking:**
   - `portal_access_attempt` event for login requests
   - `portal_login_success` event for successful authentication
@@ -85,6 +89,7 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [x] Infrastructure and hosting setup (INFRA-001) ✅
 - [x] Portal UI components and layout ✅
 - [ ] Email service configuration for magic link delivery
@@ -92,12 +97,14 @@
 - [ ] Authentication provider setup (NextAuth.js or similar)
 
 **Technical Dependencies:**
+
 - [ ] Secure session storage configuration
 - [ ] Database schema for member authentication
 - [ ] Email template design and implementation
 - [ ] Analytics event tracking system
 
 **Content Dependencies:**
+
 - [ ] Authentication flow copy and messaging
 - [ ] Error message content for various scenarios
 - [ ] Email template content for magic links
@@ -167,29 +174,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Email delivery failures | High | Medium | Multiple email providers, delivery monitoring |
-| Member list out of sync | Medium | Medium | Automated sync process, manual verification |
-| Session security vulnerabilities | High | Low | Security audit, penetration testing |
-| Poor mobile UX | Medium | Low | Mobile-first design, device testing |
-| Authentication provider downtime | High | Low | Fallback authentication method |
+| Risk                             | Impact | Probability | Mitigation                                    |
+| -------------------------------- | ------ | ----------- | --------------------------------------------- |
+| Email delivery failures          | High   | Medium      | Multiple email providers, delivery monitoring |
+| Member list out of sync          | Medium | Medium      | Automated sync process, manual verification   |
+| Session security vulnerabilities | High   | Low         | Security audit, penetration testing           |
+| Poor mobile UX                   | Medium | Low         | Mobile-first design, device testing           |
+| Authentication provider downtime | High   | Low         | Fallback authentication method                |
 
 ## 📈 Success Metrics
 
 **Authentication Performance:**
+
 - **Login Success Rate:** >95% for valid members
 - **Magic Link Delivery:** <30 seconds for 99% of requests
 - **Session Security:** Zero unauthorized access incidents
 - **Member Adoption:** >60% of active members login within first week
 
 **User Experience:**
+
 - **Mobile Conversion:** >90% mobile users complete authentication
 - **Error Recovery:** >80% users recover from authentication errors
 - **Support Tickets:** <5% members require authentication support
 - **Session Duration:** >3 minutes average portal session
 
 **Technical Performance:**
+
 - **Authentication Speed:** <2 seconds average response time
 - **System Reliability:** >99.9% authentication service uptime
 - **Database Performance:** <100ms member lookup queries
@@ -198,10 +208,11 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Authentication Architecture
+
 ```typescript
 // lib/auth/config.ts
-import NextAuth from 'next-auth';
-import EmailProvider from 'next-auth/providers/email';
+import NextAuth from 'next-auth'
+import EmailProvider from 'next-auth/providers/email'
 
 export const authOptions = {
   providers: [
@@ -214,13 +225,13 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       // Verify user is current member
-      const isMember = await verifyMemberStatus(user.email);
-      return isMember;
+      const isMember = await verifyMemberStatus(user.email)
+      return isMember
     },
     async session({ session, token }) {
       // Add member-specific data to session
-      session.user.memberStatus = await getMemberStatus(session.user.email);
-      return session;
+      session.user.memberStatus = await getMemberStatus(session.user.email)
+      return session
     },
   },
   pages: {
@@ -233,85 +244,91 @@ export const authOptions = {
     strategy: 'jwt',
     maxAge: 7 * 24 * 60 * 60, // 7 days
   },
-};
+}
 ```
 
 ### Member Verification System
+
 ```typescript
 // lib/auth/member-verification.ts
 interface MemberRecord {
-  email: string;
-  firstName: string;
-  lastName: string;
-  membershipStatus: 'active' | 'suspended' | 'expired' | 'cancelled';
-  membershipType: string;
-  joinDate: Date;
-  lastActivity?: Date;
+  email: string
+  firstName: string
+  lastName: string
+  membershipStatus: 'active' | 'suspended' | 'expired' | 'cancelled'
+  membershipType: string
+  joinDate: Date
+  lastActivity?: Date
 }
 
 export async function verifyMemberStatus(email: string): Promise<boolean> {
   try {
     // Check against member database or approved list
-    const member = await getMemberByEmail(email);
-    
+    const member = await getMemberByEmail(email)
+
     if (!member) {
-      await logAuthEvent('member_not_found', { email });
-      return false;
+      await logAuthEvent('member_not_found', { email })
+      return false
     }
-    
+
     if (member.membershipStatus !== 'active') {
-      await logAuthEvent('member_inactive', { 
-        email, 
-        status: member.membershipStatus 
-      });
-      return false;
+      await logAuthEvent('member_inactive', {
+        email,
+        status: member.membershipStatus,
+      })
+      return false
     }
-    
+
     // Update last portal access
-    await updateMemberLastActivity(email);
-    await logAuthEvent('member_verified', { email });
-    
-    return true;
+    await updateMemberLastActivity(email)
+    await logAuthEvent('member_verified', { email })
+
+    return true
   } catch (error) {
-    await logAuthEvent('verification_error', { email, error: error.message });
-    return false;
+    await logAuthEvent('verification_error', { email, error: error.message })
+    return false
   }
 }
 
-export async function getMemberByEmail(email: string): Promise<MemberRecord | null> {
+export async function getMemberByEmail(
+  email: string
+): Promise<MemberRecord | null> {
   // Implementation depends on member data source:
   // Option 1: Sanity CMS with member records
   // Option 2: Google Sheets with member list
   // Option 3: Gym management system API
   // Option 4: Manual JSON file (simplest for MVP)
-  
-  const members = await fetchMemberDatabase();
-  return members.find(member => 
-    member.email.toLowerCase() === email.toLowerCase()
-  ) || null;
+
+  const members = await fetchMemberDatabase()
+  return (
+    members.find(
+      member => member.email.toLowerCase() === email.toLowerCase()
+    ) || null
+  )
 }
 ```
 
 ### Portal Route Protection
+
 ```tsx
 // middleware.ts
-import { withAuth } from 'next-auth/middleware';
+import { withAuth } from 'next-auth/middleware'
 
 export default withAuth(
   function middleware(req) {
     // Additional checks for portal access
-    const token = req.nextauth.token;
-    
+    const token = req.nextauth.token
+
     if (req.nextUrl.pathname.startsWith('/portal')) {
       if (!token?.email) {
-        return new Response('Unauthorized', { status: 401 });
+        return new Response('Unauthorized', { status: 401 })
       }
-      
+
       // Check member status is still active
       if (token?.memberStatus !== 'active') {
-        const url = req.nextUrl.clone();
-        url.pathname = '/portal/membership-required';
-        return NextResponse.redirect(url);
+        const url = req.nextUrl.clone()
+        url.pathname = '/portal/membership-required'
+        return NextResponse.redirect(url)
       }
     }
   },
@@ -319,62 +336,77 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         if (req.nextUrl.pathname.startsWith('/portal')) {
-          return !!token?.email;
+          return !!token?.email
         }
-        return true;
+        return true
       },
     },
   }
-);
+)
 
 export const config = {
-  matcher: ['/portal/:path*']
-};
+  matcher: ['/portal/:path*'],
+}
 ```
 
 ### Magic Link Email Template
+
 ```html
 <!-- emails/magic-link.html -->
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Access Your Member Portal</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <div style="text-align: center; margin-bottom: 30px;">
-      <img src="{{logoUrl}}" alt="{{gymName}}" style="max-width: 200px;">
+  <head>
+    <meta charset="utf-8" />
+    <title>Access Your Member Portal</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <img src="{{logoUrl}}" alt="{{gymName}}" style="max-width: 200px;" />
+      </div>
+
+      <h1 style="color: #2563eb; text-align: center;">
+        Access Your Member Portal
+      </h1>
+
+      <p>Hi {{firstName}},</p>
+
+      <p>
+        Click the button below to securely access your member portal. This link
+        will expire in 15 minutes for your security.
+      </p>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <a
+          href="{{magicLink}}"
+          style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;"
+        >
+          Access Member Portal
+        </a>
+      </div>
+
+      <p style="font-size: 14px; color: #666;">
+        If the button doesn't work, copy and paste this link into your
+        browser:<br />
+        <a href="{{magicLink}}">{{magicLink}}</a>
+      </p>
+
+      <div
+        style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;"
+      >
+        <p>
+          This link was requested for {{email}}. If you didn't request this,
+          please ignore this email.
+        </p>
+        <p>Questions? Contact us at {{supportEmail}} or {{supportPhone}}</p>
+      </div>
     </div>
-    
-    <h1 style="color: #2563eb; text-align: center;">Access Your Member Portal</h1>
-    
-    <p>Hi {{firstName}},</p>
-    
-    <p>Click the button below to securely access your member portal. This link will expire in 15 minutes for your security.</p>
-    
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="{{magicLink}}" 
-         style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
-        Access Member Portal
-      </a>
-    </div>
-    
-    <p style="font-size: 14px; color: #666;">
-      If the button doesn't work, copy and paste this link into your browser:<br>
-      <a href="{{magicLink}}">{{magicLink}}</a>
-    </p>
-    
-    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-      <p>This link was requested for {{email}}. If you didn't request this, please ignore this email.</p>
-      <p>Questions? Contact us at {{supportEmail}} or {{supportPhone}}</p>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
 ```
 
 ### Analytics Event Tracking
+
 ```typescript
 // lib/analytics/portal-events.ts
 export const trackPortalEvents = {
@@ -382,40 +414,41 @@ export const trackPortalEvents = {
     gtag('event', 'portal_access_attempt', {
       event_category: 'authentication',
       event_label: 'magic_link_request',
-      user_email_hash: hashEmail(email)
-    });
+      user_email_hash: hashEmail(email),
+    })
   },
-  
+
   loginSuccess: (memberData: any) => {
     gtag('event', 'portal_login_success', {
       event_category: 'authentication',
       event_label: 'member_authenticated',
       member_type: memberData.membershipType,
-      days_since_join: calculateDaysSinceJoin(memberData.joinDate)
-    });
+      days_since_join: calculateDaysSinceJoin(memberData.joinDate),
+    })
   },
-  
+
   loginFailure: (reason: string, email?: string) => {
     gtag('event', 'portal_login_failure', {
       event_category: 'authentication',
       event_label: reason,
-      user_email_hash: email ? hashEmail(email) : 'unknown'
-    });
+      user_email_hash: email ? hashEmail(email) : 'unknown',
+    })
   },
-  
+
   sessionExpire: (sessionDuration: number) => {
     gtag('event', 'portal_session_expire', {
       event_category: 'engagement',
       event_label: 'session_timeout',
-      value: Math.round(sessionDuration / 60) // minutes
-    });
-  }
-};
+      value: Math.round(sessionDuration / 60), // minutes
+    })
+  },
+}
 ```
 
 ## 📝 Content Requirements
 
 ### Authentication Flow Messaging
+
 - [ ] **Login Page:**
   - Headline: "Member Portal Access"
   - Subheading: "Enter your email to access programming and resources"
@@ -434,6 +467,7 @@ export const trackPortalEvents = {
   - System error: "Something went wrong. Please try again or contact support."
 
 ### Member Database Setup
+
 - [ ] **Required Fields:**
   - Email address (primary identifier)
   - First name and last name

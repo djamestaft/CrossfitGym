@@ -1,10 +1,18 @@
 declare global {
   interface Window {
-    gtag: (command: string, targetId: string, config?: any) => void
+    gtag: (
+      command: string,
+      targetId: string,
+      config?: Record<string, unknown>
+    ) => void
   }
 }
 
-export const gtag = (command: string, targetId: string, config?: any) => {
+export const gtag = (
+  command: string,
+  targetId: string,
+  config?: Record<string, unknown>
+) => {
   if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
     window.gtag(command, targetId, config)
   }
@@ -12,7 +20,7 @@ export const gtag = (command: string, targetId: string, config?: any) => {
 
 export const trackEvent = (
   eventName: string,
-  parameters?: Record<string, any>
+  parameters?: Record<string, unknown>
 ) => {
   gtag('event', eventName, parameters)
 }

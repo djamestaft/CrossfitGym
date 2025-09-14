@@ -4,21 +4,22 @@
 **Story ID:** CHAT-001  
 **Priority:** Medium  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 3-4  
+**Sprint Target:** Week 3-4
 
 ## 📋 User Story
 
 **As a** potential member with questions about the gym, programs, or membership  
 **I want** immediate access to expert help through a chat interface  
-**So that** I can get answers quickly and move forward with confidence in my fitness journey  
+**So that** I can get answers quickly and move forward with confidence in my fitness journey
 
 **As an** operations team member  
 **I need** complete control over chat availability and timing  
-**So that** I can manage support capacity effectively and avoid team overwhelm during busy periods  
+**So that** I can manage support capacity effectively and avoid team overwhelm during busy periods
 
 ## ✅ Acceptance Criteria
 
 ### Tawk.to Integration & User Experience
+
 - [ ] **Professional Chat Widget:**
   - Tawk.to integration with custom branding matching site design
   - Responsive chat interface optimized for mobile and desktop
@@ -41,6 +42,7 @@
   - No interference with mobile site navigation
 
 ### CMS Control & Management
+
 - [ ] **Toggle Control System:**
   - Boolean toggle in Sanity CMS for global chat enable/disable
   - Real-time updates reflecting on website within 5 minutes
@@ -63,6 +65,7 @@
   - Version control for settings changes
 
 ### Performance & Technical Integration
+
 - [ ] **Async Loading Implementation:**
   - Chat widget loads asynchronously after critical page content
   - No layout shift (CLS impact) when widget loads
@@ -85,6 +88,7 @@
   - User feedback when chat temporarily unavailable
 
 ### Analytics & Conversion Tracking
+
 - [ ] **Event Tracking Implementation:**
   - `chat_open` event fired when user initiates chat
   - `chat_message_sent` event for user engagement tracking
@@ -107,6 +111,7 @@
   - Business hours vs after-hours engagement patterns
 
 ### Support Team Preparation
+
 - [ ] **Team Training Requirements:**
   - Tawk.to platform training for all support staff
   - Response time targets and quality standards
@@ -124,18 +129,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Sanity CMS infrastructure (CONTENT-001) operational
 - [ ] Analytics framework (ANALYTICS-001) for event tracking
 - [ ] Performance monitoring (ANALYTICS-003) for impact assessment
 - [ ] Team training and support workflow establishment
 
 **Technical Dependencies:**
+
 - [ ] Tawk.to account setup with appropriate pricing plan
 - [ ] Real-time CMS subscription system configuration
 - [ ] Cache invalidation and deployment pipeline integration
 - [ ] Mobile testing environment and device access
 
 **Operational Dependencies:**
+
 - [ ] Support team hiring and training completion
 - [ ] Business hours and availability schedule definition
 - [ ] Response time SLA and quality standards establishment
@@ -199,35 +207,39 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Support team overwhelmed by volume | High | Medium | Week +1 activation, clear business hours, volume management |
-| Chat widget performance impact | Medium | Low | Async loading, performance monitoring, fallback removal |
-| Tawk.to service reliability issues | Medium | Low | Service status monitoring, fallback contact methods |
-| Poor user experience on mobile | Medium | Low | Extensive mobile testing, touch optimization |
-| CMS toggle response delays | Low | Medium | Real-time subscriptions, cache warming strategies |
+| Risk                               | Impact | Probability | Mitigation                                                  |
+| ---------------------------------- | ------ | ----------- | ----------------------------------------------------------- |
+| Support team overwhelmed by volume | High   | Medium      | Week +1 activation, clear business hours, volume management |
+| Chat widget performance impact     | Medium | Low         | Async loading, performance monitoring, fallback removal     |
+| Tawk.to service reliability issues | Medium | Low         | Service status monitoring, fallback contact methods         |
+| Poor user experience on mobile     | Medium | Low         | Extensive mobile testing, touch optimization                |
+| CMS toggle response delays         | Low    | Medium      | Real-time subscriptions, cache warming strategies           |
 
 ## 📈 Success Metrics
 
 **Technical Performance:**
+
 - **Page Load Impact:** <200ms additional load time with chat enabled
 - **Core Web Vitals:** No degradation in LCP, CLS, or INP scores
 - **Widget Availability:** >99% uptime during business hours
 - **Response Speed:** CMS toggle changes effective within 5 minutes
 
 **User Experience:**
+
 - **Chat Engagement:** >15% of visitors interact with chat widget
 - **Conversation Quality:** >80% of chats result in helpful resolution
 - **Mobile Usage:** >60% of chat interactions from mobile devices
 - **User Satisfaction:** >4.0/5.0 average chat experience rating
 
 **Support Efficiency:**
+
 - **Response Time:** <5 minutes average during business hours
 - **First Response:** <2 minutes acknowledgment time
 - **Resolution Rate:** >80% issues resolved in single chat session
 - **Team Efficiency:** <30 minutes average conversation duration
 
 **Business Impact:**
+
 - **Lead Generation:** >10% of chat conversations result in FMS bookings
 - **Support Reduction:** >25% decrease in phone/email support volume
 - **Conversion Assistance:** Chat users convert at >20% higher rate
@@ -236,6 +248,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Sanity CMS Schema Extension
+
 ```typescript
 // sanity/schemas/site-settings.ts
 export const siteSettingsSchema = {
@@ -248,7 +261,7 @@ export const siteSettingsSchema = {
       title: 'Enable Chat Widget',
       type: 'boolean',
       description: 'Toggle chat widget visibility across the entire site',
-      initialValue: false
+      initialValue: false,
     },
     {
       name: 'chatConfiguration',
@@ -259,20 +272,21 @@ export const siteSettingsSchema = {
           name: 'welcomeMessage',
           title: 'Welcome Message',
           type: 'string',
-          initialValue: 'Hi! How can we help you start your fitness journey?'
+          initialValue: 'Hi! How can we help you start your fitness journey?',
         },
         {
           name: 'offlineMessage',
           title: 'Offline Message',
           type: 'text',
           rows: 3,
-          initialValue: 'We\'re currently offline. Leave us a message and we\'ll get back to you within 4 hours!'
+          initialValue:
+            "We're currently offline. Leave us a message and we'll get back to you within 4 hours!",
         },
         {
           name: 'businessHours',
           title: 'Business Hours Display',
           type: 'string',
-          initialValue: 'Monday-Friday 6AM-7PM, Saturday 8AM-2PM'
+          initialValue: 'Monday-Friday 6AM-7PM, Saturday 8AM-2PM',
         },
         {
           name: 'emergencyContact',
@@ -282,16 +296,16 @@ export const siteSettingsSchema = {
             {
               name: 'phone',
               title: 'Phone Number',
-              type: 'string'
+              type: 'string',
             },
             {
               name: 'email',
               title: 'Email Address',
-              type: 'string'
-            }
-          ]
-        }
-      ]
+              type: 'string',
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'chatAppearance',
@@ -305,184 +319,184 @@ export const siteSettingsSchema = {
           options: {
             list: [
               { title: 'Bottom Right', value: 'bottom-right' },
-              { title: 'Bottom Left', value: 'bottom-left' }
-            ]
+              { title: 'Bottom Left', value: 'bottom-left' },
+            ],
           },
-          initialValue: 'bottom-right'
+          initialValue: 'bottom-right',
         },
         {
           name: 'primaryColor',
           title: 'Primary Color',
           type: 'string',
-          description: 'Hex color code for chat widget branding'
-        }
-      ]
-    }
+          description: 'Hex color code for chat widget branding',
+        },
+      ],
+    },
   ],
   preview: {
     prepare() {
       return {
         title: 'Site Settings',
-        subtitle: 'Global site configuration'
-      };
-    }
-  }
-};
+        subtitle: 'Global site configuration',
+      }
+    },
+  },
+}
 ```
 
 ### Chat Widget Component
+
 ```tsx
 // components/ChatWidget.tsx
-import { useEffect, useState } from 'react';
-import { useSiteSettings } from '@/lib/sanity/hooks';
+import { useEffect, useState } from 'react'
+import { useSiteSettings } from '@/lib/sanity/hooks'
 
 declare global {
   interface Window {
-    Tawk_API?: any;
-    Tawk_LoadStart?: Date;
+    Tawk_API?: any
+    Tawk_LoadStart?: Date
   }
 }
 
 export function ChatWidget() {
-  const { data: settings, loading } = useSiteSettings();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [loadError, setLoadError] = useState(false);
+  const { data: settings, loading } = useSiteSettings()
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
-    if (loading || !settings) return;
+    if (loading || !settings) return
 
     if (settings.chatEnabled && !isLoaded) {
-      loadTawkToWidget();
+      loadTawkToWidget()
     } else if (!settings.chatEnabled && isLoaded) {
-      removeTawkToWidget();
+      removeTawkToWidget()
     }
-  }, [settings?.chatEnabled, loading, isLoaded]);
+  }, [settings?.chatEnabled, loading, isLoaded])
 
   const loadTawkToWidget = async () => {
     try {
       // Initialize Tawk_API
-      window.Tawk_API = window.Tawk_API || {};
-      window.Tawk_LoadStart = new Date();
+      window.Tawk_API = window.Tawk_API || {}
+      window.Tawk_LoadStart = new Date()
 
       // Configure Tawk.to callbacks
-      window.Tawk_API.onLoad = function() {
-        console.log('Chat widget loaded successfully');
-        setIsLoaded(true);
-        setLoadError(false);
-        
+      window.Tawk_API.onLoad = function () {
+        console.log('Chat widget loaded successfully')
+        setIsLoaded(true)
+        setLoadError(false)
+
         // Track widget load
         if (typeof gtag !== 'undefined') {
           gtag('event', 'chat_widget_loaded', {
             event_category: 'support',
-            page_type: getPageType()
-          });
+            page_type: getPageType(),
+          })
         }
-      };
+      }
 
-      window.Tawk_API.onChatStarted = function() {
+      window.Tawk_API.onChatStarted = function () {
         if (typeof gtag !== 'undefined') {
           gtag('event', 'chat_conversation_started', {
             event_category: 'support',
             event_label: 'user_initiated',
             page_type: getPageType(),
-            user_journey_stage: 'engagement'
-          });
+            user_journey_stage: 'engagement',
+          })
         }
-      };
+      }
 
-      window.Tawk_API.onChatMessageVisitor = function(message: string) {
+      window.Tawk_API.onChatMessageVisitor = function (message: string) {
         if (typeof gtag !== 'undefined') {
           gtag('event', 'chat_message_sent', {
             event_category: 'support',
             event_label: 'visitor_message',
-            message_length: message.length
-          });
+            message_length: message.length,
+          })
         }
-      };
+      }
 
-      window.Tawk_API.onChatEnded = function() {
+      window.Tawk_API.onChatEnded = function () {
         if (typeof gtag !== 'undefined') {
           gtag('event', 'chat_conversation_ended', {
             event_category: 'support',
-            event_label: 'conversation_complete'
-          });
+            event_label: 'conversation_complete',
+          })
         }
-      };
+      }
 
-      window.Tawk_API.onOfflineSubmit = function(data: any) {
+      window.Tawk_API.onOfflineSubmit = function (data: any) {
         if (typeof gtag !== 'undefined') {
           gtag('event', 'chat_offline_message', {
             event_category: 'support',
             event_label: 'offline_contact',
-            user_journey_stage: 'intent'
-          });
+            user_journey_stage: 'intent',
+          })
         }
-      };
+      }
 
       // Customize widget appearance
       if (settings.chatConfiguration?.welcomeMessage) {
         window.Tawk_API.setAttributes = {
           name: 'Gym Visitor',
-          email: ''
-        };
+          email: '',
+        }
       }
 
       // Load Tawk.to script
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://embed.tawk.to/${process.env.NEXT_PUBLIC_TAWK_SITE_ID}/${process.env.NEXT_PUBLIC_TAWK_WIDGET_ID}`;
-      script.charset = 'UTF-8';
-      script.setAttribute('crossorigin', '*');
-      
+      const script = document.createElement('script')
+      script.async = true
+      script.src = `https://embed.tawk.to/${process.env.NEXT_PUBLIC_TAWK_SITE_ID}/${process.env.NEXT_PUBLIC_TAWK_WIDGET_ID}`
+      script.charset = 'UTF-8'
+      script.setAttribute('crossorigin', '*')
+
       script.onload = () => {
-        console.log('Tawk.to script loaded');
-      };
-      
+        console.log('Tawk.to script loaded')
+      }
+
       script.onerror = () => {
-        console.error('Failed to load Tawk.to script');
-        setLoadError(true);
-        showFallbackContact();
-      };
+        console.error('Failed to load Tawk.to script')
+        setLoadError(true)
+        showFallbackContact()
+      }
 
-      document.head.appendChild(script);
-
+      document.head.appendChild(script)
     } catch (error) {
-      console.error('Error initializing chat widget:', error);
-      setLoadError(true);
-      showFallbackContact();
+      console.error('Error initializing chat widget:', error)
+      setLoadError(true)
+      showFallbackContact()
     }
-  };
+  }
 
   const removeTawkToWidget = () => {
     try {
       // Remove Tawk.to widget
       if (window.Tawk_API && window.Tawk_API.hideWidget) {
-        window.Tawk_API.hideWidget();
+        window.Tawk_API.hideWidget()
       }
 
       // Remove script
-      const tawkScript = document.querySelector('script[src*="tawk.to"]');
+      const tawkScript = document.querySelector('script[src*="tawk.to"]')
       if (tawkScript) {
-        tawkScript.remove();
+        tawkScript.remove()
       }
 
       // Clean up global variables
-      delete window.Tawk_API;
-      delete window.Tawk_LoadStart;
+      delete window.Tawk_API
+      delete window.Tawk_LoadStart
 
-      setIsLoaded(false);
-      setLoadError(false);
+      setIsLoaded(false)
+      setLoadError(false)
 
-      console.log('Chat widget removed');
+      console.log('Chat widget removed')
     } catch (error) {
-      console.error('Error removing chat widget:', error);
+      console.error('Error removing chat widget:', error)
     }
-  };
+  }
 
   const showFallbackContact = () => {
     // Show fallback contact methods when chat fails
-    const fallbackDiv = document.createElement('div');
-    fallbackDiv.id = 'chat-fallback';
+    const fallbackDiv = document.createElement('div')
+    fallbackDiv.id = 'chat-fallback'
     fallbackDiv.innerHTML = `
       <div style="position: fixed; bottom: 20px; right: 20px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); max-width: 300px; z-index: 1000;">
         <h4 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600;">Chat Temporarily Unavailable</h4>
@@ -493,47 +507,48 @@ export function ChatWidget() {
         </div>
         <button onclick="document.getElementById('chat-fallback').remove()" style="margin-top: 8px; background: #374151; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Close</button>
       </div>
-    `;
-    
+    `
+
     // Remove any existing fallback
-    const existing = document.getElementById('chat-fallback');
-    if (existing) existing.remove();
-    
-    document.body.appendChild(fallbackDiv);
+    const existing = document.getElementById('chat-fallback')
+    if (existing) existing.remove()
+
+    document.body.appendChild(fallbackDiv)
 
     // Auto-remove after 10 seconds
     setTimeout(() => {
-      const fallback = document.getElementById('chat-fallback');
-      if (fallback) fallback.remove();
-    }, 10000);
-  };
+      const fallback = document.getElementById('chat-fallback')
+      if (fallback) fallback.remove()
+    }, 10000)
+  }
 
   const getPageType = (): string => {
-    const path = window.location.pathname;
-    if (path === '/') return 'homepage';
-    if (path === '/fms') return 'fms';
-    if (path.startsWith('/hubs/')) return 'hub';
-    if (path.startsWith('/articles/')) return 'article';
-    if (path.startsWith('/portal/')) return 'portal';
-    if (path === '/timetable') return 'timetable';
-    return 'other';
-  };
+    const path = window.location.pathname
+    if (path === '/') return 'homepage'
+    if (path === '/fms') return 'fms'
+    if (path.startsWith('/hubs/')) return 'hub'
+    if (path.startsWith('/articles/')) return 'article'
+    if (path.startsWith('/portal/')) return 'portal'
+    if (path === '/timetable') return 'timetable'
+    return 'other'
+  }
 
   // This component only manages script loading and doesn't render anything
-  return null;
+  return null
 }
 ```
 
 ### Real-Time Settings Hook
+
 ```typescript
 // lib/sanity/hooks.ts
-import { useState, useEffect } from 'react';
-import { sanityClient } from './client';
+import { useState, useEffect } from 'react'
+import { sanityClient } from './client'
 
 export function useSiteSettings() {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     // Initial fetch
@@ -545,79 +560,83 @@ export function useSiteSettings() {
             chatConfiguration,
             chatAppearance
           }
-        `);
-        setData(settings);
-        setError(null);
+        `)
+        setData(settings)
+        setError(null)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch settings');
+        setError(
+          err instanceof Error ? err.message : 'Failed to fetch settings'
+        )
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchSettings();
+    fetchSettings()
 
     // Real-time subscription
     const subscription = sanityClient
       .listen('*[_type == "siteSettings"]')
       .subscribe({
-        next: (update) => {
+        next: update => {
           if (update.result) {
-            setData(update.result);
-            console.log('Site settings updated in real-time');
+            setData(update.result)
+            console.log('Site settings updated in real-time')
           }
         },
-        error: (err) => {
-          console.error('Settings subscription error:', err);
-          setError('Real-time updates unavailable');
-        }
-      });
+        error: err => {
+          console.error('Settings subscription error:', err)
+          setError('Real-time updates unavailable')
+        },
+      })
 
-    return () => subscription.unsubscribe();
-  }, []);
+    return () => subscription.unsubscribe()
+  }, [])
 
-  return { data, loading, error };
+  return { data, loading, error }
 }
 ```
 
 ### Performance Monitoring
+
 ```typescript
 // lib/monitoring/chat-performance.ts
 export class ChatPerformanceMonitor {
-  private startTime: number;
-  private loadTime: number | null = null;
+  private startTime: number
+  private loadTime: number | null = null
 
   constructor() {
-    this.startTime = performance.now();
-    this.monitorChatLoad();
+    this.startTime = performance.now()
+    this.monitorChatLoad()
   }
 
   private monitorChatLoad() {
     // Monitor for Tawk.to widget loading
     const checkForWidget = setInterval(() => {
-      const tawkWidget = document.querySelector('[data-tawk]') || 
-                         document.querySelector('#tawkchat-container');
-      
+      const tawkWidget =
+        document.querySelector('[data-tawk]') ||
+        document.querySelector('#tawkchat-container')
+
       if (tawkWidget && !this.loadTime) {
-        this.loadTime = performance.now() - this.startTime;
-        clearInterval(checkForWidget);
-        this.reportLoadTime();
+        this.loadTime = performance.now() - this.startTime
+        clearInterval(checkForWidget)
+        this.reportLoadTime()
       }
-    }, 100);
+    }, 100)
 
     // Clear interval after 10 seconds to prevent infinite checking
     setTimeout(() => {
-      clearInterval(checkForWidget);
+      clearInterval(checkForWidget)
       if (!this.loadTime) {
-        console.warn('Chat widget failed to load within 10 seconds');
-        this.reportLoadFailure();
+        console.warn('Chat widget failed to load within 10 seconds')
+        this.reportLoadFailure()
       }
-    }, 10000);
+    }, 10000)
   }
 
   private reportLoadTime() {
-    console.log(`Chat widget loaded in ${this.loadTime}ms`);
-    
+    console.log(`Chat widget loaded in ${this.loadTime}ms`)
+
     // Report to analytics
     if (typeof gtag !== 'undefined') {
       gtag('event', 'chat_performance', {
@@ -626,14 +645,16 @@ export class ChatPerformanceMonitor {
         value: Math.round(this.loadTime!),
         custom_parameters: {
           load_time_ms: this.loadTime,
-          page_type: this.getPageType()
-        }
-      });
+          page_type: this.getPageType(),
+        },
+      })
     }
 
     // Alert if load time is too slow
     if (this.loadTime! > 3000) {
-      console.warn(`Chat widget load time exceeded 3 seconds: ${this.loadTime}ms`);
+      console.warn(
+        `Chat widget load time exceeded 3 seconds: ${this.loadTime}ms`
+      )
     }
   }
 
@@ -642,18 +663,18 @@ export class ChatPerformanceMonitor {
       gtag('event', 'chat_performance', {
         event_category: 'performance',
         event_label: 'widget_load_failure',
-        page_type: this.getPageType()
-      });
+        page_type: this.getPageType(),
+      })
     }
   }
 
   private getPageType(): string {
-    const path = window.location.pathname;
-    if (path === '/') return 'homepage';
-    if (path === '/fms') return 'fms';
-    if (path.startsWith('/hubs/')) return 'hub';
-    if (path.startsWith('/articles/')) return 'article';
-    return 'other';
+    const path = window.location.pathname
+    if (path === '/') return 'homepage'
+    if (path === '/fms') return 'fms'
+    if (path.startsWith('/hubs/')) return 'hub'
+    if (path.startsWith('/articles/')) return 'article'
+    return 'other'
   }
 }
 
@@ -661,29 +682,36 @@ export class ChatPerformanceMonitor {
 if (typeof window !== 'undefined') {
   window.addEventListener('load', () => {
     // Check if chat should be monitored
-    const shouldMonitor = document.querySelector('[data-monitor-chat]');
+    const shouldMonitor = document.querySelector('[data-monitor-chat]')
     if (shouldMonitor) {
-      new ChatPerformanceMonitor();
+      new ChatPerformanceMonitor()
     }
-  });
+  })
 }
 ```
 
 ### Emergency Chat Disable API
+
 ```typescript
 // pages/api/emergency/disable-chat.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { sanityClient } from '@/lib/sanity/client';
+import { NextApiRequest, NextApiResponse } from 'next'
+import { sanityClient } from '@/lib/sanity/client'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method not allowed' })
   }
 
   // Verify authorization (add proper auth)
-  const authToken = req.headers.authorization;
-  if (!authToken || authToken !== `Bearer ${process.env.EMERGENCY_DISABLE_TOKEN}`) {
-    return res.status(401).json({ message: 'Unauthorized' });
+  const authToken = req.headers.authorization
+  if (
+    !authToken ||
+    authToken !== `Bearer ${process.env.EMERGENCY_DISABLE_TOKEN}`
+  ) {
+    return res.status(401).json({ message: 'Unauthorized' })
   }
 
   try {
@@ -691,23 +719,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await sanityClient
       .patch('siteSettings') // Assumes single settings document
       .set({ chatEnabled: false })
-      .commit();
+      .commit()
 
     // Trigger immediate cache invalidation
-    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/revalidate?path=/settings&secret=${process.env.REVALIDATE_SECRET}`);
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/revalidate?path=/settings&secret=${process.env.REVALIDATE_SECRET}`
+    )
 
-    console.log('Emergency chat disable executed');
-    
-    return res.status(200).json({ 
+    console.log('Emergency chat disable executed')
+
+    return res.status(200).json({
       message: 'Chat disabled successfully',
-      timestamp: new Date().toISOString()
-    });
+      timestamp: new Date().toISOString(),
+    })
   } catch (error) {
-    console.error('Emergency disable failed:', error);
-    return res.status(500).json({ 
+    console.error('Emergency disable failed:', error)
+    return res.status(500).json({
       message: 'Failed to disable chat',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    });
+      error: error instanceof Error ? error.message : 'Unknown error',
+    })
   }
 }
 ```
@@ -715,6 +745,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 ## 📝 Content Requirements
 
 ### Chat Configuration Content
+
 - [ ] **Welcome Messages:**
   - Standard: "Hi! How can we help you start your fitness journey?"
   - Busy periods: "Thanks for your interest! We're helping other members right now and will be with you shortly."
@@ -726,6 +757,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   - Weekends: "We're closed for the weekend. Leave a message and we'll get back to you Monday morning!"
 
 ### Response Templates
+
 - [ ] **Opening Responses:**
   - "Thanks for your interest in Geelong Movement Co! How can I help you today?"
   - "Great to meet you! Are you looking to learn more about our programs?"
@@ -737,9 +769,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   - Schedule: "Let me check our current class schedule for you. What times work best?"
 
 ### Business Hours & Availability
+
 - [ ] **Schedule:**
   - Monday-Friday: 6:00 AM - 7:00 PM
-  - Saturday: 8:00 AM - 2:00 PM  
+  - Saturday: 8:00 AM - 2:00 PM
   - Sunday: OFFLINE (messages only)
   - Public holidays: OFFLINE (messages only)
 

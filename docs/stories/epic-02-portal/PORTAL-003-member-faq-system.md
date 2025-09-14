@@ -4,17 +4,18 @@
 **Story ID:** PORTAL-003  
 **Priority:** High  
 **Effort Estimate:** 2 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 2-3
 
 ## 📋 User Story
 
 **As a** member with questions about programming, policies, or procedures  
 **I want** quick access to answers for common questions  
-**So that** I can self-serve information instead of asking coaches repeatedly during class time  
+**So that** I can self-serve information instead of asking coaches repeatedly during class time
 
 ## ✅ Acceptance Criteria
 
 ### Content Management System
+
 - [ ] **CMS-Editable FAQ Structure:**
   - Sanity CMS schema for FAQ content with rich text support
   - Category-based organization (Programming, Scheduling, Policies, Equipment)
@@ -37,6 +38,7 @@
   - Easy duplication and templating for similar questions
 
 ### Search & Discovery
+
 - [ ] **Client-Side Search:**
   - Real-time search across all FAQ content
   - Search-as-you-type with instant results
@@ -59,6 +61,7 @@
   - Offline access to frequently viewed content
 
 ### User Experience
+
 - [ ] **Interactive Design:**
   - Expandable/collapsible question format
   - Smooth animations for content reveal
@@ -81,6 +84,7 @@
   - Client-side caching for repeat visits
 
 ### Analytics & Insights
+
 - [ ] **Usage Tracking:**
   - Track most-viewed questions for content optimization
   - Search term analysis for gap identification
@@ -98,18 +102,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Member portal authentication (PORTAL-001) functional
 - [ ] Sanity CMS configuration and schema setup
 - [ ] Content collection from coaching staff and operations
 - [ ] FAQ content writing and organization completed
 
 **Technical Dependencies:**
+
 - [ ] Search functionality implementation (Fuse.js or similar)
 - [ ] Mobile-responsive design system components
 - [ ] Analytics event tracking system
 - [ ] Content delivery optimization
 
 **Content Dependencies:**
+
 - [ ] FAQ content audit and collection from staff
 - [ ] Policy documentation review and approval
 - [ ] Common member questions analysis
@@ -169,29 +176,32 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Outdated content | Medium | Medium | Regular review schedule, update notifications |
-| Poor search results | Medium | Low | Content tagging, search algorithm tuning |
-| Staff adoption for updates | Medium | Medium | Simple CMS workflow, training program |
-| Mobile usability issues | Medium | Low | Mobile-first design, device testing |
-| Content maintenance burden | Low | Medium | Template-based answers, bulk operations |
+| Risk                       | Impact | Probability | Mitigation                                    |
+| -------------------------- | ------ | ----------- | --------------------------------------------- |
+| Outdated content           | Medium | Medium      | Regular review schedule, update notifications |
+| Poor search results        | Medium | Low         | Content tagging, search algorithm tuning      |
+| Staff adoption for updates | Medium | Medium      | Simple CMS workflow, training program         |
+| Mobile usability issues    | Medium | Low         | Mobile-first design, device testing           |
+| Content maintenance burden | Low    | Medium      | Template-based answers, bulk operations       |
 
 ## 📈 Success Metrics
 
 **User Engagement:**
+
 - **FAQ Usage Rate:** >50% of portal users access FAQ within first month
 - **Search Success Rate:** >80% of searches result in content engagement
 - **Self-Service Rate:** >70% of FAQ sessions don't require follow-up contact
 - **Content Discovery:** >60% users explore multiple FAQ categories
 
 **Content Performance:**
+
 - **Answer Completeness:** <10% FAQ sessions end without engagement
 - **Content Freshness:** 100% content reviewed monthly
 - **Popular Content:** Top 10 questions account for >50% of views
 - **Search Analytics:** Clear patterns identify content gaps
 
 **Operational Efficiency:**
+
 - **Coach Question Reduction:** >30% decrease in repetitive questions during class
 - **Support Ticket Reduction:** >25% decrease in basic policy/procedure questions
 - **Content Management:** Staff can update content in <5 minutes
@@ -200,30 +210,31 @@
 ## 🛠️ Technical Implementation Notes
 
 ### FAQ Data Structure
+
 ```typescript
 // types/faq.ts
 interface FAQItem {
-  id: string;
-  question: string;
-  answer: string; // Rich text/HTML
-  category: FAQCategory;
-  tags: string[];
-  priority: number; // For ordering within category
-  featured: boolean; // Pin to top of category
-  relatedQuestions: string[]; // FAQ IDs
-  lastUpdated: Date;
-  author: string;
-  viewCount: number;
-  status: 'draft' | 'published' | 'archived';
+  id: string
+  question: string
+  answer: string // Rich text/HTML
+  category: FAQCategory
+  tags: string[]
+  priority: number // For ordering within category
+  featured: boolean // Pin to top of category
+  relatedQuestions: string[] // FAQ IDs
+  lastUpdated: Date
+  author: string
+  viewCount: number
+  status: 'draft' | 'published' | 'archived'
 }
 
 interface FAQCategory {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  order: number;
-  color: string; // For visual differentiation
+  id: string
+  name: string
+  description: string
+  icon: string
+  order: number
+  color: string // For visual differentiation
 }
 
 // Predefined categories
@@ -234,7 +245,7 @@ export const faqCategories: FAQCategory[] = [
     description: 'Questions about daily workouts, scaling, and modifications',
     icon: 'dumbbell',
     order: 1,
-    color: '#2563eb'
+    color: '#2563eb',
   },
   {
     id: 'scheduling',
@@ -242,7 +253,7 @@ export const faqCategories: FAQCategory[] = [
     description: 'Class times, booking, cancellations, and attendance',
     icon: 'calendar',
     order: 2,
-    color: '#059669'
+    color: '#059669',
   },
   {
     id: 'policies',
@@ -250,7 +261,7 @@ export const faqCategories: FAQCategory[] = [
     description: 'Gym rules, membership terms, and general policies',
     icon: 'clipboard',
     order: 3,
-    color: '#dc2626'
+    color: '#dc2626',
   },
   {
     id: 'equipment',
@@ -258,12 +269,13 @@ export const faqCategories: FAQCategory[] = [
     description: 'Equipment usage, facility access, and safety guidelines',
     icon: 'cog',
     order: 4,
-    color: '#7c2d12'
-  }
-];
+    color: '#7c2d12',
+  },
+]
 ```
 
 ### Sanity CMS Schema
+
 ```typescript
 // sanity/schemas/faq.ts
 export const faqSchema = {
@@ -275,24 +287,21 @@ export const faqSchema = {
       name: 'question',
       title: 'Question',
       type: 'string',
-      validation: Rule => Rule.required().min(10).max(200)
+      validation: Rule => Rule.required().min(10).max(200),
     },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
       options: { source: 'question' },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'answer',
       title: 'Answer',
       type: 'array',
-      of: [
-        { type: 'block' },
-        { type: 'image' }
-      ],
-      validation: Rule => Rule.required()
+      of: [{ type: 'block' }, { type: 'image' }],
+      validation: Rule => Rule.required(),
     },
     {
       name: 'category',
@@ -300,202 +309,208 @@ export const faqSchema = {
       type: 'string',
       options: {
         list: [
-          {title: 'Programming & Workouts', value: 'programming'},
-          {title: 'Scheduling & Classes', value: 'scheduling'},
-          {title: 'Policies & Procedures', value: 'policies'},
-          {title: 'Equipment & Facility', value: 'equipment'}
-        ]
+          { title: 'Programming & Workouts', value: 'programming' },
+          { title: 'Scheduling & Classes', value: 'scheduling' },
+          { title: 'Policies & Procedures', value: 'policies' },
+          { title: 'Equipment & Facility', value: 'equipment' },
+        ],
       },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     },
     {
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
       options: {
-        layout: 'tags'
-      }
+        layout: 'tags',
+      },
     },
     {
       name: 'priority',
       title: 'Priority Order',
       type: 'number',
-      description: 'Lower numbers appear first in category'
+      description: 'Lower numbers appear first in category',
     },
     {
       name: 'featured',
       title: 'Featured Question',
       type: 'boolean',
-      description: 'Pin to top of category'
+      description: 'Pin to top of category',
     },
     {
       name: 'relatedQuestions',
       title: 'Related Questions',
       type: 'array',
-      of: [{
-        type: 'reference',
-        to: [{type: 'faq'}]
-      }]
-    }
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'faq' }],
+        },
+      ],
+    },
   ],
   preview: {
     select: {
       title: 'question',
-      subtitle: 'category'
-    }
-  }
-};
+      subtitle: 'category',
+    },
+  },
+}
 ```
 
 ### Search Implementation
+
 ```typescript
 // lib/search/faq-search.ts
-import Fuse from 'fuse.js';
+import Fuse from 'fuse.js'
 
 export class FAQSearch {
-  private fuse: Fuse<FAQItem>;
-  private faqItems: FAQItem[];
+  private fuse: Fuse<FAQItem>
+  private faqItems: FAQItem[]
 
   constructor(faqItems: FAQItem[]) {
-    this.faqItems = faqItems;
+    this.faqItems = faqItems
     this.fuse = new Fuse(faqItems, {
       keys: [
         { name: 'question', weight: 0.6 },
         { name: 'answer', weight: 0.3 },
-        { name: 'tags', weight: 0.1 }
+        { name: 'tags', weight: 0.1 },
       ],
       threshold: 0.4,
       includeScore: true,
-      minMatchCharLength: 2
-    });
+      minMatchCharLength: 2,
+    })
   }
 
   search(query: string, category?: string): FAQItem[] {
     if (!query.trim()) {
-      return this.getByCategory(category);
+      return this.getByCategory(category)
     }
 
-    let results = this.fuse.search(query);
+    let results = this.fuse.search(query)
 
     // Filter by category if specified
     if (category) {
-      results = results.filter(r => r.item.category === category);
+      results = results.filter(r => r.item.category === category)
     }
 
     // Sort by relevance score and priority
     return results
       .sort((a, b) => {
-        const scoreA = a.score || 0;
-        const scoreB = b.score || 0;
-        const priorityA = a.item.priority || 999;
-        const priorityB = b.item.priority || 999;
-        
+        const scoreA = a.score || 0
+        const scoreB = b.score || 0
+        const priorityA = a.item.priority || 999
+        const priorityB = b.item.priority || 999
+
         if (Math.abs(scoreA - scoreB) < 0.1) {
-          return priorityA - priorityB; // Better priority wins
+          return priorityA - priorityB // Better priority wins
         }
-        return scoreA - scoreB; // Better score wins
+        return scoreA - scoreB // Better score wins
       })
       .map(r => r.item)
-      .slice(0, 10); // Limit results
+      .slice(0, 10) // Limit results
   }
 
   getByCategory(category?: string): FAQItem[] {
-    let items = this.faqItems;
-    
+    let items = this.faqItems
+
     if (category) {
-      items = items.filter(item => item.category === category);
+      items = items.filter(item => item.category === category)
     }
 
-    return items
-      .sort((a, b) => {
-        // Featured items first
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        
-        // Then by priority
-        const priorityA = a.priority || 999;
-        const priorityB = b.priority || 999;
-        return priorityA - priorityB;
-      });
+    return items.sort((a, b) => {
+      // Featured items first
+      if (a.featured && !b.featured) return -1
+      if (!a.featured && b.featured) return 1
+
+      // Then by priority
+      const priorityA = a.priority || 999
+      const priorityB = b.priority || 999
+      return priorityA - priorityB
+    })
   }
 
   getPopularQuestions(limit = 5): FAQItem[] {
     return this.faqItems
       .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))
-      .slice(0, limit);
+      .slice(0, limit)
   }
 
   getFeaturedQuestions(): FAQItem[] {
     return this.faqItems
       .filter(item => item.featured)
-      .sort((a, b) => (a.priority || 999) - (b.priority || 999));
+      .sort((a, b) => (a.priority || 999) - (b.priority || 999))
   }
 }
 ```
 
 ### FAQ Component Implementation
+
 ```tsx
 // components/portal/FAQSection.tsx
-import { useState, useMemo } from 'react';
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useState, useMemo } from 'react'
+import {
+  ChevronDownIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline'
 
 interface FAQSectionProps {
-  faqItems: FAQItem[];
-  categories: FAQCategory[];
+  faqItems: FAQItem[]
+  categories: FAQCategory[]
 }
 
 export function FAQSection({ faqItems, categories }: FAQSectionProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
 
-  const faqSearch = useMemo(() => new FAQSearch(faqItems), [faqItems]);
+  const faqSearch = useMemo(() => new FAQSearch(faqItems), [faqItems])
 
   const filteredFAQs = useMemo(() => {
-    return faqSearch.search(searchQuery, selectedCategory);
-  }, [searchQuery, selectedCategory, faqSearch]);
+    return faqSearch.search(searchQuery, selectedCategory)
+  }, [searchQuery, selectedCategory, faqSearch])
 
   const toggleExpanded = (faqId: string) => {
-    const newExpanded = new Set(expandedItems);
+    const newExpanded = new Set(expandedItems)
     if (newExpanded.has(faqId)) {
-      newExpanded.delete(faqId);
+      newExpanded.delete(faqId)
     } else {
-      newExpanded.add(faqId);
+      newExpanded.add(faqId)
       // Track FAQ view
-      trackFAQEvent('faq_view', { faq_id: faqId, search_query: searchQuery });
+      trackFAQEvent('faq_view', { faq_id: faqId, search_query: searchQuery })
     }
-    setExpandedItems(newExpanded);
-  };
+    setExpandedItems(newExpanded)
+  }
 
   const handleSearch = (query: string) => {
-    setSearchQuery(query);
+    setSearchQuery(query)
     if (query.length > 2) {
-      trackFAQEvent('faq_search', { 
-        search_query: query, 
-        results_count: filteredFAQs.length 
-      });
+      trackFAQEvent('faq_search', {
+        search_query: query,
+        results_count: filteredFAQs.length,
+      })
     }
-  };
+  }
 
   return (
-    <div className="faq-section">
+    <div className='faq-section'>
       {/* Search Bar */}
-      <div className="search-bar">
-        <div className="relative">
-          <MagnifyingGlassIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+      <div className='search-bar'>
+        <div className='relative'>
+          <MagnifyingGlassIcon className='absolute left-3 top-3 h-5 w-5 text-gray-400' />
           <input
-            type="text"
-            placeholder="Search frequently asked questions..."
+            type='text'
+            placeholder='Search frequently asked questions...'
             value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onChange={e => handleSearch(e.target.value)}
+            className='w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
           />
         </div>
       </div>
 
       {/* Category Filters */}
-      <div className="category-filters">
+      <div className='category-filters'>
         <button
           onClick={() => setSelectedCategory('')}
           className={`category-button ${!selectedCategory ? 'active' : ''}`}
@@ -509,56 +524,58 @@ export function FAQSection({ faqItems, categories }: FAQSectionProps) {
             className={`category-button ${selectedCategory === category.id ? 'active' : ''}`}
             style={{ '--category-color': category.color } as any}
           >
-            <span className="category-icon">{category.icon}</span>
+            <span className='category-icon'>{category.icon}</span>
             {category.name}
           </button>
         ))}
       </div>
 
       {/* FAQ Items */}
-      <div className="faq-items">
+      <div className='faq-items'>
         {filteredFAQs.length === 0 ? (
-          <div className="no-results">
+          <div className='no-results'>
             <p>No questions found for "{searchQuery}"</p>
             <p>Try a different search term or browse by category.</p>
           </div>
         ) : (
           filteredFAQs.map(faq => (
-            <div key={faq.id} className="faq-item">
+            <div key={faq.id} className='faq-item'>
               <button
                 onClick={() => toggleExpanded(faq.id)}
-                className="faq-question"
+                className='faq-question'
                 aria-expanded={expandedItems.has(faq.id)}
               >
-                <span className="question-text">{faq.question}</span>
-                <ChevronDownIcon 
+                <span className='question-text'>{faq.question}</span>
+                <ChevronDownIcon
                   className={`chevron ${expandedItems.has(faq.id) ? 'expanded' : ''}`}
                 />
               </button>
-              
+
               {expandedItems.has(faq.id) && (
-                <div className="faq-answer">
-                  <div 
+                <div className='faq-answer'>
+                  <div
                     dangerouslySetInnerHTML={{ __html: faq.answer }}
-                    className="answer-content"
+                    className='answer-content'
                   />
-                  
+
                   {faq.relatedQuestions.length > 0 && (
-                    <div className="related-questions">
+                    <div className='related-questions'>
                       <h4>Related Questions:</h4>
                       <ul>
                         {faq.relatedQuestions.map(relatedId => {
-                          const related = faqItems.find(item => item.id === relatedId);
+                          const related = faqItems.find(
+                            item => item.id === relatedId
+                          )
                           return related ? (
                             <li key={relatedId}>
-                              <button 
+                              <button
                                 onClick={() => toggleExpanded(relatedId)}
-                                className="related-link"
+                                className='related-link'
                               >
                                 {related.question}
                               </button>
                             </li>
-                          ) : null;
+                          ) : null
                         })}
                       </ul>
                     </div>
@@ -570,49 +587,50 @@ export function FAQSection({ faqItems, categories }: FAQSectionProps) {
         )}
       </div>
     </div>
-  );
+  )
 }
 ```
 
 ### Analytics Implementation
+
 ```typescript
 // lib/analytics/faq-events.ts
 export const trackFAQEvent = (eventName: string, parameters: any) => {
   gtag('event', eventName, {
     event_category: 'portal_faq',
-    ...parameters
-  });
-};
+    ...parameters,
+  })
+}
 
 export const trackFAQEvents = {
   search: (query: string, resultsCount: number) => {
     trackFAQEvent('faq_search', {
       search_query: query,
-      results_count: resultsCount
-    });
+      results_count: resultsCount,
+    })
   },
 
   view: (faqId: string, question: string, category: string) => {
     trackFAQEvent('faq_view', {
       faq_id: faqId,
       faq_question: question,
-      faq_category: category
-    });
+      faq_category: category,
+    })
   },
 
   categoryFilter: (category: string) => {
     trackFAQEvent('faq_category_filter', {
-      selected_category: category
-    });
+      selected_category: category,
+    })
   },
 
   relatedClick: (fromFaqId: string, toFaqId: string) => {
     trackFAQEvent('faq_related_click', {
       from_faq_id: fromFaqId,
-      to_faq_id: toFaqId
-    });
-  }
-};
+      to_faq_id: toFaqId,
+    })
+  },
+}
 ```
 
 ## 📝 Content Requirements
@@ -620,6 +638,7 @@ export const trackFAQEvents = {
 ### Initial FAQ Content (30+ Items)
 
 #### Programming & Workouts (8-10 items)
+
 - [ ] "How do I scale workouts if I'm a beginner?"
 - [ ] "What does 'Rx' mean and should I do it?"
 - [ ] "Can I modify workouts for injuries?"
@@ -630,6 +649,7 @@ export const trackFAQEvents = {
 - [ ] "Can I do extra work before or after class?"
 
 #### Scheduling & Classes (8-10 items)
+
 - [ ] "How do I book and cancel classes?"
 - [ ] "What's the cancellation policy?"
 - [ ] "Can I make up missed classes?"
@@ -640,6 +660,7 @@ export const trackFAQEvents = {
 - [ ] "What are the different class types?"
 
 #### Policies & Procedures (6-8 items)
+
 - [ ] "What should I bring to my first class?"
 - [ ] "What's the dress code for workouts?"
 - [ ] "Can I pause or freeze my membership?"
@@ -649,6 +670,7 @@ export const trackFAQEvents = {
 - [ ] "What safety protocols are in place?"
 
 #### Equipment & Facility (6-8 items)
+
 - [ ] "What equipment do you provide vs. what should I bring?"
 - [ ] "How do I adjust equipment for my size?"
 - [ ] "What are the facility hours?"

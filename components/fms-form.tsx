@@ -119,7 +119,11 @@ export function FMSForm() {
 
       setIsSubmitted(true)
     } catch (error) {
-      console.error('Form submission error:', error)
+      // Error logged for debugging in development
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.error('Form submission error:', error)
+      }
       setErrors({ submit: 'Something went wrong. Please try again.' })
     } finally {
       setIsSubmitting(false)

@@ -4,17 +4,18 @@
 **Story ID:** CONTENT-002  
 **Priority:** High  
 **Effort Estimate:** 5 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 2-3
 
 ## 📋 User Story
 
 **As a** searcher with specific pain or injury concerns  
 **I want** expert guidance on training safely with my condition  
-**So that** I can decide if this gym understands my needs and can help me train without making things worse  
+**So that** I can decide if this gym understands my needs and can help me train without making things worse
 
 ## ✅ Acceptance Criteria
 
 ### Shoulder Hub Content Structure
+
 - [ ] **Hero Section:**
   - Compelling headline: "Train Safely with Shoulder Issues"
   - Subheadline acknowledging common concerns
@@ -58,6 +59,7 @@
   - Testimonials about confidence and pain reduction
 
 ### Low-Back Hub Content Structure
+
 - [ ] **Hero Section:**
   - Headline: "Strengthen Your Back Safely"
   - Address fear and uncertainty around back pain
@@ -94,6 +96,7 @@
   - Red flags that require immediate medical attention
 
 ### Technical Implementation
+
 - [ ] **SEO Optimization:**
   - Schema markup for FAQ sections
   - Local SEO optimization for "CrossFit shoulder pain Geelong"
@@ -116,6 +119,7 @@
   - Email signup for additional resources
 
 ### Analytics & Tracking
+
 - [ ] **Content Performance:**
   - Page view duration and scroll depth tracking
   - CTA click-through rates to FMS assessment
@@ -133,12 +137,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Sanity CMS schema setup (CONTENT-001) completed
 - [ ] SEO keyword research and strategy finalized
 - [ ] Content creation workflow and approval process
 - [ ] Legal review process for health-related claims
 
 **Content Creation Dependencies:**
+
 - [ ] Subject matter expert consultation (physiotherapist)
 - [ ] Professional photography for movement demonstrations
 - [ ] Video production for exercise modifications
@@ -146,6 +152,7 @@
 - [ ] Competitive analysis of existing condition-specific content
 
 **Technical Dependencies:**
+
 - [ ] Schema markup implementation for FAQ sections
 - [ ] Internal linking strategy and anchor text optimization
 - [ ] Image optimization and lazy loading setup
@@ -209,35 +216,39 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Medical accuracy concerns | High | Low | Professional review, conservative claims |
-| Legal liability for health advice | High | Low | Clear disclaimers, "consult professional" messaging |
-| Content creation delays | Medium | Medium | Early SME engagement, template-based approach |
-| Low search visibility | Medium | Medium | Long-tail keyword focus, local SEO optimization |
-| Poor conversion rates | Medium | Low | Multiple CTA testing, soft-sell approach |
+| Risk                              | Impact | Probability | Mitigation                                          |
+| --------------------------------- | ------ | ----------- | --------------------------------------------------- |
+| Medical accuracy concerns         | High   | Low         | Professional review, conservative claims            |
+| Legal liability for health advice | High   | Low         | Clear disclaimers, "consult professional" messaging |
+| Content creation delays           | Medium | Medium      | Early SME engagement, template-based approach       |
+| Low search visibility             | Medium | Medium      | Long-tail keyword focus, local SEO optimization     |
+| Poor conversion rates             | Medium | Low         | Multiple CTA testing, soft-sell approach            |
 
 ## 📈 Success Metrics
 
 **Content Engagement:**
+
 - **Average Time on Page:** >4 minutes for hub content
 - **Scroll Depth:** >70% users reach FAQ section
 - **Return Visitors:** >25% within 30 days
 - **Content Sharing:** >50 social shares per hub within first month
 
 **SEO Performance:**
+
 - **Organic Traffic:** >500 monthly visits per hub by Month 3
 - **Keyword Rankings:** Top 5 for "shoulder pain CrossFit Geelong"
 - **Featured Snippets:** Capture 1+ featured snippet per hub
 - **Local Pack Visibility:** Improved GBP click-through rates
 
 **Conversion Metrics:**
+
 - **Hub → FMS Rate:** ≥15% conversion to assessment booking
 - **Email Signups:** >100 newsletter signups from hub CTAs
 - **Contact Forms:** >20 consultation requests per month
 - **Brand Awareness:** Increased branded search volume
 
 **Business Impact:**
+
 - **Lead Quality:** Hub-sourced leads convert at ≥25% to membership
 - **Cost Per Acquisition:** 50% lower than paid advertising
 - **Customer LTV:** Hub-acquired members retain 20% longer
@@ -246,6 +257,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Schema Markup Implementation
+
 ```typescript
 // components/ConditionHub/FAQSection.tsx
 interface FAQItem {
@@ -288,97 +300,98 @@ export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
 ```
 
 ### Hub Page Structure
+
 ```tsx
 // app/hubs/[slug]/page.tsx
-import { getConditionHub } from '@/lib/sanity/queries';
-import { FAQSection } from '@/components/ConditionHub/FAQSection';
-import { CTASection } from '@/components/ConditionHub/CTASection';
+import { getConditionHub } from '@/lib/sanity/queries'
+import { FAQSection } from '@/components/ConditionHub/FAQSection'
+import { CTASection } from '@/components/ConditionHub/CTASection'
 
 interface HubPageProps {
-  params: { slug: string };
+  params: { slug: string }
 }
 
 export async function generateMetadata({ params }: HubPageProps) {
-  const hub = await getConditionHub(params.slug);
-  
+  const hub = await getConditionHub(params.slug)
+
   return {
-    title: hub.seoTitle || `${hub.condition} Training Guide | Geelong Movement Co`,
-    description: hub.metaDescription || `Expert guidance for training safely with ${hub.condition.toLowerCase()}. Learn proper modifications and safe progressions.`,
+    title:
+      hub.seoTitle || `${hub.condition} Training Guide | Geelong Movement Co`,
+    description:
+      hub.metaDescription ||
+      `Expert guidance for training safely with ${hub.condition.toLowerCase()}. Learn proper modifications and safe progressions.`,
     openGraph: {
       title: hub.seoTitle,
       description: hub.metaDescription,
       type: 'article',
-      images: hub.heroContent?.heroImage ? [hub.heroContent.heroImage] : []
-    }
-  };
+      images: hub.heroContent?.heroImage ? [hub.heroContent.heroImage] : [],
+    },
+  }
 }
 
 export default async function ConditionHubPage({ params }: HubPageProps) {
-  const hub = await getConditionHub(params.slug);
+  const hub = await getConditionHub(params.slug)
 
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": hub.title,
-    "description": hub.metaDescription,
-    "author": {
-      "@type": "Organization",
-      "name": "Geelong Movement Co"
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: hub.title,
+    description: hub.metaDescription,
+    author: {
+      '@type': 'Organization',
+      name: 'Geelong Movement Co',
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Geelong Movement Co"
+    publisher: {
+      '@type': 'Organization',
+      name: 'Geelong Movement Co',
     },
-    "datePublished": hub.publishedAt,
-    "dateModified": hub.updatedAt,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://geelongmovement.com/hubs/${params.slug}`
-    }
-  };
+    datePublished: hub.publishedAt,
+    dateModified: hub.updatedAt,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://geelongmovement.com/hubs/${params.slug}`,
+    },
+  }
 
   return (
     <>
       <script
-        type="application/ld+json"
+        type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
-      <article className="condition-hub">
+
+      <article className='condition-hub'>
         <HeroSection content={hub.heroContent} />
-        
-        <nav className="hub-navigation">
+
+        <nav className='hub-navigation'>
           <TableOfContents sections={hub.sections} />
         </nav>
 
-        <div className="hub-content">
+        <div className='hub-content'>
           {hub.sections.map((section, index) => (
-            <ContentSection 
-              key={index} 
-              section={section} 
-              index={index}
-            />
+            <ContentSection key={index} section={section} index={index} />
           ))}
-          
-          <CTASection 
-            type="soft"
-            headline="Ready to Train Safely?"
-            subtext="Get a professional movement assessment"
-            ctaText="Book Your FMS Assessment"
-            ctaUrl="/fms"
+
+          <CTASection
+            type='soft'
+            headline='Ready to Train Safely?'
+            subtext='Get a professional movement assessment'
+            ctaText='Book Your FMS Assessment'
+            ctaUrl='/fms'
           />
-          
+
           <FAQSection faqs={hub.faqs} />
-          
+
           <RelatedContent articles={hub.relatedArticles} />
         </div>
       </article>
     </>
-  );
+  )
 }
 ```
 
 ### Conversion Tracking
+
 ```typescript
 // lib/analytics/hub-events.ts
 export const trackHubEvents = {
@@ -387,16 +400,16 @@ export const trackHubEvents = {
       event_category: 'content_engagement',
       event_label: hubSlug,
       condition_type: condition,
-      content_type: 'condition_hub'
-    });
+      content_type: 'condition_hub',
+    })
   },
 
   sectionView: (sectionTitle: string, sectionType: string) => {
     gtag('event', 'hub_section_view', {
       event_category: 'content_engagement',
       event_label: sectionTitle,
-      section_type: sectionType
-    });
+      section_type: sectionType,
+    })
   },
 
   ctaClick: (ctaType: string, ctaPosition: string, hubSlug: string) => {
@@ -404,32 +417,32 @@ export const trackHubEvents = {
       event_category: 'conversion',
       event_label: `${ctaType}_${ctaPosition}`,
       hub_source: hubSlug,
-      value: 1
-    });
+      value: 1,
+    })
   },
 
   faqExpand: (question: string, hubSlug: string) => {
     gtag('event', 'hub_faq_expand', {
       event_category: 'content_engagement',
       event_label: question,
-      hub_source: hubSlug
-    });
+      hub_source: hubSlug,
+    })
   },
 
   printClick: (hubSlug: string) => {
     gtag('event', 'hub_print_click', {
       event_category: 'content_engagement',
       event_label: 'print_action',
-      hub_source: hubSlug
-    });
+      hub_source: hubSlug,
+    })
   },
 
   shareClick: (platform: string, hubSlug: string) => {
     gtag('event', 'hub_share_click', {
       event_category: 'content_engagement',
       event_label: platform,
-      hub_source: hubSlug
-    });
+      hub_source: hubSlug,
+    })
   },
 
   scrollMilestone: (percentage: number, hubSlug: string) => {
@@ -437,15 +450,16 @@ export const trackHubEvents = {
       event_category: 'content_engagement',
       event_label: `${percentage}%`,
       hub_source: hubSlug,
-      value: percentage
-    });
-  }
-};
+      value: percentage,
+    })
+  },
+}
 ```
 
 ## 📝 Content Requirements
 
 ### Shoulder Hub Content Checklist
+
 - [ ] **Medical Accuracy:**
   - Physiotherapist review and approval
   - Current evidence-based recommendations
@@ -461,6 +475,7 @@ export const trackHubEvents = {
   - When-to-progress guidelines
 
 ### Low-Back Hub Content Checklist
+
 - [ ] **Educational Content:**
   - Hip mobility's role in back health
   - Core stability vs. strength explanation
@@ -476,6 +491,7 @@ export const trackHubEvents = {
   - Red flag symptom identification
 
 ### Shared Content Elements
+
 - [ ] **Trust Building:**
   - Professional credentials and partnerships
   - Success story case studies (with consent)
@@ -491,6 +507,7 @@ export const trackHubEvents = {
   - Meta descriptions compelling and accurate
 
 ### Visual Content Requirements
+
 - [ ] **Professional Photography:**
   - Correct movement demonstration photos
   - Before/after posture comparisons

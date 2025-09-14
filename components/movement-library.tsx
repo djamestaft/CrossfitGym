@@ -268,6 +268,7 @@ export function MovementLibrary() {
             className='group hover:shadow-lg transition-shadow'
           >
             <div className='relative'>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={video.thumbnailUrl || '/placeholder.svg'}
                 alt={video.title}

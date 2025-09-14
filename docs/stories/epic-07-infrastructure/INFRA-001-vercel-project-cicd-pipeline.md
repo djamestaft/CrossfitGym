@@ -4,17 +4,18 @@
 **Story ID:** INFRA-001  
 **Priority:** Critical Foundation  
 **Effort Estimate:** 4 story points  
-**Sprint Target:** Week 0-1  
+**Sprint Target:** Week 0-1
 
 ## 📋 User Story
 
 **As a** Development Team  
 **I need** automated deployment infrastructure  
-**So that** I can deploy safely and roll back quickly if issues occur  
+**So that** I can deploy safely and roll back quickly if issues occur
 
 ## ✅ Acceptance Criteria
 
 ### Vercel Project Setup
+
 - [ ] **Production Environment:**
   - Custom domain (geelongmovement.com) configured with SSL
   - Production environment variables securely configured
@@ -34,6 +35,7 @@
   - Development tools and debugging enabled
 
 ### CI/CD Pipeline Quality Gates
+
 - [ ] **Build & Quality Checks:**
   - TypeScript compilation verification
   - ESLint code quality checks with zero warnings
@@ -49,6 +51,7 @@
   - Image optimization verification
 
 ### Deployment Strategy
+
 - [ ] **Automated Deployments:**
   - Zero-downtime deployments to production
   - Automatic rollback on failed health checks
@@ -66,12 +69,14 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] GitHub repository setup with proper branch protection
 - [ ] Domain registration and DNS access
 - [ ] Team access management and permissions configured
 - [ ] Security policy review and approval
 
 **Downstream Dependencies:**
+
 - [ ] All other epics require this infrastructure foundation
 - [ ] Content deployment depends on CMS integration
 - [ ] Analytics setup requires environment configuration
@@ -118,12 +123,12 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Vercel service outage | High | Low | Multi-region setup, status monitoring |
-| Environment variable leak | High | Medium | Proper secrets management, access auditing |
-| Build pipeline failure | Medium | Medium | Comprehensive testing, fallback procedures |
-| Domain/DNS issues | High | Low | Multiple DNS providers, TTL optimization |
+| Risk                      | Impact | Probability | Mitigation                                 |
+| ------------------------- | ------ | ----------- | ------------------------------------------ |
+| Vercel service outage     | High   | Low         | Multi-region setup, status monitoring      |
+| Environment variable leak | High   | Medium      | Proper secrets management, access auditing |
+| Build pipeline failure    | Medium | Medium      | Comprehensive testing, fallback procedures |
+| Domain/DNS issues         | High   | Low         | Multiple DNS providers, TTL optimization   |
 
 ## 📈 Success Metrics
 
@@ -136,6 +141,7 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Environment Variables Required
+
 ```bash
 # Production
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
@@ -148,17 +154,18 @@ TURNSTILE_SECRET_KEY=xxxxxxxxxxxxxxxxxx
 ```
 
 ### Vercel Configuration
+
 ```json
 {
   "version": 2,
-  "builds": [{"src": "package.json", "use": "@vercel/next"}],
+  "builds": [{ "src": "package.json", "use": "@vercel/next" }],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {"key": "X-Content-Type-Options", "value": "nosniff"},
-        {"key": "X-Frame-Options", "value": "DENY"},
-        {"key": "X-XSS-Protection", "value": "1; mode=block"}
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
   ]
@@ -166,11 +173,12 @@ TURNSTILE_SECRET_KEY=xxxxxxxxxxxxxxxxxx
 ```
 
 ### GitHub Actions Pipeline
+
 ```yaml
 name: CI/CD Pipeline
 on:
-  push: {branches: [main]}
-  pull_request: {branches: [main]}
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
 
 jobs:
   quality-gates:
@@ -178,7 +186,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with: {node-version: '18', cache: 'npm'}
+        with: { node-version: '18', cache: 'npm' }
       - run: npm ci
       - run: npm run type-check
       - run: npm run lint
@@ -190,6 +198,7 @@ jobs:
 ## 📝 Operational Procedures
 
 ### Deployment Checklist
+
 - [ ] Feature branch PR approved and reviewed
 - [ ] All CI/CD quality checks passing
 - [ ] Performance impact assessed (bundle size, Core Web Vitals)
@@ -197,6 +206,7 @@ jobs:
 - [ ] Rollback plan documented if needed
 
 ### Emergency Rollback Procedure
+
 1. **Immediate:** Use Vercel dashboard 1-click rollback
 2. **Verification:** Confirm rollback successful via health checks
 3. **Communication:** Notify team and stakeholders

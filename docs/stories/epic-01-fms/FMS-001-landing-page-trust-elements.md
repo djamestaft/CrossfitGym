@@ -4,17 +4,18 @@
 **Story ID:** FMS-001  
 **Priority:** Critical Path ⭐  
 **Effort Estimate:** 4 story points  
-**Sprint Target:** Week 1-2  
+**Sprint Target:** Week 1-2
 
 ## 📋 User Story
 
 **As a** cautious fitness beginner  
 **I want** a clear FMS overview with trust cues and safety messaging  
-**So that** I feel confident and safe to start my fitness journey  
+**So that** I feel confident and safe to start my fitness journey
 
 ## ✅ Acceptance Criteria
 
 ### Hero Section & Primary CTA
+
 - [ ] **Compelling Hero:**
   - Clear value proposition: "Start Your Fitness Journey Safely"
   - Primary CTA button: "Get Your Movement Assessment" prominently displayed
@@ -29,6 +30,7 @@
   - Professional accreditation logos (Exercise & Sports Science Australia)
 
 ### Trust & Safety Elements
+
 - [ ] **Safety Panel:**
   - "Injury-Aware Approach" messaging prominently featured
   - Clear explanation of assessment-first methodology
@@ -48,6 +50,7 @@
   - Physiotherapy partnership messaging
 
 ### Information Architecture
+
 - [ ] **FMS Explanation Section:**
   - Clear explanation of what FMS assessment involves
   - "What to expect" during the assessment
@@ -67,6 +70,7 @@
   - Link to member testimonials page
 
 ### Technical Performance
+
 - [ ] **Core Web Vitals:**
   - Largest Contentful Paint (LCP) ≤2.5s
   - Cumulative Layout Shift (CLS) ≤0.1
@@ -83,18 +87,21 @@
 ## 🔗 Dependencies
 
 **Upstream Dependencies:**
+
 - [ ] Design system components and branding guidelines
 - [ ] Testimonial content collection and consent
 - [ ] Coach qualification copy and professional photos
 - [ ] Professional photography of gym and assessment area
 
 **Content Dependencies:**
+
 - [ ] 5-8 client testimonials with photos and consent
 - [ ] Coach bio content and professional qualifications
 - [ ] Safety standards and methodology documentation
 - [ ] FAQ content addressing common concerns
 
 **Technical Dependencies:**
+
 - [ ] Component library with responsive design system
 - [ ] GA4 event tracking implementation
 - [ ] Image optimization pipeline
@@ -154,27 +161,30 @@
 
 ## ⚠️ Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Missing testimonials | High | Medium | Start collection early, use placeholder content |
-| Performance issues | High | Low | Performance budgets, continuous monitoring |
-| Content accuracy concerns | Medium | Low | Legal review, fact verification process |
-| Mobile experience issues | High | Low | Mobile-first design, device testing |
+| Risk                      | Impact | Probability | Mitigation                                      |
+| ------------------------- | ------ | ----------- | ----------------------------------------------- |
+| Missing testimonials      | High   | Medium      | Start collection early, use placeholder content |
+| Performance issues        | High   | Low         | Performance budgets, continuous monitoring      |
+| Content accuracy concerns | Medium | Low         | Legal review, fact verification process         |
+| Mobile experience issues  | High   | Low         | Mobile-first design, device testing             |
 
 ## 📈 Success Metrics
 
 **Engagement Metrics:**
+
 - **Page Visit Duration:** Target >90 seconds average
 - **Scroll Depth:** >70% users reach CTA section
 - **Bounce Rate:** <60% for landing page traffic
 - **CTA Click Rate:** >15% of page visitors
 
 **Performance Metrics:**
+
 - **Core Web Vitals:** 100% pass rate
 - **Page Load Speed:** <3s on mobile, <2s on desktop
 - **SEO Performance:** Rank in top 3 for "movement assessment Geelong"
 
 **Conversion Metrics:**
+
 - **Page-to-Form:** >20% conversion rate
 - **Traffic Quality:** >50% from local search
 - **Return Visitors:** >30% of visitors return within 7 days
@@ -182,14 +192,15 @@
 ## 🛠️ Technical Implementation Notes
 
 ### Component Structure
+
 ```tsx
 // app/fms/page.tsx
 export default function FMSLandingPage() {
   return (
     <>
-      <SEOHead 
-        title="FMS Movement Assessment Geelong | [Gym Name]"
-        description="Professional movement assessment to start your fitness journey safely. Expert physiotherapy-backed approach."
+      <SEOHead
+        title='FMS Movement Assessment Geelong | [Gym Name]'
+        description='Professional movement assessment to start your fitness journey safely. Expert physiotherapy-backed approach.'
       />
       <HeroSection />
       <TrustBarSection />
@@ -199,11 +210,12 @@ export default function FMSLandingPage() {
       <FAQSection />
       <CTASection />
     </>
-  );
+  )
 }
 ```
 
 ### Schema Markup
+
 ```json
 {
   "@context": "https://schema.org",
@@ -223,19 +235,22 @@ export default function FMSLandingPage() {
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Movement Assessment",
-    "itemListElement": [{
-      "@type": "Offer",
-      "itemOffered": {
-        "@type": "Service",
-        "name": "FMS Assessment",
-        "description": "Functional Movement Screen assessment"
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "FMS Assessment",
+          "description": "Functional Movement Screen assessment"
+        }
       }
-    }]
+    ]
   }
 }
 ```
 
 ### GA4 Event Tracking
+
 ```javascript
 // Analytics events to implement
 const fmsPageEvents = {
@@ -244,13 +259,14 @@ const fmsPageEvents = {
   safety_panel_view: 'fms_safety_panel_view',
   testimonial_interaction: 'fms_testimonial_click',
   faq_expand: 'fms_faq_expand',
-  scroll_milestone: 'fms_scroll_[25|50|75|100]'
-};
+  scroll_milestone: 'fms_scroll_[25|50|75|100]',
+}
 ```
 
 ## 📝 Content Requirements
 
 ### Testimonials (5 Required)
+
 - [ ] **Sarah, 34:** "Never exercised before" → "Lost 15kg, feeling stronger"
 - [ ] **Mike, 45:** "Chronic back pain" → "Pain-free and active again"
 - [ ] **Emma, 28:** "Post-pregnancy fitness" → "Stronger than before pregnancy"
@@ -258,6 +274,7 @@ const fmsPageEvents = {
 - [ ] **Lisa, 29:** "Previous injury concerns" → "Safe progression, amazing results"
 
 ### FAQ Content
+
 - [ ] "Do I need to be fit to start?" → No, assessment helps us start safely
 - [ ] "How much does assessment cost?" → $X, applied to membership if joining
 - [ ] "What should I wear/bring?" → Comfortable clothes, we provide everything else
@@ -265,6 +282,7 @@ const fmsPageEvents = {
 - [ ] "What happens after?" → Personalized program design and goal setting
 
 ### Coach Qualification Copy
+
 - [ ] Exercise & Sports Science degree
 - [ ] Years of experience with beginners
 - [ ] Physiotherapy partnership benefits

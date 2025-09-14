@@ -5,13 +5,14 @@
 **Business Value:** Conversion optimization through credibility building  
 **Technical Complexity:** Low  
 **Effort Estimate:** 6-8 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 2-3
 
 ## 🎯 Epic Goal
 
 Reduce visitor anxiety and increase conversion rates by prominently displaying social proof, expertise credentials, and safety commitments.
 
 **Success Metrics:**
+
 - Increased time-on-page for key conversion pages (FMS, Programs)
 - Improved FMS form completion rates (+10% baseline)
 - Higher trust indicators in user feedback/surveys
@@ -20,11 +21,13 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 ## 👥 User Stories
 
 ### Story TRUST-001: Testimonials Carousel
+
 **As a** cautious beginner  
 **I want** to see real member success stories  
-**So that** I feel confident this gym can help people like me  
+**So that** I feel confident this gym can help people like me
 
 **Acceptance Criteria:**
+
 - [ ] Testimonials carousel with ≥6 authentic member stories
 - [ ] CMS-editable content with rich attribution fields:
   - Member name (first name + last initial for privacy)
@@ -40,12 +43,14 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 - [ ] Loading optimization for images
 
 **Dependencies:**
+
 - Member consent and photo release process
 - Content collection and photography
 - Design system carousel component
 - Image optimization workflow
 
 **Definition of Done:**
+
 - [ ] Minimum 6 testimonials live with proper attribution
 - [ ] Carousel functionality tested across browsers
 - [ ] Image optimization and lazy loading implemented
@@ -55,11 +60,13 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 ---
 
 ### Story TRUST-002: Coach Bio Pages
+
 **As a** potential member  
 **I want** to learn about the coaches' qualifications  
-**So that** I trust their expertise to train me safely  
+**So that** I trust their expertise to train me safely
 
 **Acceptance Criteria:**
+
 - [ ] Individual coach bio pages with ≥3 coaches minimum
 - [ ] Professional coach photography (headshots + action shots)
 - [ ] Comprehensive qualification display:
@@ -74,12 +81,14 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 - [ ] Schema markup for professional credentials
 
 **Dependencies:**
+
 - Coach photography session coordination
 - Content collection from each coach
 - Credential verification and copy approval
 - Professional copywriting/editing
 
 **Definition of Done:**
+
 - [ ] All active coaches have complete bio pages
 - [ ] Professional photography standards met
 - [ ] Qualifications accurately represented and verified
@@ -89,11 +98,13 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 ---
 
 ### Story TRUST-003: Safety/Standards Panel
+
 **As a** person concerned about injury risk  
 **I want** clear information about safety standards  
-**So that** I feel confident about training safely  
+**So that** I feel confident about training safely
 
 **Acceptance Criteria:**
+
 - [ ] Prominent safety standards panel on key pages
 - [ ] Clear messaging about injury-aware coaching approach
 - [ ] Specific safety protocols and standards listed:
@@ -108,12 +119,14 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 - [ ] Legal review and compliance approval
 
 **Dependencies:**
+
 - Legal review of safety claims and messaging
 - Content approval from gym ownership
 - Integration with overall brand messaging
 - Design elements supporting safety theme
 
 **Definition of Done:**
+
 - [ ] Safety panel visible on Home, FMS, and Programs pages
 - [ ] Messaging balances confidence with responsibility
 - [ ] Legal compliance review completed
@@ -123,12 +136,14 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 ## 🔗 Epic Dependencies
 
 **Upstream Dependencies:**
+
 - Content collection and member consent process
 - Professional photography coordination
 - Legal review of claims and messaging
 - CMS infrastructure for content management
 
 **Downstream Dependencies:**
+
 - Trust elements support FMS conversion funnel
 - Coach credibility feeds into service page effectiveness
 - Safety messaging reinforces injury-aware positioning
@@ -136,6 +151,7 @@ Reduce visitor anxiety and increase conversion rates by prominently displaying s
 ## 🎨 Design Specifications
 
 ### Testimonials Carousel Design
+
 ```
 Desktop Layout:
 ┌─────────────────────────────────────────────────────┐
@@ -158,6 +174,7 @@ Mobile Layout:
 ```
 
 ### Coach Bio Page Structure
+
 ```
 Coach Bio Layout:
 ┌─────────────┬─────────────────────────────────┐
@@ -184,6 +201,7 @@ Coach Bio Layout:
 ### CMS Schemas
 
 **Testimonial Schema:**
+
 ```javascript
 {
   name: 'testimonial',
@@ -203,6 +221,7 @@ Coach Bio Layout:
 ```
 
 **Coach Bio Schema:**
+
 ```javascript
 {
   name: 'coach',
@@ -214,14 +233,14 @@ Coach Bio Layout:
     { name: 'actionShot', type: 'image', title: 'Action/Training Photo' },
     { name: 'bio', type: 'text', title: 'Personal Bio' },
     { name: 'experience', type: 'string', title: 'Years Experience' },
-    { 
-      name: 'certifications', 
+    {
+      name: 'certifications',
       type: 'array',
       of: [{ type: 'string' }],
       title: 'Certifications'
     },
-    { 
-      name: 'specialties', 
+    {
+      name: 'specialties',
       type: 'array',
       of: [{ type: 'string' }],
       title: 'Training Specialties'
@@ -236,6 +255,7 @@ Coach Bio Layout:
 ### Component Architecture
 
 **Testimonials Carousel Component:**
+
 ```javascript
 // components/TestimonialsCarousel.jsx
 - Responsive design with mobile-first approach
@@ -247,6 +267,7 @@ Coach Bio Layout:
 ```
 
 **Coach Bio Card Component:**
+
 ```javascript
 // components/CoachBioCard.jsx
 - Consistent card layout for team pages
@@ -259,17 +280,20 @@ Coach Bio Layout:
 ## 📊 Success Criteria
 
 ### Content Quality Standards
+
 - **Testimonials:** Specific, authentic stories with measurable results
 - **Coach Bios:** Professional yet personable, emphasizing qualifications
 - **Safety Messaging:** Clear, confident, legally compliant
 
 ### Performance Metrics
+
 - **Page Load Impact:** No significant performance degradation
 - **Image Optimization:** All images properly compressed and sized
 - **Mobile Experience:** Full functionality and readability on mobile
 - **Accessibility:** WCAG AA compliance across all components
 
 ### Business Impact Targets
+
 - **Conversion Lift:** +10% improvement in FMS form completion rates
 - **Engagement:** Increased time-on-page for pages with trust elements
 - **Trust Indicators:** Positive mentions of credentials/safety in feedback
@@ -277,16 +301,17 @@ Coach Bio Layout:
 
 ## 🚨 Risks & Mitigations
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Member consent issues | Legal liability | Clear consent process, photo releases |
-| Outdated coach information | Credibility damage | Regular content audit process |
-| Legal issues with safety claims | Compliance problems | Legal review of all safety messaging |
-| Performance impact of images | Poor user experience | Aggressive image optimization, lazy loading |
+| Risk                            | Impact               | Mitigation                                  |
+| ------------------------------- | -------------------- | ------------------------------------------- |
+| Member consent issues           | Legal liability      | Clear consent process, photo releases       |
+| Outdated coach information      | Credibility damage   | Regular content audit process               |
+| Legal issues with safety claims | Compliance problems  | Legal review of all safety messaging        |
+| Performance impact of images    | Poor user experience | Aggressive image optimization, lazy loading |
 
 ## 📝 Content Guidelines
 
 ### Testimonial Content Standards
+
 - **Authenticity:** Real members, real stories, verifiable results
 - **Diversity:** Represent different demographics and fitness levels
 - **Specificity:** Include concrete results and timeframes
@@ -294,6 +319,7 @@ Coach Bio Layout:
 - **Compliance:** Avoid medical claims or unrealistic promises
 
 ### Coach Bio Content Framework
+
 - **Credentials First:** Lead with qualifications and certifications
 - **Experience Context:** Quantify years and types of experience
 - **Personal Touch:** Include personal fitness journey where relevant
@@ -301,6 +327,7 @@ Coach Bio Layout:
 - **Specialization:** Highlight unique skills and focus areas
 
 ### Safety Messaging Principles
+
 - **Evidence-Based:** Support claims with specific protocols
 - **Balanced Tone:** Confident but not arrogant about safety
 - **Specific Standards:** Concrete rather than vague commitments
@@ -310,12 +337,14 @@ Coach Bio Layout:
 ## 🔧 Operational Workflow
 
 ### Content Maintenance Schedule
+
 - **Monthly:** Review testimonials for freshness and relevance
 - **Quarterly:** Update coach information and photos
 - **Annually:** Comprehensive content audit and refresh
 - **As Needed:** Add new testimonials and coach updates
 
 ### Quality Assurance Process
+
 1. **Content Review:** Editorial review for tone and accuracy
 2. **Legal Review:** Compliance check for all safety claims
 3. **Visual Review:** Photo quality and brand consistency
