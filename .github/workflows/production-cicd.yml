@@ -48,7 +48,7 @@ jobs:
       - name: Code quality (ESLint)
         run: |
           echo "🔍 Running ESLint checks..."
-          npm run lint
+          npx eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
 
       - name: Code formatting (Prettier)
         run: |
