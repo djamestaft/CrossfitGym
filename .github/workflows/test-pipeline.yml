@@ -26,14 +26,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'app/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./app
+        working-directory: ./
         run: npm ci
 
       - name: Verify package.json scripts
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "📋 Available npm scripts:"
           npm run --list
@@ -55,32 +54,31 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'app/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./app
+        working-directory: ./
         run: npm ci
 
       - name: TypeScript compilation check
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🔍 Running TypeScript compilation check..."
           npm run type-check
 
       - name: ESLint code quality check
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🔍 Running ESLint checks..."
           npx eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Prettier formatting check
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🔍 Checking code formatting..."
           npm run format:check
 
       - name: Run tests with coverage
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🧪 Running test suite with coverage..."
           npm run test:coverage
@@ -100,26 +98,25 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'app/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./app
+        working-directory: ./
         run: npm ci
 
       - name: Build application
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🏗️ Building application..."
           npm run build
 
       - name: Security audit
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🔒 Running security audit..."
           npm audit --audit-level moderate || true
 
       - name: Bundle analysis (if configured)
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "📊 Analyzing bundle (if configured)..."
           if npm run analyze --if-present; then
@@ -141,10 +138,10 @@ jobs:
       - name: Check environment template
         run: |
           echo "🔧 Checking environment configuration..."
-          if [ -f "app/env.template" ]; then
+          if [ -f "env.template" ]; then
             echo "✅ Environment template found"
             echo "📋 Environment variables expected:"
-            cat app/env.template
+            cat env.template
           else
             echo "⚠️ No environment template found"
           fi
@@ -171,14 +168,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'app/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./app
+        working-directory: ./
         run: npm ci
 
       - name: Build for production
-        working-directory: ./app
+        working-directory: ./
         run: |
           echo "🚀 Building for production simulation..."
           NODE_ENV=production npm run build
