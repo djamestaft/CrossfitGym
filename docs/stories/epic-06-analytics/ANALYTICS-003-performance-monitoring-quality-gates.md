@@ -4,7 +4,7 @@
 **Story ID:** ANALYTICS-003  
 **Priority:** High  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 3-4  
+**Sprint Target:** Week 1-2 (parallel with FMS development)  
 
 ## 📋 User Story
 

@@ -10,15 +10,15 @@
 |------|----------|--------|------|----------------|
 | [Epic 1: FMS Conversion Funnel](01-fms-conversion-funnel.md) | ⭐ Critical | 12-15 SP | 1-2 | Primary revenue driver (+50% leads) |
 | [Epic 2: Member Portal (Light)](02-member-portal-light.md) | High | 8-10 SP | 2-3 | Member retention (40% weekly login) |
-| [Epic 3: Content Engine & SEO](03-content-engine-seo.md) | High | 10-12 SP | 2-4 | Organic traffic growth (≥20% mix) |
+| [Epic 3: Content Engine & SEO](03-content-engine-seo.md) | High | 10-12 SP | 0-3 | Organic traffic growth (≥20% mix) |
 | [Epic 4: Timetable (Read-Only)](04-timetable-readonly.md) | Medium | 6-8 SP | 1-2 | Discovery without booking complexity |
 | [Epic 5: Trust & Proof Components](05-trust-proof-components.md) | High | 6-8 SP | 2-3 | Conversion optimization |
-| [Epic 6: Analytics & Observability](06-analytics-observability.md) | High | 8-10 SP | 2-4 | Measurable outcomes & optimization |
-| [Epic 7: Infrastructure & Hosting](07-infrastructure-hosting.md) | Critical | 6-8 SP | 0-1 | Reliable delivery & operations |
+| [Epic 6: Analytics & Observability](06-analytics-observability.md) | ⭐ Critical | 8-10 SP | 0-2 | Measurable outcomes & optimization |
+| [Epic 7: Infrastructure & Hosting](07-infrastructure-hosting.md) | ⭐ Critical | 6-8 SP | 0-1 | Reliable delivery & operations |
 | [Epic 8: Chat Integration](08-chat-integration.md) | Medium | 3-4 SP | 3-4 | User support without overload |
 
 **Total Story Points:** 59-75 SP  
-**Critical Path:** Epic 7 → Epic 1 → Epic 6  
+**Critical Path:** Epic 7 → Epic 6 → Epic 3 → Epic 1  
 
 ## 🎯 MVP Success Criteria
 
@@ -32,11 +32,10 @@
 
 ### Value Delivery Timeline
 ```
-Week 0: Foundation (Infrastructure + CMS)
-Week 1: Core Funnel (FMS + Timetable basics)  
-Week 2: Engagement (Portal + Trust elements)
-Week 3: Content & Discovery (SEO + Articles)
-Week 4: Polish & Launch (Analytics + Chat ready)
+Week 0-1: Foundation (Infrastructure + Analytics + CMS)
+Week 1-2: Core Funnel (FMS + Timetable basics)  
+Week 2-3: Engagement (Portal + Trust + Content)
+Week 3-4: Polish & Launch (Advanced Features + Chat)
 ```
 
 ## 📋 Story Breakdown Summary

@@ -4,7 +4,7 @@
 **Story ID:** CONTENT-001  
 **Priority:** High  
 **Effort Estimate:** 3 story points  
-**Sprint Target:** Week 2  
+**Sprint Target:** Week 0-1  
 
 ## 📋 User Story
 

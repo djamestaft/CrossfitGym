@@ -4,7 +4,7 @@
 **Story ID:** ANALYTICS-001  
 **Priority:** High  
 **Effort Estimate:** 4 story points  
-**Sprint Target:** Week 2-3  
+**Sprint Target:** Week 0-1  
 
 ## 📋 User Story
 

@@ -202,25 +202,45 @@ Operational toggles (off by default): Cliniko booking embed, payments/trials, po
 
 ---
 
-## 13) Timeline & Milestones (REVISED - Accelerated 2‑Week MVP)
+## 13) Timeline & Milestones (OPTIMIZED - 4‑Week Foundation-First MVP)
 
-**✅ Current Status:** **Week 2.5 equivalent ALREADY COMPLETE** via v0 AI generation
+**🎯 Optimized Sequencing:** Foundation → Core Value → Engagement → Launch
 
-**Revised timeline based on actual development state:**
+**Revised timeline for optimal dependency management:**
 
-* **✅ Week 0-2 COMPLETE:** Next.js setup; base components; Home, FMS, Portal pages built; responsive design; GA4 events; trust components; schema markup.
-* **Week 1 (Sep 16–20):** Backend integration; FMS form API; email notifications; navigation header/footer; Vercel deployment.
-* **Week 2 (Sep 23–27):** Missing pages (About, Contact, Legal); Sanity CMS setup; content loading; final testing; **LAUNCH by Fri Sep 27, 2025**.
+* **Week 0-1 (Sep 16–27): Foundation Phase**
+  - Infrastructure & CI/CD pipeline (INFRA-001/002)
+  - Analytics foundation with GA4 setup (ANALYTICS-001)
+  - CMS schema and content infrastructure (CONTENT-001)
+  - Core deployment and monitoring systems
+  
+* **Week 1-2 (Sep 28–Oct 4): Core Funnel Phase**
+  - FMS landing page with trust elements (FMS-001)
+  - Two-step form with validation (FMS-002)
+  - Timetable CMS fallback system (TIMETABLE-001)
+  - Performance monitoring active during development
 
-**🚀 NEW LAUNCH TARGET: September 27, 2025** (3 weeks ahead of original schedule)
+* **Week 2-3 (Oct 5–11): Engagement Phase**
+  - Member portal authentication (PORTAL-001)
+  - Trust components and testimonials (TRUST-001)
+  - Success page and notifications (FMS-003)
+  - Condition hubs content (CONTENT-002)
+
+* **Week 3-4 (Oct 12–18): Polish & Launch Phase**
+  - Movement library and portal completion (PORTAL-002)
+  - Article publishing and SEO (CONTENT-003)
+  - KPI dashboard and analytics (ANALYTICS-002)
+  - Chat integration and final optimization (CHAT-001)
+
+**🚀 LAUNCH TARGET: October 18, 2025** (Optimized 4-week timeline)
 
 Post‑Launch Week +1 (Oct 21–25): KPI review, copy tweaks, proof enhancements; content cadence continues.
 
 ---
 
-## 14) Definition of Done (DoD) - REVISED for Accelerated Launch
+## 14) Definition of Done (DoD) - REVISED for Foundation-First Launch
 
-### **MVP Launch Ready (September 27, 2025):**
+### **MVP Launch Ready (October 18, 2025):**
 * **✅ Frontend Complete:** All MVP pages built (Home, FMS, Portal, Timetable); responsive design; professional UI/UX
 * **✅ Core Functionality:** FMS 2‑step form with validation; portal with programming notes; testimonials & trust elements
 * **🔧 Backend Integration:** FMS form API with email notifications; lead storage system

@@ -5,7 +5,7 @@
 **Business Value:** Organic traffic growth (≥20% organic mix target)  
 **Technical Complexity:** Low-Medium  
 **Effort Estimate:** 10-12 story points  
-**Sprint Target:** Week 2-4  
+**Sprint Target:** Week 0-3  
 
 ## 🎯 Epic Goal
 

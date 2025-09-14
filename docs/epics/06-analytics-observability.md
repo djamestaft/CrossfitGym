@@ -1,11 +1,11 @@
 # Epic 6: Analytics & Observability
 
 **Epic ID:** EPIC-06  
-**Priority:** High  
+**Priority:** ⭐ Critical  
 **Business Value:** Measurable outcomes and data-driven optimization  
 **Technical Complexity:** Medium  
 **Effort Estimate:** 8-10 story points  
-**Sprint Target:** Week 2-4  
+**Sprint Target:** Week 0-2  
 
 ## 🎯 Epic Goal
 

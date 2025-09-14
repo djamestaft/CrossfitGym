@@ -1,6 +1,6 @@
 # GMC Implementation Roadmap — Accelerated MVP Launch
 
-**Target Launch: September 27, 2025 (2 weeks from Sep 13)**
+**Target Launch: October 18, 2025 (4-week MVP from Sep 16)**
 
 ---
 
@@ -21,33 +21,55 @@
 
 ---
 
-## 📅 2-Week Implementation Plan
+## 📅 4-Week Implementation Plan
 
-### **Week 1: September 16-20, 2025**
-**Goal: Make the site functional and navigable**
+### **Week 0-1: Foundation Phase (September 16-27, 2025)**
+**Goal: Infrastructure, Analytics, and CMS Foundation**
+**Epic Focus: Epic 7 (Infrastructure) + Epic 6 (Analytics Core) + Epic 3 (CMS Setup)**
 
-#### **Monday, September 16**
-**Backend Foundation Day**
-- [ ] Create `/api/fms/submit` route for form submissions
-- [ ] Set up email notification system (Nodemailer or Resend)
-- [ ] Test FMS form end-to-end with real backend
-- [ ] Add basic error handling and loading states
+#### **Foundation Sprint Tasks:**
+- [ ] **INFRA-001:** Vercel project & CI/CD pipeline setup
+- [ ] **INFRA-002:** Monitoring & health checks implementation  
+- [ ] **ANALYTICS-001:** GA4 implementation & event dictionary
+- [ ] **CONTENT-001:** Sanity CMS schema setup
+- [ ] Backend API routes for form submissions
+- [ ] Email notification system (Nodemailer/Resend)
+- [ ] Navigation components (header/footer)
+- [ ] Core deployment pipeline with quality gates
 
-#### **Tuesday, September 17**
-**Navigation & Structure Day**
-- [ ] Create header navigation component
-- [ ] Create footer component with contact info
-- [ ] Update layout.tsx to include navigation
-- [ ] Test navigation flow between all pages
-- [ ] Add basic 404 page
+### **Week 1-2: Core Funnel Phase (September 28 - October 4, 2025)**
+**Goal: Primary Business Value - FMS Conversion Funnel**
+**Epic Focus: Epic 1 (FMS Funnel) + Epic 4 (Timetable)**
 
-#### **Wednesday, September 18**
-**Deployment & Hosting Day**
-- [ ] Set up Vercel project and connect to GitHub
-- [ ] Configure environment variables for production
-- [ ] Deploy initial version and test live functionality
-- [ ] Set up custom domain (if available)
-- [ ] Configure email delivery for production
+#### **Core Value Sprint Tasks:**
+- [ ] **FMS-001:** Landing page with trust elements
+- [ ] **FMS-002:** Two-step form with validation
+- [ ] **TIMETABLE-001:** CMS timetable fallback system
+- [ ] Performance monitoring active during development
+- [ ] End-to-end FMS funnel testing with analytics tracking
+
+### **Week 2-3: Engagement Phase (October 5-11, 2025)**
+**Goal: Member Retention and Trust Building**
+**Epic Focus: Epic 2 (Portal) + Epic 5 (Trust) + Epic 3 (Content)**
+
+#### **Engagement Sprint Tasks:**
+- [ ] **PORTAL-001:** Authentication gate implementation
+- [ ] **TRUST-001:** Testimonials carousel
+- [ ] **FMS-003:** Success page & admin notifications
+- [ ] **CONTENT-002:** Condition hubs (Shoulder & Low-Back)
+- [ ] Integration testing for member portal workflow
+
+### **Week 3-4: Polish & Launch Phase (October 12-18, 2025)**
+**Goal: Launch Readiness and Advanced Features**
+**Epic Focus: Epic 2 (Portal Complete) + Epic 3 (Articles) + Epic 6 (Analytics) + Epic 8 (Chat)**
+
+#### **Launch Sprint Tasks:**
+- [ ] **PORTAL-002:** Programming notes & movement library
+- [ ] **CONTENT-003:** Article publishing & SEO optimization
+- [ ] **ANALYTICS-002:** KPI dashboard setup
+- [ ] **CHAT-001:** Tawk.to integration with CMS toggle
+- [ ] Final performance optimization and quality assurance
+- [ ] Launch readiness review and go-live preparation
 
 #### **Thursday, September 19**
 **Content & Pages Day**

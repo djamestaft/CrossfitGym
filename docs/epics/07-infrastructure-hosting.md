@@ -1,7 +1,7 @@
 # Epic 7: Infrastructure & Hosting
 
 **Epic ID:** EPIC-07  
-**Priority:** Critical Foundation  
+**Priority:** ⭐ Critical Foundation  
 **Business Value:** Reliable delivery and operations  
 **Technical Complexity:** Medium  
 **Effort Estimate:** 6-8 story points  
