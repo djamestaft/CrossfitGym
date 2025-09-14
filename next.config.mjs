@@ -10,11 +10,8 @@ const nextConfig = {
   experimental: {
     workerThreads: false,
     cpus: 1,
-    optimizeCss: true,
     scrollRestoration: true,
   },
-  // Disable telemetry to prevent hanging
-  telemetry: false,
   // Optimize for production builds
   swcMinify: true,
   compiler: {
@@ -56,6 +53,14 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Optimize bundle splitting
     if (!isServer) {
+      // Ensure splitChunks is an object
+      if (!config.optimization.splitChunks || typeof config.optimization.splitChunks !== 'object') {
+        config.optimization.splitChunks = {
+          chunks: 'all',
+          cacheGroups: {}
+        }
+      }
+      
       config.optimization.splitChunks.cacheGroups = {
         ...config.optimization.splitChunks.cacheGroups,
         vendor: {
