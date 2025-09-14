@@ -1,16 +1,24 @@
-import type { Metadata } from "next"
-import { notFound } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Clock, User, Calendar, BookOpen, Share2 } from "lucide-react"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import {
+  ArrowRight,
+  Clock,
+  User,
+  Calendar,
+  BookOpen,
+  Share2,
+} from 'lucide-react'
+import Link from 'next/link'
 
 // Mock data - in real implementation, this would come from Sanity CMS
 const articlesData = {
-  "desk-worker-shoulder-pain": {
+  'desk-worker-shoulder-pain': {
     title: "Desk Worker's Guide to Shoulder Pain Prevention",
-    description: "Simple exercises and ergonomic tips to prevent shoulder pain from prolonged desk work.",
+    description:
+      'Simple exercises and ergonomic tips to prevent shoulder pain from prolonged desk work.',
     content: `
       <h2>The Desk Worker's Dilemma</h2>
       <p>If you spend most of your day at a desk, you're not alone in experiencing shoulder pain. Poor posture, repetitive movements, and prolonged static positions can lead to muscle imbalances and discomfort.</p>
@@ -50,24 +58,26 @@ const articlesData = {
         <li>Thoracic spine extensions</li>
       </ul>
     `,
-    category: "Prevention",
-    hub: "shoulder",
-    hubTitle: "Shoulder Pain & Movement",
-    lastUpdated: "2024-01-10",
-    readTime: "6 min read",
-    author: "Dr. Sarah Mitchell",
-    tags: ["desk work", "ergonomics", "prevention", "exercises"],
+    category: 'Prevention',
+    hub: 'shoulder',
+    hubTitle: 'Shoulder Pain & Movement',
+    lastUpdated: '2024-01-10',
+    readTime: '6 min read',
+    author: 'Dr. Sarah Mitchell',
+    tags: ['desk work', 'ergonomics', 'prevention', 'exercises'],
     relatedArticles: [
       {
-        slug: "rotator-cuff-exercises",
-        title: "Essential Rotator Cuff Strengthening Exercises",
-        excerpt: "Evidence-based exercises to strengthen and protect your rotator cuff.",
+        slug: 'rotator-cuff-exercises',
+        title: 'Essential Rotator Cuff Strengthening Exercises',
+        excerpt:
+          'Evidence-based exercises to strengthen and protect your rotator cuff.',
       },
     ],
   },
-  "rotator-cuff-exercises": {
-    title: "Essential Rotator Cuff Strengthening Exercises",
-    description: "Evidence-based exercises to strengthen and protect your rotator cuff muscles.",
+  'rotator-cuff-exercises': {
+    title: 'Essential Rotator Cuff Strengthening Exercises',
+    description:
+      'Evidence-based exercises to strengthen and protect your rotator cuff muscles.',
     content: `
       <h2>Understanding Your Rotator Cuff</h2>
       <p>The rotator cuff consists of four muscles that work together to stabilize your shoulder joint. These muscles are crucial for overhead activities and maintaining shoulder health.</p>
@@ -128,24 +138,26 @@ const articlesData = {
         <li>Allow rest days between sessions</li>
       </ul>
     `,
-    category: "Exercise",
-    hub: "shoulder",
-    hubTitle: "Shoulder Pain & Movement",
-    lastUpdated: "2024-01-12",
-    readTime: "8 min read",
-    author: "Dr. Mark Thompson",
-    tags: ["rotator cuff", "strengthening", "rehabilitation", "exercises"],
+    category: 'Exercise',
+    hub: 'shoulder',
+    hubTitle: 'Shoulder Pain & Movement',
+    lastUpdated: '2024-01-12',
+    readTime: '8 min read',
+    author: 'Dr. Mark Thompson',
+    tags: ['rotator cuff', 'strengthening', 'rehabilitation', 'exercises'],
     relatedArticles: [
       {
-        slug: "desk-worker-shoulder-pain",
+        slug: 'desk-worker-shoulder-pain',
         title: "Desk Worker's Guide to Shoulder Pain Prevention",
-        excerpt: "Simple exercises and ergonomic tips to prevent shoulder pain from desk work.",
+        excerpt:
+          'Simple exercises and ergonomic tips to prevent shoulder pain from desk work.',
       },
     ],
   },
-  "core-strengthening-back-pain": {
-    title: "Core Strengthening for Back Pain Prevention",
-    description: "Learn the most effective core exercises to support your lower back and prevent pain.",
+  'core-strengthening-back-pain': {
+    title: 'Core Strengthening for Back Pain Prevention',
+    description:
+      'Learn the most effective core exercises to support your lower back and prevent pain.',
     content: `
       <h2>The Core-Back Pain Connection</h2>
       <p>Your core muscles act as a natural corset, providing stability and support for your spine. Weak core muscles can contribute to poor posture and increased stress on the lower back.</p>
@@ -212,24 +224,26 @@ const articlesData = {
         <li>Ignoring proper form</li>
       </ul>
     `,
-    category: "Exercise",
-    hub: "low-back",
-    hubTitle: "Low Back Pain Solutions",
-    lastUpdated: "2024-01-15",
-    readTime: "7 min read",
-    author: "Dr. Sarah Mitchell",
-    tags: ["core strength", "back pain", "prevention", "stability"],
+    category: 'Exercise',
+    hub: 'low-back',
+    hubTitle: 'Low Back Pain Solutions',
+    lastUpdated: '2024-01-15',
+    readTime: '7 min read',
+    author: 'Dr. Sarah Mitchell',
+    tags: ['core strength', 'back pain', 'prevention', 'stability'],
     relatedArticles: [
       {
-        slug: "sitting-posture-back-health",
-        title: "Optimal Sitting Posture for Back Health",
-        excerpt: "How to set up your workspace and maintain good posture throughout the day.",
+        slug: 'sitting-posture-back-health',
+        title: 'Optimal Sitting Posture for Back Health',
+        excerpt:
+          'How to set up your workspace and maintain good posture throughout the day.',
       },
     ],
   },
-  "sitting-posture-back-health": {
-    title: "Optimal Sitting Posture for Back Health",
-    description: "How to set up your workspace and maintain good posture throughout the day.",
+  'sitting-posture-back-health': {
+    title: 'Optimal Sitting Posture for Back Health',
+    description:
+      'How to set up your workspace and maintain good posture throughout the day.',
     content: `
       <h2>The Modern Sitting Challenge</h2>
       <p>The average office worker spends 10+ hours per day sitting. Poor sitting posture is a major contributor to lower back pain and can lead to long-term spinal problems.</p>
@@ -307,18 +321,19 @@ const articlesData = {
         <li>Strengthen your core and back muscles</li>
       </ul>
     `,
-    category: "Prevention",
-    hub: "low-back",
-    hubTitle: "Low Back Pain Solutions",
-    lastUpdated: "2024-01-18",
-    readTime: "9 min read",
-    author: "Dr. Mark Thompson",
-    tags: ["posture", "ergonomics", "workplace health", "prevention"],
+    category: 'Prevention',
+    hub: 'low-back',
+    hubTitle: 'Low Back Pain Solutions',
+    lastUpdated: '2024-01-18',
+    readTime: '9 min read',
+    author: 'Dr. Mark Thompson',
+    tags: ['posture', 'ergonomics', 'workplace health', 'prevention'],
     relatedArticles: [
       {
-        slug: "core-strengthening-back-pain",
-        title: "Core Strengthening for Back Pain Prevention",
-        excerpt: "Learn the most effective core exercises to support your lower back.",
+        slug: 'core-strengthening-back-pain',
+        title: 'Core Strengthening for Back Pain Prevention',
+        excerpt:
+          'Learn the most effective core exercises to support your lower back.',
       },
     ],
   },
@@ -330,12 +345,14 @@ interface ArticlePageProps {
   }
 }
 
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ArticlePageProps): Promise<Metadata> {
   const article = articlesData[params.slug as keyof typeof articlesData]
 
   if (!article) {
     return {
-      title: "Article Not Found | Geelong Movement Co",
+      title: 'Article Not Found | Geelong Movement Co',
     }
   }
 
@@ -345,7 +362,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     openGraph: {
       title: `${article.title} | Geelong Movement Co`,
       description: article.description,
-      type: "article",
+      type: 'article',
     },
   }
 }
@@ -358,45 +375,45 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
+    '@context': 'https://schema.org',
+    '@type': 'Article',
     headline: article.title,
     description: article.description,
     author: {
-      "@type": "Person",
+      '@type': 'Person',
       name: article.author,
     },
     publisher: {
-      "@type": "Organization",
-      name: "Geelong Movement Co",
+      '@type': 'Organization',
+      name: 'Geelong Movement Co',
     },
     dateModified: article.lastUpdated,
     articleSection: article.category,
-    keywords: article.tags.join(", "),
+    keywords: article.tags.join(', '),
     mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://geelongmovement.com/articles/${params.slug}`,
+      '@type': 'WebPage',
+      '@id': `https://geelongmovement.com/articles/${params.slug}`,
     },
   }
 
   const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
     itemListElement: [
       {
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: 1,
-        name: "Home",
-        item: "https://geelongmovement.com",
+        name: 'Home',
+        item: 'https://geelongmovement.com',
       },
       {
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: 2,
-        name: "Articles",
-        item: "https://geelongmovement.com/articles",
+        name: 'Articles',
+        item: 'https://geelongmovement.com/articles',
       },
       {
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: 3,
         name: article.title,
         item: `https://geelongmovement.com/articles/${params.slug}`,
@@ -406,53 +423,71 @@ export default function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
-      <div className="min-h-screen bg-background">
+      <div className='min-h-screen bg-background'>
         {/* Breadcrumb */}
-        <nav className="bg-muted py-4" aria-label="Breadcrumb">
-          <div className="container mx-auto px-4">
-            <ol className="flex items-center space-x-2 text-sm">
+        <nav className='bg-muted py-4' aria-label='Breadcrumb'>
+          <div className='container mx-auto px-4'>
+            <ol className='flex items-center space-x-2 text-sm'>
               <li>
-                <Link href="/" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href='/'
+                  className='text-muted-foreground hover:text-foreground'
+                >
                   Home
                 </Link>
               </li>
-              <li className="text-muted-foreground">/</li>
+              <li className='text-muted-foreground'>/</li>
               <li>
-                <Link href={`/hubs/${article.hub}`} className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href={`/hubs/${article.hub}`}
+                  className='text-muted-foreground hover:text-foreground'
+                >
                   {article.hubTitle}
                 </Link>
               </li>
-              <li className="text-muted-foreground">/</li>
-              <li className="text-foreground font-medium">{article.title}</li>
+              <li className='text-muted-foreground'>/</li>
+              <li className='text-foreground font-medium'>{article.title}</li>
             </ol>
           </div>
         </nav>
 
         {/* Header */}
-        <header className="bg-gradient-to-b from-muted to-background py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-center gap-2 mb-4">
-                <Badge variant="secondary">{article.category}</Badge>
-                <Badge variant="outline">{article.hubTitle}</Badge>
+        <header className='bg-gradient-to-b from-muted to-background py-12'>
+          <div className='container mx-auto px-4'>
+            <div className='max-w-4xl mx-auto'>
+              <div className='flex items-center gap-2 mb-4'>
+                <Badge variant='secondary'>{article.category}</Badge>
+                <Badge variant='outline'>{article.hubTitle}</Badge>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{article.title}</h1>
-              <p className="text-xl text-muted-foreground mb-6 text-balance">{article.description}</p>
+              <h1 className='text-4xl md:text-5xl font-bold mb-4 text-balance'>
+                {article.title}
+              </h1>
+              <p className='text-xl text-muted-foreground mb-6 text-balance'>
+                {article.description}
+              </p>
 
-              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
+              <div className='flex flex-wrap items-center gap-4 text-sm text-muted-foreground'>
+                <div className='flex items-center gap-2'>
+                  <User className='h-4 w-4' />
                   <span>{article.author}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Updated {new Date(article.lastUpdated).toLocaleDateString()}</span>
+                <div className='flex items-center gap-2'>
+                  <Calendar className='h-4 w-4' />
+                  <span>
+                    Updated {new Date(article.lastUpdated).toLocaleDateString()}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
+                <div className='flex items-center gap-2'>
+                  <Clock className='h-4 w-4' />
                   <span>{article.readTime}</span>
                 </div>
               </div>
@@ -460,37 +495,40 @@ export default function ArticlePage({ params }: ArticlePageProps) {
           </div>
         </header>
 
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid lg:grid-cols-3 gap-12">
+        <div className='container mx-auto px-4 py-12'>
+          <div className='max-w-4xl mx-auto'>
+            <div className='grid lg:grid-cols-3 gap-12'>
               {/* Main Content */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className='lg:col-span-2 space-y-8'>
                 {/* Article Content */}
                 <div
-                  className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground"
+                  className='prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground'
                   dangerouslySetInnerHTML={{ __html: article.content }}
                 />
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className='flex flex-wrap gap-2'>
                   {article.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
+                    <Badge key={index} variant='outline' className='text-xs'>
                       {tag}
                     </Badge>
                   ))}
                 </div>
 
                 {/* CTA */}
-                <Card className="bg-primary text-primary-foreground">
-                  <CardContent className="pt-6">
-                    <h2 className="text-xl font-semibold mb-2">Ready to Take Action?</h2>
-                    <p className="mb-4 opacity-90">
-                      Get a personalized movement assessment to address your specific needs and goals.
+                <Card className='bg-primary text-primary-foreground'>
+                  <CardContent className='pt-6'>
+                    <h2 className='text-xl font-semibold mb-2'>
+                      Ready to Take Action?
+                    </h2>
+                    <p className='mb-4 opacity-90'>
+                      Get a personalized movement assessment to address your
+                      specific needs and goals.
                     </p>
-                    <Button variant="secondary" asChild>
-                      <Link href="/fms">
+                    <Button variant='secondary' asChild>
+                      <Link href='/fms'>
                         Book Free Assessment
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className='ml-2 h-4 w-4' />
                       </Link>
                     </Button>
                   </CardContent>
@@ -498,20 +536,25 @@ export default function ArticlePage({ params }: ArticlePageProps) {
               </div>
 
               {/* Sidebar */}
-              <div className="space-y-8">
+              <div className='space-y-8'>
                 {/* Share */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Share2 className="h-5 w-5" />
+                    <CardTitle className='flex items-center gap-2'>
+                      <Share2 className='h-5 w-5' />
                       Share Article
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      Found this helpful? Share it with others who might benefit.
+                    <p className='text-sm text-muted-foreground mb-3'>
+                      Found this helpful? Share it with others who might
+                      benefit.
                     </p>
-                    <Button variant="outline" size="sm" className="w-full bg-transparent">
+                    <Button
+                      variant='outline'
+                      size='sm'
+                      className='w-full bg-transparent'
+                    >
                       Copy Link
                     </Button>
                   </CardContent>
@@ -521,23 +564,25 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                 {article.relatedArticles.length > 0 && (
                   <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <BookOpen className="h-5 w-5" />
+                      <CardTitle className='flex items-center gap-2'>
+                        <BookOpen className='h-5 w-5' />
                         Related Articles
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className='space-y-4'>
                       {article.relatedArticles.map((relatedArticle, index) => (
-                        <div key={index} className="space-y-2">
-                          <h3 className="font-semibold text-sm">
+                        <div key={index} className='space-y-2'>
+                          <h3 className='font-semibold text-sm'>
                             <Link
                               href={`/articles/${relatedArticle.slug}`}
-                              className="hover:text-primary transition-colors"
+                              className='hover:text-primary transition-colors'
                             >
                               {relatedArticle.title}
                             </Link>
                           </h3>
-                          <p className="text-xs text-muted-foreground">{relatedArticle.excerpt}</p>
+                          <p className='text-xs text-muted-foreground'>
+                            {relatedArticle.excerpt}
+                          </p>
                         </div>
                       ))}
                     </CardContent>
@@ -549,15 +594,19 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                   <CardHeader>
                     <CardTitle>Explore More</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full bg-transparent" asChild>
+                  <CardContent className='space-y-3'>
+                    <Button
+                      variant='outline'
+                      className='w-full bg-transparent'
+                      asChild
+                    >
                       <Link href={`/hubs/${article.hub}`}>
                         Back to {article.hubTitle}
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className='ml-2 h-4 w-4' />
                       </Link>
                     </Button>
-                    <Button className="w-full" asChild>
-                      <Link href="/fms">Book Assessment</Link>
+                    <Button className='w-full' asChild>
+                      <Link href='/fms'>Book Assessment</Link>
                     </Button>
                   </CardContent>
                 </Card>

@@ -46,4 +46,3 @@ jest.mock('next/navigation', () => ({
 
 // Mock environment variables
 process.env.NODE_ENV = 'test'
-
