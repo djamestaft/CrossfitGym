@@ -17,7 +17,7 @@
 | [Epic 7: Infrastructure & Hosting](07-infrastructure-hosting.md) | ⭐ Critical | 6-8 SP | 0-1 | Reliable delivery & operations |
 | [Epic 8: Chat Integration](08-chat-integration.md) | Medium | 3-4 SP | 3-4 | User support without overload |
 
-**Total Story Points:** 59-75 SP  
+**Total Story Points:** 61-77 SP  
 **Critical Path:** Epic 7 → Epic 6 → Epic 3 → Epic 1  
 
 ## 🎯 MVP Success Criteria
@@ -70,9 +70,10 @@ Week 3-4: Polish & Launch (Advanced Features + Chat)
 - **ANALYTICS-002:** KPI dashboard setup (3 SP)
 - **ANALYTICS-003:** Performance monitoring & quality gates (3 SP)
 
-### Epic 7: Infrastructure & Hosting (6-8 SP)
+### Epic 7: Infrastructure & Hosting (8-10 SP)
 - **INFRA-001:** Vercel project & CI/CD pipeline (4 SP)
 - **INFRA-002:** Monitoring & health checks (3 SP)
+- **INFRA-003:** Navigation components (header/footer) (2 SP)
 
 ### Epic 8: Chat Integration (3-4 SP)
 - **CHAT-001:** Tawk.to integration with CMS toggle (3 SP)
