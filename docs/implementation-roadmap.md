@@ -1,6 +1,5 @@
 # GMC Implementation Roadmap — Accelerated MVP Launch
 
-
 **Target Launch: October 18, 2025 (4-week MVP from Sep 16)**
 
 ---
