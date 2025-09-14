@@ -1,4 +1,4 @@
-import { GET } from '../api/health/route'
+import { GET } from '../app/api/health/route'
 
 describe('/api/health', () => {
   it('should return healthy status', async () => {
