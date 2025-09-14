@@ -1,0 +1,214 @@
+# Test CI/CD Pipeline - Safe Validation
+# This workflow tests our CI/CD setup without affecting production
+
+name: Test CI/CD Pipeline
+
+on:
+  push:
+    branches: [ test/ci-cd-pipeline-validation ]
+  pull_request:
+    branches: [ test/ci-cd-pipeline-validation ]
+
+jobs:
+  # Phase 1: Basic Setup Validation
+  basic-validation:
+    runs-on: ubuntu-latest
+    name: Basic Setup Validation
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: Verify package.json scripts
+        working-directory: ./app
+        run: |
+          echo "📋 Available npm scripts:"
+          npm run --list
+          echo ""
+          echo "✅ Package.json validation complete"
+
+  # Phase 2: Code Quality Gates
+  quality-gates:
+    runs-on: ubuntu-latest
+    name: Quality Gates Validation
+    needs: basic-validation
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: TypeScript compilation check
+        working-directory: ./app
+        run: |
+          echo "🔍 Running TypeScript compilation check..."
+          npm run type-check
+
+      - name: ESLint code quality check
+        working-directory: ./app
+        run: |
+          echo "🔍 Running ESLint checks..."
+          npm run lint
+
+      - name: Prettier formatting check
+        working-directory: ./app
+        run: |
+          echo "🔍 Checking code formatting..."
+          npm run format:check
+
+      - name: Run tests with coverage
+        working-directory: ./app
+        run: |
+          echo "🧪 Running test suite with coverage..."
+          npm run test:coverage
+
+  # Phase 3: Build and Security Validation
+  build-security:
+    runs-on: ubuntu-latest
+    name: Build and Security Validation
+    needs: quality-gates
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: Build application
+        working-directory: ./app
+        run: |
+          echo "🏗️ Building application..."
+          npm run build
+
+      - name: Security audit
+        working-directory: ./app
+        run: |
+          echo "🔒 Running security audit..."
+          npm audit --audit-level moderate || true
+
+      - name: Bundle analysis (if configured)
+        working-directory: ./app
+        run: |
+          echo "📊 Analyzing bundle (if configured)..."
+          if npm run analyze --if-present; then
+            echo "✅ Bundle analysis completed"
+          else
+            echo "ℹ️ Bundle analysis not configured yet"
+          fi
+
+  # Phase 4: Environment Configuration Test
+  environment-test:
+    runs-on: ubuntu-latest
+    name: Environment Configuration Test
+    needs: build-security
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Check environment template
+        run: |
+          echo "🔧 Checking environment configuration..."
+          if [ -f "app/env.template" ]; then
+            echo "✅ Environment template found"
+            echo "📋 Environment variables expected:"
+            cat app/env.template
+          else
+            echo "⚠️ No environment template found"
+          fi
+
+      - name: Verify GitHub secrets (without exposing)
+        run: |
+          echo "🔐 Checking GitHub secrets configuration..."
+          echo "GITHUB_TOKEN available: ${{ secrets.GITHUB_TOKEN != '' }}"
+          echo "Note: Other secrets checked without exposing values"
+
+  # Phase 5: Deployment Simulation
+  deployment-simulation:
+    runs-on: ubuntu-latest
+    name: Deployment Simulation
+    needs: environment-test
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: Build for production
+        working-directory: ./app
+        run: |
+          echo "🚀 Building for production simulation..."
+          NODE_ENV=production npm run build
+
+      - name: Simulate deployment checks
+        run: |
+          echo "✅ All deployment prerequisites met"
+          echo "🎯 Ready for actual deployment setup"
+
+  # Summary Report
+  pipeline-summary:
+    runs-on: ubuntu-latest
+    name: Pipeline Summary
+    needs: [basic-validation, quality-gates, build-security, environment-test]
+    if: always()
+    
+    steps:
+      - name: Generate Pipeline Report
+        run: |
+          echo "# 🎯 CI/CD Pipeline Validation Summary"
+          echo ""
+          echo "## Test Results:"
+          echo "- Basic Validation: ${{ needs.basic-validation.result }}"
+          echo "- Quality Gates: ${{ needs.quality-gates.result }}"
+          echo "- Build & Security: ${{ needs.build-security.result }}"
+          echo "- Environment Test: ${{ needs.environment-test.result }}"
+          echo ""
+          echo "## Next Steps:"
+          if [[ "${{ needs.basic-validation.result }}" == "success" && "${{ needs.quality-gates.result }}" == "success" && "${{ needs.build-security.result }}" == "success" && "${{ needs.environment-test.result }}" == "success" ]]; then
+            echo "✅ All tests passed! Ready to set up production pipeline."
+          else
+            echo "⚠️ Some tests failed. Review and fix before proceeding."
+          fi

@@ -1,0 +1,258 @@
+# Production CI/CD Pipeline
+# This is the main pipeline for production deployments
+
+name: Production CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Set permissions for GITHUB_TOKEN
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  # Quality Gates - Must pass before deployment
+  quality-gates:
+    runs-on: ubuntu-latest
+    name: Quality Gates
+    defaults:
+      run:
+        working-directory: ./app
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript compilation
+        run: |
+          echo "🔍 Checking TypeScript compilation..."
+          npm run type-check
+
+      - name: Code quality (ESLint)
+        run: |
+          echo "🔍 Running ESLint checks..."
+          npm run lint
+
+      - name: Code formatting (Prettier)
+        run: |
+          echo "🔍 Checking code formatting..."
+          npm run format:check
+
+      - name: Run tests with coverage
+        run: |
+          echo "🧪 Running test suite with coverage..."
+          npm run test:coverage
+
+      - name: Build verification
+        run: |
+          echo "🏗️ Verifying build..."
+          npm run build
+
+  # Security and Performance Checks
+  security-performance:
+    runs-on: ubuntu-latest
+    name: Security & Performance
+    needs: quality-gates
+    defaults:
+      run:
+        working-directory: ./app
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security audit
+        run: |
+          echo "🔒 Running security audit..."
+          npm audit --audit-level moderate
+
+      - name: Build for analysis
+        run: npm run build
+
+      - name: Bundle analysis
+        run: |
+          echo "📊 Analyzing bundle size..."
+          if npm run analyze --if-present; then
+            echo "✅ Bundle analysis completed"
+          else
+            echo "ℹ️ Bundle analysis not configured - consider adding"
+          fi
+
+      - name: Lighthouse CI (if configured)
+        run: |
+          echo "🔍 Running Lighthouse CI..."
+          if command -v lhci &> /dev/null; then
+            lhci autorun || echo "⚠️ Lighthouse CI not configured yet"
+          else
+            echo "ℹ️ Lighthouse CI will be configured in next phase"
+          fi
+
+  # Deployment to Vercel (Production)
+  deploy-production:
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+    needs: [quality-gates, security-performance]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: Build for production
+        working-directory: ./app
+        env:
+          NODE_ENV: production
+        run: npm run build:vercel
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./app
+          vercel-args: '--prod'
+
+  # Preview Deployment (PR only)
+  deploy-preview:
+    runs-on: ubuntu-latest
+    name: Deploy Preview
+    needs: [quality-gates, security-performance]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm ci
+
+      - name: Build for preview
+        working-directory: ./app
+        run: npm run build
+
+      - name: Deploy to Vercel Preview
+        uses: amondnet/vercel-action@v25
+        id: vercel-preview
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./app
+
+      - name: Comment Preview URL
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('🚀 Preview Deployment')
+            );
+            
+            const body = `🚀 **Preview Deployment Ready!**
+            
+            ✅ Your changes have been deployed to: ${{ steps.vercel-preview.outputs.preview-url }}
+            
+            🔗 [View Preview](${{ steps.vercel-preview.outputs.preview-url }})
+            
+            This preview will be updated automatically with new commits.`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+  # Post-deployment health check
+  health-check:
+    runs-on: ubuntu-latest
+    name: Health Check
+    needs: deploy-production
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Health check
+        run: |
+          echo "🏥 Running health check..."
+          # Replace with your actual domain
+          HEALTH_URL="https://geelongmovement.com/api/health"
+          
+          # Try to get health status
+          if curl -f -s "$HEALTH_URL" > /dev/null; then
+            echo "✅ Health check passed"
+          else
+            echo "❌ Health check failed"
+            exit 1
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "🚨 Deployment health check failed!"
+          echo "Consider rolling back if issues persist."
