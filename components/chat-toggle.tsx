@@ -11,6 +11,20 @@ declare global {
       toggle?: () => void
       hideWidget?: () => void
       showWidget?: () => void
+      minimize?: () => void
+      maximize?: () => void
+      onLoad?: () => void
+      onStatusChange?: (status: string) => void
+      onChatMaximized?: () => void
+      onChatMinimized?: () => void
+      onChatHidden?: () => void
+      onChatStarted?: () => void
+      onChatEnded?: () => void
+      visitor?: {
+        name?: string
+        email?: string
+        [key: string]: unknown
+      }
     }
     Tawk_LoadStart?: Date
   }
@@ -37,28 +51,32 @@ export function ChatToggle() {
       setIsLoaded(true)
 
       // Configure Tawk.to
-      window.Tawk_API.onLoad = () => {
-        // Hide the default widget
-        window.Tawk_API.hideWidget()
-        setIsVisible(true)
-      }
+      if (window.Tawk_API) {
+        window.Tawk_API.onLoad = () => {
+          // Hide the default widget
+          if (window.Tawk_API?.hideWidget) {
+            window.Tawk_API.hideWidget()
+          }
+          setIsVisible(true)
+        }
 
-      window.Tawk_API.onChatMaximized = () => {
-        setIsMinimized(false)
-        trackChatEngagement('maximized')
-      }
+        window.Tawk_API.onChatMaximized = () => {
+          setIsMinimized(false)
+          trackChatEngagement('maximized')
+        }
 
-      window.Tawk_API.onChatMinimized = () => {
-        setIsMinimized(true)
-        trackChatEngagement('minimized')
-      }
+        window.Tawk_API.onChatMinimized = () => {
+          setIsMinimized(true)
+          trackChatEngagement('minimized')
+        }
 
-      window.Tawk_API.onChatStarted = () => {
-        trackChatEngagement('started')
-      }
+        window.Tawk_API.onChatStarted = () => {
+          trackChatEngagement('started')
+        }
 
-      window.Tawk_API.onChatEnded = () => {
-        trackChatEngagement('ended')
+        window.Tawk_API.onChatEnded = () => {
+          trackChatEngagement('ended')
+        }
       }
     }
 
@@ -75,10 +93,14 @@ export function ChatToggle() {
   const toggleChat = () => {
     if (window.Tawk_API) {
       if (isMinimized) {
-        window.Tawk_API.maximize()
+        if (window.Tawk_API.maximize) {
+          window.Tawk_API.maximize()
+        }
         trackChatEngagement('toggle_open')
       } else {
-        window.Tawk_API.minimize()
+        if (window.Tawk_API.minimize) {
+          window.Tawk_API.minimize()
+        }
         trackChatEngagement('toggle_close')
       }
     }
