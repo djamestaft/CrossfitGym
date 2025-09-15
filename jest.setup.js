@@ -86,7 +86,7 @@ global.windowturnstile = global.turnstile
 const originalAppendChild = document.head.appendChild
 const originalRemoveChild = document.head.removeChild
 
-document.head.appendChild = jest.fn((script) => {
+document.head.appendChild = jest.fn(script => {
   if (script.id === 'turnstile-script') {
     // Simulate script loading success
     setTimeout(() => {
@@ -97,7 +97,7 @@ document.head.appendChild = jest.fn((script) => {
   return originalAppendChild.call(document.head, script)
 })
 
-document.head.removeChild = jest.fn((node) => {
+document.head.removeChild = jest.fn(node => {
   // Don't fail on script removal during tests
   if (node && typeof node.id === 'string' && node.id.includes('turnstile')) {
     return node
