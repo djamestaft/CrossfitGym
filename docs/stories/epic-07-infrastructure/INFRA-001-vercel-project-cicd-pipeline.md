@@ -207,7 +207,7 @@ jobs:
       - uses: actions/setup-node@v3
         with: { node-version: '18', cache: 'npm' }
       - run: npm ci
-      
+
       # Core Quality Checks
       - run: npm run type-check
       - run: npm run lint
@@ -219,7 +219,7 @@ jobs:
         run: npm run test:e2e:ci
       - name: Accessibility Tests
         run: npm run test:a11y
-      
+
       # Build & Security
       - run: npm run build
       - run: npm audit --audit-level moderate

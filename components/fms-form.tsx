@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -34,6 +34,7 @@ export function FMSForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [formStartTime] = useState(Date.now())
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -44,6 +45,30 @@ export function FMSForm() {
     injuryFlags: [],
     experience: '',
   })
+
+  // Track form abandonment on component unmount
+  useEffect(() => {
+    return () => {
+      // Only track abandonment if form was started but not submitted
+      if (!isSubmitted && (formData.name || formData.email || formData.phone)) {
+        const timeSpent = Math.floor((Date.now() - formStartTime) / 1000)
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'fms_form_abandon', {
+            event_category: 'engagement',
+            event_label: `abandoned_step_${step}`,
+            value: timeSpent,
+          })
+        }
+      }
+    }
+  }, [
+    isSubmitted,
+    formData.name,
+    formData.email,
+    formData.phone,
+    step,
+    formStartTime,
+  ])
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {}
@@ -106,14 +131,27 @@ export function FMSForm() {
     setIsSubmitting(true)
 
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Submit form to API
+      const response = await fetch('/api/fms/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // GA4 event
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Submission failed')
+      }
+
+      // GA4 event for successful submission
       if (typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'fms_submit', {
           event_category: 'conversion',
           event_label: 'FMS Form Complete',
+          value: 1,
         })
       }
 
@@ -124,7 +162,13 @@ export function FMSForm() {
         // eslint-disable-next-line no-console
         console.error('Form submission error:', error)
       }
-      setErrors({ submit: 'Something went wrong. Please try again.' })
+
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.'
+
+      setErrors({ submit: errorMessage })
     } finally {
       setIsSubmitting(false)
     }
