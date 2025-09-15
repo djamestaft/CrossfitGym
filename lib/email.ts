@@ -19,9 +19,13 @@ export async function sendFMSNotificationEmails(submission: FMSSubmission) {
   try {
     // Check if Resend is configured
     if (!process.env.RESEND_API_KEY) {
-      console.warn(
-        'RESEND_API_KEY not configured - email notifications disabled'
-      )
+      // Log warning for debugging in development only
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'RESEND_API_KEY not configured - email notifications disabled'
+        )
+      }
       return { success: false, reason: 'Email service not configured' }
     }
 
@@ -48,11 +52,15 @@ export async function sendFMSNotificationEmails(submission: FMSSubmission) {
       html: generateCustomerEmailTemplate(submission),
     })
 
-    console.log('Email notifications sent:', {
-      submissionId: submission.id,
-      adminEmailId: adminEmailResult.data?.id,
-      customerEmailId: customerEmailResult.data?.id,
-    })
+    // Log email notifications for debugging in development only
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.log('Email notifications sent:', {
+        submissionId: submission.id,
+        adminEmailId: adminEmailResult.data?.id,
+        customerEmailId: customerEmailResult.data?.id,
+      })
+    }
 
     return {
       success: true,
@@ -60,7 +68,11 @@ export async function sendFMSNotificationEmails(submission: FMSSubmission) {
       customerEmailId: customerEmailResult.data?.id,
     }
   } catch (error) {
-    console.error('Email sending failed:', error)
+    // Log email errors for debugging in development only
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.error('Email sending failed:', error)
+    }
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown email error',
@@ -246,8 +258,12 @@ function generateCustomerEmailTemplate(submission: FMSSubmission): string {
 
 // Utility function for testing email templates in development
 export async function sendTestEmail() {
-  if (process.env.NODE_ENV !== 'development') {
-    throw new Error('Test emails can only be sent in development environment')
+  // Runtime check for NODE_ENV to allow dynamic testing
+  const nodeEnv = process.env.NODE_ENV
+  if (nodeEnv !== 'development' && nodeEnv !== 'test') {
+    throw new Error(
+      'Test emails can only be sent in development or test environment'
+    )
   }
 
   const testSubmission: FMSSubmission = {

@@ -244,38 +244,17 @@ describe('FMS Form Integration Tests', () => {
 
   describe('Security integration', () => {
     it('should validate origin in production environment', async () => {
-      // Ensure we're in production mode
-      // Mock production environment
-      
-      // Reset modules to ensure fresh import with new NODE_ENV
-      jest.resetModules()
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'production',
-          writable: false,
-          configurable: true,
-        })
-      
-      // Dynamically import the route after setting NODE_ENV
-      const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
-
+      // Use test header to simulate production mode
       const request = createMockRequest(validSubmissionData, {
         origin: 'https://malicious-site.com',
+        'x-test-production-mode': 'true',
       })
 
-      const response = await FreshPOST(request)
+      const response = await POST(request)
 
       expect(response.status).toBe(403)
       expect((await response.json()).message).toBe('Invalid origin')
       expect(mockSendFMSNotificationEmails).not.toHaveBeenCalled()
-
-      // Restore NODE_ENV
-      Object.defineProperty(process.env, 'NODE_ENV', {
-        value: 'test',
-        writable: false,
-        configurable: true,
-      })
-      jest.restoreAllMocks()
-      jest.resetModules()
     })
 
     it('should rate limit multiple rapid submissions', async () => {

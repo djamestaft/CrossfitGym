@@ -184,7 +184,9 @@ export function FMSForm() {
         }
       } else {
         // If any other flag is selected, remove "None of the above" and manage the flag
-        const otherFlags = prev.injuryFlags.filter(f => f !== 'None of the above')
+        const otherFlags = prev.injuryFlags.filter(
+          f => f !== 'None of the above'
+        )
         return {
           ...prev,
           injuryFlags: checked

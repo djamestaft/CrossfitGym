@@ -219,66 +219,28 @@ describe('/api/fms/submit', () => {
 
     describe('Security measures', () => {
       it('should reject requests from invalid origins in production', async () => {
-        // Mock production environment
-        
-        // Reset the module to pick up new NODE_ENV
-        jest.resetModules()
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'production',
-          writable: false,
-          configurable: true,
-        })
-        
-        // Dynamically import the route after setting NODE_ENV
-        const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
-
+        // Use test header to simulate production mode
         const request = createMockRequest(validFormData, {
           origin: 'https://malicious-site.com',
+          'x-test-production-mode': 'true',
         })
-        const response = await FreshPOST(request)
+        const response = await POST(request)
         const data = await response.json()
 
         expect(response.status).toBe(403)
         expect(data.success).toBe(false)
         expect(data.message).toBe('Invalid origin')
-
-        // Restore NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'test',
-          writable: false,
-          configurable: true,
-        })
-        jest.resetModules()
       })
 
       it('should accept requests from allowed origins in production', async () => {
-        // Mock production environment
-        
-        // Reset the module to pick up new NODE_ENV
-        jest.resetModules()
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'production',
-          writable: false,
-          configurable: true,
-        })
-        
-        // Dynamically import the route after setting NODE_ENV
-        const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
-
+        // Use test header to simulate production mode
         const request = createMockRequest(validFormData, {
           origin: 'https://geelongmovement.com',
+          'x-test-production-mode': 'true',
         })
-        const response = await FreshPOST(request)
+        const response = await POST(request)
 
         expect(response.status).toBe(201)
-
-        // Restore NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'test',
-          writable: false,
-          configurable: true,
-        })
-        jest.resetModules()
       })
 
       it('should reject requests that are too large', async () => {
