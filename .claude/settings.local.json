@@ -9,7 +9,20 @@
       "Bash(curl:*)",
       "Bash(npx jest:*)",
       "Bash(prettier:*)",
-      "Bash(npx prettier:*)"
+      "Bash(npx prettier:*)",
+      "Bash(mkdir:*)",
+      "Bash(KillShell:*)",
+      "Bash(pkill:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(dir:*)",
+      "Bash(ctrl+c)",
+      "Bash(rm:*)",
+      "Bash(npx tsc:*)",
+      "Bash(TASKKILL:*)",
+      "Read(//c/Users/djame/OneDrive/Pictures/Screenshots/**)"
     ],
     "deny": [],
     "ask": []

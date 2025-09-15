@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { Suspense } from 'react'
 import Script from 'next/script'
 import { ChatToggle } from '@/components/chat-toggle'
+import { Layout } from '@/components/layout/Layout'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -124,16 +125,18 @@ export default function RootLayout({
         />
 
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <meta name='theme-color' content='#3f2e2e' />
+        <meta name='theme-color' content='#166534' />
         <link rel='icon' href='/favicon.ico' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
         <link rel='manifest' href='/manifest.json' />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={<div>Loading...</div>}>
-          {children}
-          <Analytics />
-          <ChatToggle />
+          <Layout>
+            {children}
+            <Analytics />
+            <ChatToggle />
+          </Layout>
         </Suspense>
       </body>
     </html>
