@@ -1,1 +1,20 @@
+# Build artifacts
+.next/
+coverage/
+*.min.js
+*.min.css
+
+# Generated files
+tsconfig.tsbuildinfo
+
+# Documentation and test files that don't need formatting
 __tests__/components/fms-form-localstorage.test.tsx
+__tests__/manual/localStorage-manual-test.md
+localStorage-test-report.md
+localStorage-test-summary.md
+docs/**/*.md
+
+# Configuration files
+.claude/settings.local.json
+.eslintrc.json
+tsconfig.json
