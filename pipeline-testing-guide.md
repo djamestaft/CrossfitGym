@@ -36,7 +36,7 @@ git commit -m "feat: add CI/CD pipeline testing workflows
 git push origin test/ci-cd-pipeline-validation
 ```
 
-### Step 2: Monitor Test Results
+### Step 2: Monitor Test Results please
 
 1. Go to your GitHub repository
 2. Click on "Actions" tab
