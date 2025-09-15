@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 
 // Suppress React DOM 16.8 act warnings - from React Testing Library best practices
+// eslint-disable-next-line no-console
 const originalError = console.error
 beforeAll(() => {
   // eslint-disable-next-line no-console

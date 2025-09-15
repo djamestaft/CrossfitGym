@@ -192,11 +192,14 @@ describe('FMS Form Integration Tests', () => {
     })
 
     it('should handle submissions without marketing attribution', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         referralSource: _referralSource,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         utmSource: _utmSource,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         utmMedium: _utmMedium,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         utmCampaign: _utmCampaign,
         ...submissionWithoutUTM
       } = validSubmissionData
