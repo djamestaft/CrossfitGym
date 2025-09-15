@@ -22,7 +22,8 @@
       "Bash(rm:*)",
       "Bash(npx tsc:*)",
       "Bash(TASKKILL:*)",
-      "Read(//c/Users/djame/OneDrive/Pictures/Screenshots/**)"
+      "Read(//c/Users/djame/OneDrive/Pictures/Screenshots/**)",
+      "Bash(rename:*)"
     ],
     "deny": [],
     "ask": []

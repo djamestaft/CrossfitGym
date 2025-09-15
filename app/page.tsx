@@ -16,11 +16,11 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className='relative h-screen flex items-center justify-center overflow-hidden'>
+      <section className='relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden'>
         {/* Hero Background Image */}
         <div className='absolute inset-0 bg-cover bg-center bg-no-repeat'>
           <img
-            src='https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+            src='/images/hero-image.webp'
             alt='Movement therapy and fitness'
             className='w-full h-full object-cover'
           />
@@ -30,39 +30,32 @@ export default function HomePage() {
 
         {/* Hero Content */}
         <div className='relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto'>
-          <Badge variant='secondary' className='mb-6 bg-white/20 text-white border-white/30 backdrop-blur-sm'>
+          <Badge variant='secondary' className='mb-3 bg-white/20 text-white border-white/30 backdrop-blur-sm'>
             Geelong's Movement Specialists
           </Badge>
-          <h1 className='text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 leading-tight'>
+          <h1 className='text-2xl md:text-4xl lg:text-5xl font-bold text-balance mb-3 leading-tight'>
             Train Around Pain, Move Freely Again
           </h1>
-          <p className='text-lg md:text-xl text-gray-100 text-balance max-w-3xl mx-auto mb-8 leading-relaxed'>
+          <p className='text-sm md:text-base text-gray-100 text-balance max-w-3xl mx-auto mb-4 leading-relaxed'>
             Professional movement therapy and functional movement screening in
             Geelong. Expert physiotherapy and exercise rehabilitation to help
             you move without limitations.
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+          <div className='flex flex-col sm:flex-row gap-2 justify-center items-center'>
             <Button
               size='lg'
-              className='text-lg px-8 bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg'
+              className='text-sm px-5 bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg'
               asChild
             >
               <Link href='/fms'>
                 Get Your Free Assessment
-                <ArrowRight className='ml-2 h-5 w-5' />
+                <ArrowRight className='ml-2 h-4 w-4' />
               </Link>
             </Button>
-            <p className='text-sm text-gray-200'>
+            <p className='text-xs text-gray-200'>
               ✓ No obligation ✓ 45-minute comprehensive evaluation
             </p>
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce'>
-          <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 14l-7 7m0 0l-7-7m7 7V3' />
-          </svg>
         </div>
       </section>
 
