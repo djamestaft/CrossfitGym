@@ -3,6 +3,7 @@ import '@testing-library/jest-dom'
 // Suppress React DOM 16.8 act warnings - from React Testing Library best practices
 const originalError = console.error
 beforeAll(() => {
+  // eslint-disable-next-line no-console
   console.error = (...args) => {
     if (
       /Warning.*not wrapped in act/.test(args[0]) ||
@@ -17,6 +18,7 @@ beforeAll(() => {
 })
 
 afterAll(() => {
+  // eslint-disable-next-line no-console
   console.error = originalError
 })
 
