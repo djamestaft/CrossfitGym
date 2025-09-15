@@ -69,7 +69,7 @@ jobs:
         working-directory: ./
         run: |
           echo "🔍 Running ESLint checks..."
-          npx eslint . --ext .js,.jsx,.ts,.tsx
+          npm run lint
 
       - name: Prettier formatting check
         working-directory: ./

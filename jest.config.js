@@ -52,8 +52,8 @@ const config = {
   testTimeout: process.env.CI ? 15000 : 10000, // 15s in CI, 10s locally
   maxWorkers: process.env.CI ? 2 : '50%', // Limit workers in CI
   bail: process.env.CI ? 1 : 0, // Stop on first failure in CI
-  forceExit: process.env.CI, // Force exit in CI to prevent hanging
-  detectOpenHandles: process.env.CI, // Detect open handles in CI
+  forceExit: process.env.CI === 'true', // Force exit in CI to prevent hanging
+  detectOpenHandles: process.env.CI === 'true', // Detect open handles in CI
 }
 
 module.exports = config
