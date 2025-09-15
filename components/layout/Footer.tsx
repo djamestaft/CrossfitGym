@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
 
 export function Footer() {
@@ -8,16 +9,16 @@ export function Footer() {
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Business Info */}
           <div className='space-y-4'>
-            <div className='flex items-center space-x-2'>
-              <div className='h-10 w-10 bg-primary rounded-lg flex items-center justify-center shadow-sm'>
-                <span className='text-primary-foreground font-bold text-lg'>
-                  GMC
-                </span>
-              </div>
-              <span className='font-bold text-foreground'>
-                Geelong Movement Co
-              </span>
-            </div>
+            <Link href='/' className='flex items-center space-x-3'>
+              <Image
+                src='/images/logo.webp'
+                alt='Geelong Movement Co Logo'
+                width={100}
+                height={100}
+                className='w-auto h-8'
+              />
+             
+            </Link>
             <div className='space-y-2 text-sm text-muted-foreground'>
               <div className='flex items-start space-x-2'>
                 <MapPin className='h-4 w-4 mt-0.5 flex-shrink-0 text-primary' />

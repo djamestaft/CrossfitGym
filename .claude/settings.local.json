@@ -23,7 +23,8 @@
       "Bash(npx tsc:*)",
       "Bash(TASKKILL:*)",
       "Read(//c/Users/djame/OneDrive/Pictures/Screenshots/**)",
-      "Bash(rename:*)"
+      "Bash(rename:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []
