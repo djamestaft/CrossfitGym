@@ -1,17 +1,17 @@
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import {
-  ArrowRight,
   Activity,
-  Users,
-  Clock,
-  CheckCircle,
-  Star,
+  ArrowRight,
   Calendar,
+  CheckCircle,
+  Clock,
+  Star,
+  Users,
 } from 'lucide-react'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
@@ -39,7 +39,7 @@ export default function HomePage() {
           >
             Geelong's Movement Specialists
           </Badge>
-          <h1 className='text-2xl md:text-4xl lg:text-5xl font-bold text-balance mb-3 leading-tight'>
+          <h1 className='typography-h1 text-2xl md:text-4xl lg:text-5xl font-bold text-balance mb-3 leading-tight'>
             Train Around Pain, Move Freely Again
           </h1>
           <p className='text-sm md:text-base text-gray-100 text-balance max-w-3xl mx-auto mb-4 leading-relaxed'>
@@ -69,7 +69,7 @@ export default function HomePage() {
       <section className='py-16 md:py-20 bg-background'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-12 px-4'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4 text-foreground'>
+            <h2 className='typography-h2 text-3xl md:text-4xl font-bold mb-4 text-foreground'>
               How We Help You Move Better
             </h2>
             <p className='text-base md:text-lg text-muted-foreground max-w-2xl mx-auto'>
@@ -79,19 +79,19 @@ export default function HomePage() {
           </div>
 
           <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto px-4'>
-            <Card className='text-center border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced text-center border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 md:pt-8 px-4'>
                 <Activity className='h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6' />
-                <h3 className='text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
+                <h3 className='typography-h3 text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
                   Functional Movement Screen
                 </h3>
-                <p className='text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
+                <p className='typography-body text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
                   Comprehensive 7-point assessment to identify movement
                   limitations and injury risks.
                 </p>
                 <Button
                   variant='outline'
-                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium'
+                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium focus-visible'
                   asChild
                 >
                   <Link href='/fms'>
@@ -102,19 +102,19 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className='text-center border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced text-center border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 md:pt-8 px-4'>
                 <Users className='h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6' />
-                <h3 className='text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
+                <h3 className='typography-h3 text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
                   Personalized Therapy
                 </h3>
-                <p className='text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
+                <p className='typography-body text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
                   One-on-one treatment plans tailored to your specific needs and
                   goals.
                 </p>
                 <Button
                   variant='outline'
-                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium'
+                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium focus-visible'
                   asChild
                 >
                   <Link href='/timetable'>
@@ -125,19 +125,19 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className='text-center border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced text-center border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 md:pt-8 px-4'>
                 <Clock className='h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6' />
-                <h3 className='text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
+                <h3 className='typography-h3 text-lg md:text-xl font-semibold mb-3 md:mb-4 text-foreground'>
                   Ongoing Support
                 </h3>
-                <p className='text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
+                <p className='typography-body text-muted-foreground mb-4 md:mb-6 text-sm md:text-base'>
                   Access to movement resources and ongoing guidance through our
                   member portal.
                 </p>
                 <Button
                   variant='outline'
-                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium'
+                  className='border-primary text-primary hover:bg-primary/10 bg-transparent font-medium focus-visible'
                   asChild
                 >
                   <Link href='/portal'>
@@ -155,7 +155,7 @@ export default function HomePage() {
       <section className='py-16 md:py-20 bg-secondary'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-12 px-4'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4 text-foreground'>
+            <h2 className='typography-h2 text-3xl md:text-4xl font-bold mb-4 text-foreground'>
               Trusted by 500+ Geelong Residents
             </h2>
             <div className='flex justify-center items-center gap-2 mb-8 flex-wrap'>
@@ -171,7 +171,7 @@ export default function HomePage() {
           </div>
 
           <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4'>
-            <Card className='border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 px-4'>
                 <div className='flex mb-4'>
                   {[...Array(5)].map((_, i) => (
@@ -181,7 +181,7 @@ export default function HomePage() {
                     />
                   ))}
                 </div>
-                <p className='text-sm mb-4 text-muted-foreground'>
+                <p className='typography-body text-sm mb-4 text-muted-foreground'>
                   "The team at GMC completely transformed my approach to
                   fitness. No more shoulder pain during workouts!"
                 </p>
@@ -194,7 +194,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className='border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 px-4'>
                 <div className='flex mb-4'>
                   {[...Array(5)].map((_, i) => (
@@ -204,7 +204,7 @@ export default function HomePage() {
                     />
                   ))}
                 </div>
-                <p className='text-sm mb-4 text-muted-foreground'>
+                <p className='typography-body text-sm mb-4 text-muted-foreground'>
                   "Professional, caring, and incredibly knowledgeable. They
                   helped me get back to running after my back injury."
                 </p>
@@ -215,7 +215,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className='border-border shadow-sm hover:shadow-md transition-shadow'>
+            <Card className='card-enhanced border-border shadow-sm hover:shadow-md transition-shadow'>
               <CardContent className='pt-6 px-4'>
                 <div className='flex mb-4'>
                   {[...Array(5)].map((_, i) => (
@@ -225,7 +225,7 @@ export default function HomePage() {
                     />
                   ))}
                 </div>
-                <p className='text-sm mb-4 text-muted-foreground'>
+                <p className='typography-body text-sm mb-4 text-muted-foreground'>
                   "The FMS assessment was eye-opening. The personalized plan has
                   made such a difference to my daily comfort."
                 </p>
@@ -280,17 +280,17 @@ export default function HomePage() {
       <section className='py-16 md:py-20 bg-secondary'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='max-w-3xl mx-auto text-center space-y-6 md:space-y-8 px-4'>
-            <h2 className='text-3xl md:text-4xl font-bold text-foreground'>
+            <h2 className='typography-h2 text-3xl md:text-4xl font-bold text-foreground'>
               Ready to Move Without Limitations?
             </h2>
-            <p className='text-lg md:text-xl text-muted-foreground'>
+            <p className='typography-body text-lg md:text-xl text-muted-foreground'>
               Book your free Functional Movement Screen assessment today. Our
               team will contact you within 1 business day.
             </p>
             <div className='space-y-6'>
               <Button
                 size='lg'
-                className='text-lg px-8 bg-primary hover:bg-primary/90 font-medium'
+                className='text-lg px-8 bg-primary hover:bg-primary/90 font-medium focus-visible'
                 asChild
               >
                 <Link href='/fms'>

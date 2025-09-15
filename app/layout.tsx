@@ -1,12 +1,13 @@
-import type React from 'react'
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
-import { Suspense } from 'react'
-import Script from 'next/script'
 import { ChatToggle } from '@/components/chat-toggle'
 import { Layout } from '@/components/layout/Layout'
+import StickyMobileCTA from '@/components/sticky-mobile-cta'
+import { Analytics } from '@vercel/analytics/next'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
+import type { Metadata } from 'next'
+import Script from 'next/script'
+import type React from 'react'
+import { Suspense } from 'react'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -136,6 +137,8 @@ export default function RootLayout({
             {children}
             <Analytics />
             <ChatToggle />
+            {/* <FloatingContactWidget /> */}
+            <StickyMobileCTA />
           </Layout>
         </Suspense>
       </body>

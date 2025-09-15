@@ -1,74 +1,86 @@
 @import 'tailwindcss';
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 210 40% 15%;
-  --card: 0 0% 100%;
-  --card-foreground: 210 40% 15%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 210 40% 15%;
-  --primary: 20 19% 21%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 152 35% 95%;
-  --secondary-foreground: 210 40% 15%;
-  --muted: 152 35% 95%;
-  --muted-foreground: 210 20% 50%;
-  --accent: 20 19% 31%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 152 35% 85%;
-  --input: 152 35% 85%;
-  --ring: 20 19% 21%;
-  --chart-1: 20 19% 21%;
-  --chart-2: 20 19% 31%;
-  --chart-3: 152 65% 50%;
-  --chart-4: 142 35% 65%;
-  --chart-5: 152 25% 75%;
+  /* Movement Therapy Color Palette - Light Mode */
+  --background: 30 20% 96%; /* #F5F2ED - Cream */
+  --foreground: 20 25% 18%; /* #2D2416 - Dark Brown */
+  --card: 30 15% 98%;
+  --card-foreground: 20 25% 18%;
+  --popover: 30 15% 98%;
+  --popover-foreground: 20 25% 18%;
+  --primary: 0 16% 21%; /* Rich Brown */
+  --primary-foreground: 30 15% 96%;
+  --secondary: 152 35% 95%; /* Warm Brown */
+  --secondary-foreground: 30 15% 96%;
+  --muted: 30 15% 92%;
+  --muted-foreground: 20 15% 35%;
+  --accent: 20 20% 55%; /* Light Brown */
+  --accent-foreground: 30 15% 96%;
+  --destructive: 10 50% 45%;
+  --destructive-foreground: 30 15% 96%;
+  --border: 30 15% 85%;
+  --input: 30 15% 85%;
+  --ring: 0 16% 21%;
+  --chart-1: 0 16% 21%;
+  --chart-2: 0 20% 31%;
+  --chart-3: 25 25% 45%;
+  --chart-4: 20 20% 55%;
+  --chart-5: 20 25% 65%;
   --radius: 0.5rem;
-  --sidebar: 152 35% 98%;
-  --sidebar-foreground: 210 40% 15%;
-  --sidebar-primary: 20 19% 21%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 152 35% 92%;
-  --sidebar-accent-foreground: 210 40% 15%;
-  --sidebar-border: 152 35% 85%;
-  --sidebar-ring: 20 19% 21%;
+  --sidebar: 30 15% 94%;
+  --sidebar-foreground: 20 25% 18%;
+  --sidebar-primary: 0 16% 21%;
+  --sidebar-primary-foreground: 30 15% 96%;
+  --sidebar-accent: 25 25% 45%;
+  --sidebar-accent-foreground: 20 25% 18%;
+  --sidebar-border: 30 15% 85%;
+  --sidebar-ring: 0 16% 21%;
+
+  /* Custom CSS Variables for Movement Therapy Theme */
+  --therapy-primary: hsla(0, 15.6%, 21.37%, 1); /* Rich Brown */
+  --therapy-secondary: #8b7355; /* Warm Brown */
+  --therapy-accent: #a0826d; /* Light Brown */
+  --therapy-dark: #2d2416; /* Dark Brown */
+  --therapy-light: #f5f2ed; /* Cream */
+  --therapy-text-primary: #2d2416; /* Dark Brown */
+  --therapy-text-secondary: #5d4e37; /* Medium Brown */
+  --therapy-text-light: #f5f2ed; /* Cream */
 }
 
 .dark {
-  --background: 210 40% 8%;
-  --foreground: 210 40% 95%;
-  --card: 210 40% 10%;
-  --card-foreground: 210 40% 95%;
-  --popover: 210 40% 10%;
-  --popover-foreground: 210 40% 95%;
-  --primary: 20 19% 26%;
-  --primary-foreground: 0 0% 95%;
-  --secondary: 210 40% 15%;
-  --secondary-foreground: 210 40% 95%;
-  --muted: 210 40% 15%;
-  --muted-foreground: 210 20% 65%;
-  --accent: 20 19% 36%;
-  --accent-foreground: 0 0% 95%;
-  --destructive: 0 75% 55%;
-  --destructive-foreground: 0 0% 95%;
-  --border: 210 40% 15%;
-  --input: 210 40% 15%;
-  --ring: 20 19% 26%;
-  --chart-1: 20 19% 26%;
-  --chart-2: 20 19% 36%;
-  --chart-3: 152 65% 55%;
-  --chart-4: 142 35% 70%;
-  --chart-5: 152 25% 80%;
-  --sidebar: 210 40% 6%;
-  --sidebar-foreground: 210 40% 95%;
-  --sidebar-primary: 20 19% 26%;
-  --sidebar-primary-foreground: 0 0% 95%;
-  --sidebar-accent: 210 40% 12%;
-  --sidebar-accent-foreground: 210 40% 95%;
-  --sidebar-border: 210 40% 15%;
-  --sidebar-ring: 20 19% 26%;
+  /* Movement Therapy Color Palette - Dark Mode */
+  --background: 20 15% 10%; /* #1A1612 - Very Dark Brown */
+  --foreground: 30 15% 90%; /* #E8E6E3 - Light Cream */
+  --card: 20 15% 12%;
+  --card-foreground: 30 15% 90%;
+  --popover: 20 15% 12%;
+  --popover-foreground: 30 15% 90%;
+  --primary: 0 16% 31%; /* Lighter Rich Brown */
+  --primary-foreground: 20 15% 95%;
+  --secondary: 25 20% 60%; /* Darker Warm Brown */
+  --secondary-foreground: 30 15% 90%;
+  --muted: 20 10% 15%;
+  --muted-foreground: 30 8% 65%;
+  --accent: 20 25% 65%; /* Darker Light Brown */
+  --accent-foreground: 20 15% 95%;
+  --destructive: 10 40% 35%;
+  --destructive-foreground: 30 15% 90%;
+  --border: 20 10% 18%;
+  --input: 20 10% 18%;
+  --ring: 0 16% 31%;
+  --chart-1: 0 16% 31%;
+  --chart-2: 0 20% 41%;
+  --chart-3: 25 20% 60%;
+  --chart-4: 20 25% 65%;
+  --chart-5: 20 30% 75%;
+  --sidebar: 20 15% 8%;
+  --sidebar-foreground: 30 15% 90%;
+  --sidebar-primary: 0 16% 31%;
+  --sidebar-primary-foreground: 20 15% 95%;
+  --sidebar-accent: 25 20% 60%;
+  --sidebar-accent-foreground: 30 15% 90%;
+  --sidebar-border: 20 10% 18%;
+  --sidebar-ring: 0 16% 31%;
 }
 
 @layer base {
@@ -175,4 +187,184 @@ html.dark {
     hsl(var(--background)) 0%,
     hsl(var(--secondary)) 100%
   );
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+  background: var(--therapy-primary);
+  color: var(--therapy-text-light);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(45, 36, 22, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--therapy-accent);
+  box-shadow: 0 6px 20px rgba(160, 130, 109, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--therapy-primary);
+  border: 2px solid var(--therapy-primary);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--therapy-primary);
+  color: var(--therapy-text-light);
+}
+
+/* Enhanced Card Styles */
+.card-enhanced {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-enhanced:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Input Enhancements */
+.input-enhanced {
+  border-radius: 8px;
+  border: 2px solid hsl(var(--border));
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.input-enhanced:focus {
+  outline: none;
+  border-color: var(--therapy-primary);
+  box-shadow: 0 0 0 3px rgba(45, 36, 22, 0.1);
+}
+
+/* Touch-friendly buttons for mobile */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 14px 28px;
+    font-size: 18px;
+  }
+}
+
+/* Floating Contact Widget */
+.floating-contact {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--therapy-primary);
+  color: var(--therapy-text-light);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(160, 130, 109, 0.4);
+  transition: all 0.3s ease;
+}
+
+.floating-contact:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(160, 130, 109, 0.5);
+}
+
+/* Sticky Mobile CTA */
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--therapy-primary);
+  color: var(--therapy-text-light);
+  padding: 16px;
+  text-align: center;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.sticky-cta.visible {
+  transform: translateY(0);
+}
+
+/* Typography Hierarchy */
+.typography-h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.typography-h2 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.typography-h3 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.typography-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Focus Indicators for Accessibility */
+.focus-visible:focus {
+  outline: 2px solid var(--therapy-primary);
+  outline-offset: 2px;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading Animation */
+.loading-spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid var(--therapy-primary);
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, Phone, X } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -16,6 +16,7 @@ export function Header() {
     { label: 'FMS Assessment', href: '/fms' },
     { label: 'Timetable', href: '/timetable' },
     { label: 'About', href: '/about' },
+    { label: 'Blog', href: '/hubs' },
     { label: 'Member Portal', href: '/portal' },
     { label: 'Contact', href: '/contact' },
   ]
@@ -62,7 +63,7 @@ export function Header() {
                 href={item.href}
                 className={`text-sm font-medium transition-colors px-2 py-2 hover:bg-secondary ${
                   isActive(item.href)
-                    ? 'text-amber-700 font-semibold'
+                    ? 'font-semibold underline underline-offset-4'
                     : 'text-foreground hover:text-primary'
                 }`}
                 aria-current={isActive(item.href) ? 'page' : undefined}
@@ -75,7 +76,7 @@ export function Header() {
           {/* Desktop CTA */}
           <div className='hidden lg:flex items-center space-x-4'>
             {/* Emergency Contact */}
-            <div className='hidden xl:flex items-center space-x-2 px-3 py-1 bg-red-50 border border-red-200 rounded-md'>
+            {/* <div className='hidden xl:flex items-center space-x-2 px-3 py-1 bg-red-50 border border-red-200 rounded-md'>
               <span className='text-xs font-medium text-red-700'>
                 Emergency:
               </span>
@@ -86,7 +87,7 @@ export function Header() {
                 <Phone className='h-4 w-4' />
                 <span>0400 000 000</span>
               </a>
-            </div>
+            </div> */}
 
             <a
               href='tel:+61312345678'
