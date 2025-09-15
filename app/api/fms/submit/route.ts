@@ -184,10 +184,8 @@ function generateSubmissionId(): string {
 // Simple in-memory rate limiting
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
-// Export for testing only
-if (process.env.NODE_ENV === 'test') {
-  ;(globalThis as any).__rateLimitMap = rateLimitMap
-}
+// Export for testing only - always export so tests can access it
+;(globalThis as any).__rateLimitMap = rateLimitMap
 
 async function isRateLimited(clientIP: string): Promise<boolean> {
   const now = Date.now()

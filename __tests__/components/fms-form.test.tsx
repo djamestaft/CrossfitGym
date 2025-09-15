@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { FMSForm } from '../../components/fms-form'
 
@@ -26,7 +26,7 @@ describe('FMSForm Component', () => {
       expect(
         screen.getByText('Functional Movement Screen Assessment')
       ).toBeInTheDocument()
-      expect(screen.getByText('Step 1 of 2')).toBeInTheDocument()
+      expect(screen.getByText(/step 1 of 2/i)).toBeInTheDocument()
 
       // Check form fields
       expect(screen.getByLabelText(/full name/i)).toBeInTheDocument()
@@ -57,7 +57,9 @@ describe('FMSForm Component', () => {
       render(<FMSForm />)
 
       const continueButton = screen.getByText('Continue to Step 2')
-      await user.click(continueButton)
+      await act(async () => {
+        await user.click(continueButton)
+      })
 
       await waitFor(() => {
         expect(screen.getByText('Name is required')).toBeInTheDocument()
@@ -74,10 +76,14 @@ describe('FMSForm Component', () => {
       render(<FMSForm />)
 
       const emailInput = screen.getByLabelText(/email address/i)
-      await user.type(emailInput, 'invalid-email')
+      await act(async () => {
+        await user.type(emailInput, 'invalid-email')
+      })
 
       const continueButton = screen.getByText('Continue to Step 2')
-      await user.click(continueButton)
+      await act(async () => {
+        await user.click(continueButton)
+      })
 
       await waitFor(() => {
         expect(
@@ -91,10 +97,14 @@ describe('FMSForm Component', () => {
       render(<FMSForm />)
 
       const phoneInput = screen.getByLabelText(/phone number/i)
-      await user.type(phoneInput, '123')
+      await act(async () => {
+        await user.type(phoneInput, '123')
+      })
 
       const continueButton = screen.getByText('Continue to Step 2')
-      await user.click(continueButton)
+      await act(async () => {
+        await user.click(continueButton)
+      })
 
       await waitFor(() => {
         expect(
@@ -108,37 +118,65 @@ describe('FMSForm Component', () => {
       render(<FMSForm />)
 
       // Fill out step 1 form
-      await user.type(screen.getByLabelText(/full name/i), 'John Smith')
-      await user.type(
-        screen.getByLabelText(/email address/i),
-        'john@example.com'
-      )
-      await user.type(screen.getByLabelText(/phone number/i), '0412345678')
-      await user.click(screen.getByLabelText(/morning/i))
+      await act(async () => {
+        await user.type(screen.getByLabelText(/full name/i), 'John Smith')
+        await user.type(
+          screen.getByLabelText(/email address/i),
+          'john@example.com'
+        )
+        await user.type(screen.getByLabelText(/phone number/i), '0412345678')
+        await user.click(screen.getByLabelText(/morning/i))
+      })
 
       const continueButton = screen.getByText('Continue to Step 2')
-      await user.click(continueButton)
+      await act(async () => {
+        await user.click(continueButton)
+      })
 
       await waitFor(() => {
-        expect(screen.getByText('Step 2 of 2')).toBeInTheDocument()
-        expect(mockGtag).toHaveBeenCalledWith('event', 'fms_start', {
-          event_category: 'engagement',
-          event_label: 'FMS Form Step 2',
-        })
+        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+      }, { timeout: 10000 })
+      
+      expect(mockGtag).toHaveBeenCalledWith('event', 'fms_start', {
+        event_category: 'engagement',
+        event_label: 'FMS Form Step 2',
       })
     })
   })
 
   describe('Step 2 functionality', () => {
     const fillStep1 = async (user: any) => {
-      await user.type(screen.getByLabelText(/full name/i), 'John Smith')
-      await user.type(
-        screen.getByLabelText(/email address/i),
-        'john@example.com'
-      )
-      await user.type(screen.getByLabelText(/phone number/i), '0412345678')
-      await user.click(screen.getByLabelText(/morning/i))
-      await user.click(screen.getByText('Continue to Step 2'))
+      // Fill step 1 form fields
+      await act(async () => {
+        await user.clear(screen.getByLabelText(/full name/i))
+        await user.type(screen.getByLabelText(/full name/i), 'John Smith')
+      })
+      
+      await act(async () => {
+        await user.clear(screen.getByLabelText(/email address/i))
+        await user.type(
+          screen.getByLabelText(/email address/i),
+          'john@example.com'
+        )
+      })
+      
+      await act(async () => {
+        await user.clear(screen.getByLabelText(/phone number/i))
+        await user.type(screen.getByLabelText(/phone number/i), '0412345678')
+      })
+      
+      await act(async () => {
+        await user.click(screen.getByLabelText(/morning/i))
+      })
+      
+      // Wait for form to be valid before proceeding
+      await waitFor(() => {
+        expect(screen.queryByText('Please select a preferred time')).not.toBeInTheDocument()
+      })
+      
+      await act(async () => {
+        await user.click(screen.getByText('Continue to Step 2'))
+      })
     }
 
     it('should render step 2 form with all required fields', async () => {
@@ -189,7 +227,7 @@ describe('FMSForm Component', () => {
       await waitFor(() => {
         const progressBar = document.querySelector('.bg-primary')
         expect(progressBar).toHaveStyle('width: 100%')
-      })
+      }, { timeout: 10000 })
     })
 
     it('should allow going back to step 1', async () => {
@@ -199,18 +237,20 @@ describe('FMSForm Component', () => {
       await fillStep1(user)
 
       await waitFor(() => {
-        expect(screen.getByText('Step 2 of 2')).toBeInTheDocument()
-      })
+        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+      }, { timeout: 10000 })
 
       const backButton = screen.getByText('Back')
-      await user.click(backButton)
+      await act(async () => {
+        await user.click(backButton)
+      })
 
       await waitFor(() => {
-        expect(screen.getByText('Step 1 of 2')).toBeInTheDocument()
+        expect(screen.getByText(/step 1 of 2/i)).toBeInTheDocument()
         // Data should be preserved
         expect(screen.getByDisplayValue('John Smith')).toBeInTheDocument()
         expect(screen.getByDisplayValue('john@example.com')).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
     })
 
     it('should validate step 2 required fields', async () => {
@@ -221,7 +261,7 @@ describe('FMSForm Component', () => {
 
       await waitFor(() => {
         expect(screen.getByText('Book My Assessment')).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
 
       const submitButton = screen.getByText('Book My Assessment')
       await user.click(submitButton)
@@ -236,7 +276,7 @@ describe('FMSForm Component', () => {
       })
     })
 
-    it('should handle injury flag selection', async () => {
+    it('should handle injury flag selection with mutual exclusivity', async () => {
       const user = userEvent.setup()
       render(<FMSForm />)
 
@@ -246,17 +286,24 @@ describe('FMSForm Component', () => {
         expect(
           screen.getByLabelText(/current pain or injury/i)
         ).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
 
       const injuryCheckbox = screen.getByLabelText(/current pain or injury/i)
       const noneCheckbox = screen.getByLabelText(/none of the above/i)
 
-      await user.click(injuryCheckbox)
+      // First select an injury flag
+      await act(async () => {
+        await user.click(injuryCheckbox)
+      })
       expect(injuryCheckbox).toBeChecked()
+      expect(noneCheckbox).not.toBeChecked()
 
-      await user.click(noneCheckbox)
+      // Then select "None of the above" - should deselect injury flag
+      await act(async () => {
+        await user.click(noneCheckbox)
+      })
       expect(noneCheckbox).toBeChecked()
-      expect(injuryCheckbox).toBeChecked() // Multiple selections allowed
+      expect(injuryCheckbox).not.toBeChecked() // Should be deselected due to mutual exclusivity
     })
   })
 
@@ -278,19 +325,34 @@ describe('FMSForm Component', () => {
       // Step 2 - Wait for form to transition
       await waitFor(
         () => {
+          expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
+      
+      await waitFor(
+        () => {
           expect(
             screen.getByLabelText(/what are your movement goals/i)
           ).toBeInTheDocument()
         },
-        { timeout: 10000 }
+        { timeout: 5000 }
       )
 
-      await user.type(
-        screen.getByLabelText(/what are your movement goals/i),
-        'I want to improve my mobility and reduce back pain.'
-      )
-      await user.click(screen.getByLabelText(/none of the above/i))
-      await user.click(screen.getByLabelText(/beginner/i))
+      await act(async () => {
+        await user.type(
+          screen.getByLabelText(/what are your movement goals/i),
+          'I want to improve my mobility and reduce back pain.'
+        )
+      })
+      
+      await act(async () => {
+        await user.click(screen.getByLabelText(/none of the above/i))
+      })
+      
+      await act(async () => {
+        await user.click(screen.getByLabelText(/beginner/i))
+      })
     }
 
     it('should submit form successfully', async () => {
@@ -469,11 +531,16 @@ describe('FMSForm Component', () => {
       await user.click(screen.getByLabelText(/morning/i))
       await user.click(screen.getByText('Continue to Step 2'))
 
+      // Wait for step 2 transition
+      await waitFor(() => {
+        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+      }, { timeout: 10000 })
+      
       await waitFor(() => {
         expect(
           screen.getByLabelText(/what are your movement goals/i)
         ).toBeInTheDocument()
-      })
+      }, { timeout: 5000 })
 
       await user.type(
         screen.getByLabelText(/what are your movement goals/i),

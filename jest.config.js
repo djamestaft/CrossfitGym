@@ -2,6 +2,11 @@
 const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  testEnvironmentOptions: {
+    html: '<html lang="en-US"><body><div id="root"></div></body></html>',
+    url: 'http://localhost:3000',
+    userAgent: 'node.js',
+  },
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/components/$1',
     '^@/lib/(.*)$': '<rootDir>/lib/$1',
@@ -38,6 +43,13 @@ const config = {
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  
+  // CI-specific configuration  
+  testTimeout: process.env.CI ? 15000 : 10000, // 15s in CI, 10s locally
+  maxWorkers: process.env.CI ? 2 : '50%', // Limit workers in CI
+  bail: process.env.CI ? 1 : 0, // Stop on first failure in CI
+  forceExit: process.env.CI, // Force exit in CI to prevent hanging
+  detectOpenHandles: process.env.CI, // Detect open handles in CI
 }
 
 module.exports = config

@@ -193,14 +193,13 @@ describe('Email Service', () => {
 
     it('should send test email in development', async () => {
       const originalNodeEnv = process.env.NODE_ENV
-      Object.defineProperty(process.env, 'NODE_ENV', {
-        value: 'development',
-        writable: true,
-      })
+      
+      // Clear module cache and set NODE_ENV
+      jest.resetModules()
+      process.env.NODE_ENV = 'development'
       process.env.RESEND_API_KEY = 'test-api-key'
 
-      // Clear module cache to pick up new NODE_ENV
-      jest.resetModules()
+      // Dynamically import after setting NODE_ENV
       const { sendTestEmail: freshSendTestEmail } = await import(
         '../../lib/email'
       )
@@ -222,10 +221,9 @@ describe('Email Service', () => {
         html: expect.stringContaining('test_fms_123'),
       })
 
-      Object.defineProperty(process.env, 'NODE_ENV', {
-        value: originalNodeEnv,
-        writable: true,
-      })
+      // Restore NODE_ENV and reset modules
+      process.env.NODE_ENV = originalNodeEnv
+      jest.resetModules()
     })
   })
 

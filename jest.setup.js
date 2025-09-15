@@ -1,5 +1,23 @@
 import '@testing-library/jest-dom'
 
+// Suppress React DOM 16.8 act warnings - from React Testing Library best practices
+const originalError = console.error
+beforeAll(() => {
+  console.error = (...args) => {
+    if (
+      /Warning.*not wrapped in act/.test(args[0]) ||
+      /The current testing environment is not configured to support act/.test(args[0])
+    ) {
+      return
+    }
+    originalError.call(console, ...args)
+  }
+})
+
+afterAll(() => {
+  console.error = originalError
+})
+
 // Mock Next.js router
 jest.mock('next/router', () => ({
   useRouter() {

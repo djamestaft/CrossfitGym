@@ -85,7 +85,7 @@ export function FMSForm() {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required'
-    } else if (!/^[\d\s\-+$$$$]{8,}$/.test(formData.phone.replace(/\s/g, ''))) {
+    } else if (!/^[\d\s\-+()]{8,}$/.test(formData.phone.replace(/\s/g, ''))) {
       newErrors.phone = 'Please enter a valid phone number'
     }
 
@@ -175,12 +175,24 @@ export function FMSForm() {
   }
 
   const handleInjuryFlagChange = (flag: string, checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      injuryFlags: checked
-        ? [...prev.injuryFlags, flag]
-        : prev.injuryFlags.filter(f => f !== flag),
-    }))
+    setFormData(prev => {
+      if (flag === 'None of the above') {
+        // If "None of the above" is selected, clear all other flags
+        return {
+          ...prev,
+          injuryFlags: checked ? ['None of the above'] : [],
+        }
+      } else {
+        // If any other flag is selected, remove "None of the above" and manage the flag
+        const otherFlags = prev.injuryFlags.filter(f => f !== 'None of the above')
+        return {
+          ...prev,
+          injuryFlags: checked
+            ? [...otherFlags, flag]
+            : otherFlags.filter(f => f !== flag),
+        }
+      }
+    })
   }
 
   if (isSubmitted) {
@@ -233,9 +245,13 @@ export function FMSForm() {
               <Input
                 id='name'
                 value={formData.name}
-                onChange={e =>
+                onChange={e => {
                   setFormData(prev => ({ ...prev, name: e.target.value }))
-                }
+                  // Clear error when user starts typing
+                  if (errors.name) {
+                    setErrors(prev => ({ ...prev, name: '' }))
+                  }
+                }}
                 placeholder='Enter your full name'
                 className={errors.name ? 'border-destructive' : ''}
               />
@@ -252,9 +268,13 @@ export function FMSForm() {
                 id='email'
                 type='email'
                 value={formData.email}
-                onChange={e =>
+                onChange={e => {
                   setFormData(prev => ({ ...prev, email: e.target.value }))
-                }
+                  // Clear error when user starts typing
+                  if (errors.email) {
+                    setErrors(prev => ({ ...prev, email: '' }))
+                  }
+                }}
                 placeholder='Enter your email address'
                 className={errors.email ? 'border-destructive' : ''}
               />
@@ -271,9 +291,13 @@ export function FMSForm() {
                 id='phone'
                 type='tel'
                 value={formData.phone}
-                onChange={e =>
+                onChange={e => {
                   setFormData(prev => ({ ...prev, phone: e.target.value }))
-                }
+                  // Clear error when user starts typing
+                  if (errors.phone) {
+                    setErrors(prev => ({ ...prev, phone: '' }))
+                  }
+                }}
                 placeholder='Enter your phone number'
                 className={errors.phone ? 'border-destructive' : ''}
               />
@@ -288,9 +312,13 @@ export function FMSForm() {
               <Label>Preferred Assessment Time *</Label>
               <RadioGroup
                 value={formData.preferredTime}
-                onValueChange={value =>
+                onValueChange={value => {
                   setFormData(prev => ({ ...prev, preferredTime: value }))
-                }
+                  // Clear error when value is selected
+                  if (errors.preferredTime) {
+                    setErrors(prev => ({ ...prev, preferredTime: '' }))
+                  }
+                }}
               >
                 <div className='flex items-center space-x-2'>
                   <RadioGroupItem value='morning' id='morning' />

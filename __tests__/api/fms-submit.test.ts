@@ -201,45 +201,49 @@ describe('/api/fms/submit', () => {
     describe('Security measures', () => {
       it('should reject requests from invalid origins in production', async () => {
         const originalNodeEnv = process.env.NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'production',
-          writable: true,
-        })
+        
+        // Reset the module to pick up new NODE_ENV
+        jest.resetModules()
+        process.env.NODE_ENV = 'production'
+        
+        // Dynamically import the route after setting NODE_ENV
+        const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
 
         const request = createMockRequest(validFormData, {
           origin: 'https://malicious-site.com',
         })
-        const response = await POST(request)
+        const response = await FreshPOST(request)
         const data = await response.json()
 
         expect(response.status).toBe(403)
         expect(data.success).toBe(false)
         expect(data.message).toBe('Invalid origin')
 
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: originalNodeEnv,
-          writable: true,
-        })
+        // Restore original NODE_ENV
+        process.env.NODE_ENV = originalNodeEnv
+        jest.resetModules()
       })
 
       it('should accept requests from allowed origins in production', async () => {
         const originalNodeEnv = process.env.NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: 'production',
-          writable: true,
-        })
+        
+        // Reset the module to pick up new NODE_ENV
+        jest.resetModules()
+        process.env.NODE_ENV = 'production'
+        
+        // Dynamically import the route after setting NODE_ENV
+        const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
 
         const request = createMockRequest(validFormData, {
           origin: 'https://geelongmovement.com',
         })
-        const response = await POST(request)
+        const response = await FreshPOST(request)
 
         expect(response.status).toBe(201)
 
-        Object.defineProperty(process.env, 'NODE_ENV', {
-          value: originalNodeEnv,
-          writable: true,
-        })
+        // Restore original NODE_ENV
+        process.env.NODE_ENV = originalNodeEnv
+        jest.resetModules()
       })
 
       it('should reject requests that are too large', async () => {
@@ -287,8 +291,10 @@ describe('/api/fms/submit', () => {
       })
 
       it('should reject requests exceeding rate limit', async () => {
+        // Use the same IP for all requests to trigger rate limiting
+        const sameIP = '192.168.1.100'
         const requests = Array.from({ length: 5 }, () =>
-          createMockRequest(validFormData)
+          createMockRequest(validFormData, { 'x-forwarded-for': sameIP })
         )
 
         const responses = await Promise.all(requests.map(req => POST(req)))
