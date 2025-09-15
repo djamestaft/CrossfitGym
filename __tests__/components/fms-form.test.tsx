@@ -511,7 +511,6 @@ describe('FMSForm Component', () => {
 
   describe('Analytics tracking', () => {
     it('should track form abandonment on unmount', () => {
-      const user = userEvent.setup()
       const { unmount } = render(<FMSForm />)
 
       // Start filling form but don't complete

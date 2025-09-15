@@ -193,10 +193,10 @@ describe('FMS Form Integration Tests', () => {
 
     it('should handle submissions without marketing attribution', async () => {
       const {
-        referralSource,
-        utmSource,
-        utmMedium,
-        utmCampaign,
+        referralSource: _referralSource,
+        utmSource: _utmSource,
+        utmMedium: _utmMedium,
+        utmCampaign: _utmCampaign,
         ...submissionWithoutUTM
       } = validSubmissionData
 
