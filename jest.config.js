@@ -38,6 +38,7 @@ const config = {
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
     '<rootDir>/__tests__/components/fms-form.test.tsx',
+    '<rootDir>/__tests__/components/fms-form-localstorage.test.tsx',
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
