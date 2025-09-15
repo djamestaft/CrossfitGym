@@ -3,10 +3,6 @@ export const metadata = {
   description: 'Functional Movement Systems assessment at Geelong Movement Co',
 }
 
-export default function FMSLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function FMSLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
