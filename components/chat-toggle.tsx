@@ -64,8 +64,8 @@ export function ChatToggle() {
           setIsMinimized(false)
           try {
             trackChatEngagement('maximized')
-          } catch (error) {
-            console.warn('Failed to track chat engagement:', error)
+          } catch {
+            // Silent fail for tracking errors
           }
         }
 
@@ -73,24 +73,24 @@ export function ChatToggle() {
           setIsMinimized(true)
           try {
             trackChatEngagement('minimized')
-          } catch (error) {
-            console.warn('Failed to track chat engagement:', error)
+          } catch {
+            // Silent fail for tracking errors
           }
         }
 
         window.Tawk_API.onChatStarted = () => {
           try {
             trackChatEngagement('started')
-          } catch (error) {
-            console.warn('Failed to track chat engagement:', error)
+          } catch {
+            // Silent fail for tracking errors
           }
         }
 
         window.Tawk_API.onChatEnded = () => {
           try {
             trackChatEngagement('ended')
-          } catch (error) {
-            console.warn('Failed to track chat engagement:', error)
+          } catch {
+            // Silent fail for tracking errors
           }
         }
       }
@@ -114,8 +114,8 @@ export function ChatToggle() {
         }
         try {
           trackChatEngagement('toggle_open')
-        } catch (error) {
-          console.warn('Failed to track chat engagement:', error)
+        } catch {
+          // Silent fail for tracking errors
         }
       } else {
         if (window.Tawk_API.minimize) {
@@ -123,8 +123,8 @@ export function ChatToggle() {
         }
         try {
           trackChatEngagement('toggle_close')
-        } catch (error) {
-          console.warn('Failed to track chat engagement:', error)
+        } catch {
+          // Silent fail for tracking errors
         }
       }
     }

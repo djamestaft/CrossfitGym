@@ -14,7 +14,9 @@ export function Footer() {
                   GMC
                 </span>
               </div>
-              <span className='font-bold text-foreground'>Geelong Movement Co</span>
+              <span className='font-bold text-foreground'>
+                Geelong Movement Co
+              </span>
             </div>
             <div className='space-y-2 text-sm text-muted-foreground'>
               <div className='flex items-start space-x-2'>
@@ -27,7 +29,10 @@ export function Footer() {
               </div>
               <div className='flex items-center space-x-2'>
                 <Phone className='h-4 w-4 text-primary' />
-                <a href='tel:+61312345678' className='hover:text-primary transition-colors'>
+                <a
+                  href='tel:+61312345678'
+                  className='hover:text-primary transition-colors'
+                >
                   (03) 1234 5678
                 </a>
               </div>
@@ -113,10 +118,16 @@ export function Footer() {
                 <span className='text-xs'>Registered Member</span>
               </div>
               <div className='space-y-1'>
-                <Link href='/privacy' className='block hover:text-primary transition-colors'>
+                <Link
+                  href='/privacy'
+                  className='block hover:text-primary transition-colors'
+                >
                   Privacy Policy
                 </Link>
-                <Link href='/terms' className='block hover:text-primary transition-colors'>
+                <Link
+                  href='/terms'
+                  className='block hover:text-primary transition-colors'
+                >
                   Terms of Service
                 </Link>
               </div>

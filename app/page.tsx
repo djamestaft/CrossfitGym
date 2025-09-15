@@ -11,6 +11,7 @@ import {
   Calendar,
 } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function HomePage() {
   return (
@@ -19,10 +20,12 @@ export default function HomePage() {
       <section className='relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden'>
         {/* Hero Background Image */}
         <div className='absolute inset-0 bg-cover bg-center bg-no-repeat'>
-          <img
+          <Image
             src='/images/hero-image.webp'
             alt='Movement therapy and fitness'
-            className='w-full h-full object-cover'
+            fill
+            className='object-cover'
+            priority
           />
           {/* Dark Overlay for Better Text Readability */}
           <div className='absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60'></div>
@@ -30,7 +33,10 @@ export default function HomePage() {
 
         {/* Hero Content */}
         <div className='relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto'>
-          <Badge variant='secondary' className='mb-3 bg-white/20 text-white border-white/30 backdrop-blur-sm'>
+          <Badge
+            variant='secondary'
+            className='mb-3 bg-white/20 text-white border-white/30 backdrop-blur-sm'
+          >
             Geelong's Movement Specialists
           </Badge>
           <h1 className='text-2xl md:text-4xl lg:text-5xl font-bold text-balance mb-3 leading-tight'>
@@ -158,7 +164,9 @@ export default function HomePage() {
                   <Star key={i} className='h-5 w-5 fill-primary text-primary' />
                 ))}
               </div>
-              <span className='text-muted-foreground'>4.9/5 from 127 reviews</span>
+              <span className='text-muted-foreground'>
+                4.9/5 from 127 reviews
+              </span>
             </div>
           </div>
 
@@ -178,7 +186,9 @@ export default function HomePage() {
                   fitness. No more shoulder pain during workouts!"
                 </p>
                 <div className='text-sm'>
-                  <p className='font-semibold text-foreground'>Sarah Mitchell</p>
+                  <p className='font-semibold text-foreground'>
+                    Sarah Mitchell
+                  </p>
                   <p className='text-muted-foreground'>Office Manager</p>
                 </div>
               </CardContent>
