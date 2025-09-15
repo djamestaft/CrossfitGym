@@ -14,7 +14,8 @@ import {
 } from '@/components/ui/card'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
-import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
+import { ArrowRight, ArrowLeft, CheckCircle, Shield } from 'lucide-react'
+import { Turnstile } from '@/components/turnstile'
 
 interface FormData {
   // Step 1
@@ -29,22 +30,71 @@ interface FormData {
   experience: string
 }
 
+const STORAGE_KEY = 'fms_form_data'
+
 export function FMSForm() {
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [formStartTime] = useState(Date.now())
+  const [turnstileToken, setTurnstileToken] = useState<string>('')
 
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    preferredTime: '',
-    goals: '',
-    injuryFlags: [],
-    experience: '',
+  // Load saved form data from localStorage on mount
+  const [formData, setFormData] = useState<FormData>(() => {
+    if (typeof window === 'undefined') {
+      return {
+        name: '',
+        email: '',
+        phone: '',
+        preferredTime: '',
+        goals: '',
+        injuryFlags: [],
+        experience: '',
+      }
+    }
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      return saved
+        ? JSON.parse(saved)
+        : {
+            name: '',
+            email: '',
+            phone: '',
+            preferredTime: '',
+            goals: '',
+            injuryFlags: [],
+            experience: '',
+          }
+    } catch {
+      return {
+        name: '',
+        email: '',
+        phone: '',
+        preferredTime: '',
+        goals: '',
+        injuryFlags: [],
+        experience: '',
+      }
+    }
   })
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
+    }
+  }, [formData])
+
+  // Clear localStorage after successful submission
+  useEffect(() => {
+    if (isSubmitted) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem(STORAGE_KEY)
+      }
+    }
+  }, [isSubmitted])
 
   // Track form abandonment on component unmount
   useEffect(() => {
@@ -57,6 +107,11 @@ export function FMSForm() {
             event_category: 'engagement',
             event_label: `abandoned_step_${step}`,
             value: timeSpent,
+            custom_parameters: {
+              form_id: 'fms_assessment',
+              step_number: step,
+              time_spent_seconds: timeSpent,
+            },
           })
         }
       }
@@ -69,6 +124,40 @@ export function FMSForm() {
     step,
     formStartTime,
   ])
+
+  // Track form start when component mounts
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'fms_form_start', {
+        event_category: 'engagement',
+        event_label: 'fms_conversion_funnel',
+        custom_parameters: {
+          form_id: 'fms_assessment',
+          form_version: '2.0',
+          page_location: window.location.href,
+        },
+      })
+    }
+  }, [])
+
+  // Track step completion
+  useEffect(() => {
+    if (step === 2 && formData.name && formData.email && formData.phone) {
+      // Step 1 completed
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'fms_form_step_complete', {
+          event_category: 'engagement',
+          event_label: 'step_1_complete',
+          value: 1,
+          custom_parameters: {
+            form_id: 'fms_assessment',
+            step_number: 1,
+            fields_completed: 3,
+          },
+        })
+      }
+    }
+  }, [step, formData.name, formData.email, formData.phone])
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {}
@@ -128,16 +217,22 @@ export function FMSForm() {
   const handleSubmit = async () => {
     if (!validateStep2()) return
 
+    // Check if Turnstile token is available
+    if (!turnstileToken) {
+      setErrors({ submit: 'Please complete the security check' })
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
-      // Submit form to API
+      // Submit form to API with Turnstile token
       const response = await fetch('/api/fms/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       })
 
       const data = await response.json()
@@ -148,10 +243,19 @@ export function FMSForm() {
 
       // GA4 event for successful submission
       if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'fms_submit', {
+        window.gtag('event', 'fms_form_submit', {
           event_category: 'conversion',
-          event_label: 'FMS Form Complete',
+          event_label: 'fms_lead_generated',
           value: 1,
+          custom_parameters: {
+            form_id: 'fms_assessment',
+            submission_id: data.submissionId,
+            fitness_goal: formData.experience,
+            experience_level: formData.experience,
+            time_to_complete: Math.floor((Date.now() - formStartTime) / 1000),
+            fields_completed: 7,
+            preferred_time: formData.preferredTime,
+          },
         })
       }
 
@@ -453,6 +557,37 @@ export function FMSForm() {
             </div>
           </div>
         )}
+
+        {/* Bot Protection */}
+        <div className='border-t pt-4 mt-6'>
+          <div className='flex items-center space-x-2 mb-2'>
+            <Shield className='h-4 w-4 text-muted-foreground' />
+            <Label className='text-sm text-muted-foreground'>
+              Security Verification
+            </Label>
+          </div>
+          <div className='text-center'>
+            <div className='inline-block w-full max-w-sm mx-auto'>
+              <Turnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+                onTokenChange={setTurnstileToken}
+                onError={() =>
+                  setErrors({
+                    submit: 'Security verification failed. Please try again.',
+                  })
+                }
+                onExpire={() =>
+                  setErrors({
+                    submit:
+                      'Security verification expired. Please complete it again.',
+                  })
+                }
+                theme='light'
+                size='normal'
+              />
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   )

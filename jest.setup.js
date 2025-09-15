@@ -69,6 +69,41 @@ jest.mock('next/navigation', () => ({
 
 // Mock environment variables
 process.env.NODE_ENV = 'test'
+process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'test-site-key-for-testing'
+process.env.TURNSTILE_SECRET_KEY = 'test-secret-key-for-testing'
+
+// Mock window.turnstile for testing
+global.turnstile = {
+  render: jest.fn(),
+  remove: jest.fn(),
+  reset: jest.fn(),
+}
+
+// Mock windowturnstile for turnstile component
+global.windowturnstile = global.turnstile
+
+// Mock script loading for Turnstile
+const originalAppendChild = document.head.appendChild
+const originalRemoveChild = document.head.removeChild
+
+document.head.appendChild = jest.fn((script) => {
+  if (script.id === 'turnstile-script') {
+    // Simulate script loading success
+    setTimeout(() => {
+      script.onload?.()
+    }, 0)
+    return script
+  }
+  return originalAppendChild.call(document.head, script)
+})
+
+document.head.removeChild = jest.fn((node) => {
+  // Don't fail on script removal during tests
+  if (node && typeof node.id === 'string' && node.id.includes('turnstile')) {
+    return node
+  }
+  return originalRemoveChild.call(document.head, node)
+})
 
 // Mock NextResponse
 jest.mock('next/server', () => ({

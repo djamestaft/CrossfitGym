@@ -85,6 +85,17 @@ export async function POST(request: NextRequest) {
     // Validate the form data
     const validatedData = fmsSubmissionSchema.parse(body)
 
+    // Verify Turnstile token if present
+    if (body.turnstileToken) {
+      const turnstileVerified = await verifyTurnstileToken(body.turnstileToken)
+      if (!turnstileVerified) {
+        return NextResponse.json(
+          { success: false, message: 'Security verification failed' },
+          { status: 400 }
+        )
+      }
+    }
+
     // Sanitize text inputs to prevent XSS
     const sanitizedData = {
       ...validatedData,
@@ -259,6 +270,48 @@ function sanitizeText(text: string): string {
     .replace(/javascript:/gi, '') // Remove javascript: protocols
     .replace(/on\w+=/gi, '') // Remove event handlers
     .trim()
+}
+
+// Cloudflare Turnstile token verification
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  try {
+    if (!process.env.TURNSTILE_SECRET_KEY) {
+      // In development, if secret key is not configured, accept any token
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'TURNSTILE_SECRET_KEY not configured - skipping verification in development'
+        )
+        return true
+      }
+      return false
+    }
+
+    const response = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: token,
+        }),
+      }
+    )
+
+    const data = await response.json()
+
+    return data.success
+  } catch (error) {
+    // Log verification errors for debugging in development only
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.error('Turnstile verification failed:', error)
+    }
+    return false
+  }
 }
 
 // Health check endpoint for this specific API

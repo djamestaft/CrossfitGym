@@ -6,17 +6,19 @@
 
 ## 🎯 Current State Summary
 
-**✅ COMPLETED (80% of MVP)**
+**✅ COMPLETED (85% of MVP)**
 
 - Next.js 14 application with professional UI/UX
-- Complete FMS conversion funnel (frontend)
+- Complete FMS conversion funnel (frontend + backend)
 - Member portal with programming content
 - Responsive design and mobile optimization
 - GA4 analytics integration and SEO foundation
+- **CI/CD pipeline setup with Jest testing**
+- **Turnstile bot protection integration**
+- **Form submission API with email notifications**
 
-**🔧 REMAINING (20% to MVP)**
+**🔧 REMAINING (15% to MVP)**
 
-- Backend API integration for form submission
 - Site navigation (header/footer)
 - Deployment and hosting setup
 - Basic content management system
@@ -49,7 +51,7 @@
 #### **Core Value Sprint Tasks:**
 
 - [ ] **FMS-001:** Landing page with trust elements
-- [ ] **FMS-002:** Two-step form with validation
+- [x] **FMS-002:** Two-step form with validation ✅
 - [ ] **TIMETABLE-001:** CMS timetable fallback system
 - [ ] Performance monitoring active during development
 - [ ] End-to-end FMS funnel testing with analytics tracking
@@ -350,6 +352,6 @@ ADMIN_EMAIL=admin@geelongmovement.co
 
 ---
 
-**This roadmap gets you from 80% complete to 100% launched in 2 weeks. Focus on the critical path items first, then enhance post-launch.**
+**This roadmap gets you from 85% complete to 100% launched in 1.5 weeks. CI/CD pipeline is ready, core API functionality is complete, and tests are passing. Focus on navigation components and deployment for MVP launch.**
 
 _Roadmap created: September 13, 2025_
