@@ -105,14 +105,20 @@ export async function POST(request: NextRequest) {
     })
 
     // Send email notifications
-    const emailResult = await sendFMSNotificationEmails(submission)
+    try {
+      const emailResult = await sendFMSNotificationEmails(submission)
 
-    if (!emailResult.success) {
-      console.warn(
-        'Email notification failed:',
-        emailResult.reason || emailResult.error
-      )
-      // Continue with successful response even if email fails
+      if (!emailResult.success) {
+        console.warn(
+          'Email notification failed:',
+          emailResult.reason || emailResult.error
+        )
+        // Continue with successful response even if email fails
+      }
+    } catch (emailError) {
+      // If email service throws an exception, log it and re-throw
+      console.error('Email service threw an exception:', emailError)
+      throw emailError
     }
 
     // Track analytics event

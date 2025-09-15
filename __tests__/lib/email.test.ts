@@ -175,28 +175,35 @@ describe('Email Service', () => {
 
   describe('sendTestEmail', () => {
     it('should only work in development environment', async () => {
-      const originalNodeEnv = process.env.NODE_ENV
+      // Mock development environment
       Object.defineProperty(process.env, 'NODE_ENV', {
         value: 'production',
-        writable: true,
+        writable: false,
+        configurable: true,
       })
 
       await expect(sendTestEmail()).rejects.toThrow(
         'Test emails can only be sent in development environment'
       )
 
+      // Restore NODE_ENV
       Object.defineProperty(process.env, 'NODE_ENV', {
-        value: originalNodeEnv,
-        writable: true,
+        value: 'test',
+        writable: false,
+        configurable: true,
       })
     })
 
     it('should send test email in development', async () => {
-      const originalNodeEnv = process.env.NODE_ENV
+      // Mock development environment
       
       // Clear module cache and set NODE_ENV
       jest.resetModules()
-      process.env.NODE_ENV = 'development'
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'development',
+          writable: false,
+          configurable: true,
+        })
       process.env.RESEND_API_KEY = 'test-api-key'
 
       // Dynamically import after setting NODE_ENV
@@ -221,8 +228,13 @@ describe('Email Service', () => {
         html: expect.stringContaining('test_fms_123'),
       })
 
-      // Restore NODE_ENV and reset modules
-      process.env.NODE_ENV = originalNodeEnv
+      // Restore NODE_ENV and reset modules  
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: 'test',
+        writable: false,
+        configurable: true,
+      })
+      jest.restoreAllMocks()
       jest.resetModules()
     })
   })

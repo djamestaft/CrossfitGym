@@ -10,18 +10,26 @@ jest.mock('../../lib/email', () => ({
   }),
 }))
 
-// Mock environment variables
-const originalEnv = process.env
+// Mock environment variables safely
+const originalEnv = process.env.NODE_ENV
 beforeAll(() => {
+  // Set NODE_ENV for tests using Object.defineProperty
   Object.defineProperty(process.env, 'NODE_ENV', {
     value: 'test',
-    writable: true,
+    writable: false,
     configurable: true,
   })
 })
 
 afterAll(() => {
-  process.env = originalEnv
+  // Restore original NODE_ENV
+  if (originalEnv !== undefined) {
+    Object.defineProperty(process.env, 'NODE_ENV', {
+      value: originalEnv,
+      writable: false,
+      configurable: true,
+    })
+  }
 })
 
 // Clear rate limiting between tests
@@ -69,10 +77,21 @@ describe('/api/fms/submit', () => {
     }
 
     beforeEach(() => {
+      // Clear mock call history but preserve implementations
       jest.clearAllMocks()
+      
       requestCounter = 0 // Reset counter for each test
+      
       // Clear rate limiting between tests
       jest.clearAllTimers()
+      
+      // Ensure email service mock has the default successful behavior
+      const { sendFMSNotificationEmails } = require('../../lib/email')
+      sendFMSNotificationEmails.mockResolvedValue({
+        success: true,
+        adminEmailId: 'mock-admin-id',
+        customerEmailId: 'mock-customer-id',
+      })
     })
 
     describe('Successful submissions', () => {
@@ -200,11 +219,15 @@ describe('/api/fms/submit', () => {
 
     describe('Security measures', () => {
       it('should reject requests from invalid origins in production', async () => {
-        const originalNodeEnv = process.env.NODE_ENV
+        // Mock production environment
         
         // Reset the module to pick up new NODE_ENV
         jest.resetModules()
-        process.env.NODE_ENV = 'production'
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'production',
+          writable: false,
+          configurable: true,
+        })
         
         // Dynamically import the route after setting NODE_ENV
         const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
@@ -219,17 +242,25 @@ describe('/api/fms/submit', () => {
         expect(data.success).toBe(false)
         expect(data.message).toBe('Invalid origin')
 
-        // Restore original NODE_ENV
-        process.env.NODE_ENV = originalNodeEnv
+        // Restore NODE_ENV
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'test',
+          writable: false,
+          configurable: true,
+        })
         jest.resetModules()
       })
 
       it('should accept requests from allowed origins in production', async () => {
-        const originalNodeEnv = process.env.NODE_ENV
+        // Mock production environment
         
         // Reset the module to pick up new NODE_ENV
         jest.resetModules()
-        process.env.NODE_ENV = 'production'
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'production',
+          writable: false,
+          configurable: true,
+        })
         
         // Dynamically import the route after setting NODE_ENV
         const { POST: FreshPOST } = await import('../../app/api/fms/submit/route')
@@ -241,8 +272,12 @@ describe('/api/fms/submit', () => {
 
         expect(response.status).toBe(201)
 
-        // Restore original NODE_ENV
-        process.env.NODE_ENV = originalNodeEnv
+        // Restore NODE_ENV
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'test',
+          writable: false,
+          configurable: true,
+        })
         jest.resetModules()
       })
 
@@ -331,17 +366,34 @@ describe('/api/fms/submit', () => {
       })
 
       it('should handle unexpected errors', async () => {
-        // Mock an unexpected error in email service
-        const { sendFMSNotificationEmails } = require('../../lib/email')
-        sendFMSNotificationEmails.mockRejectedValueOnce(
-          new Error('Unexpected error')
-        )
+        // Use jest.isolateModules to ensure clean module state for this test
+        await jest.isolateModulesAsync(async () => {
+          // Reset all modules first to ensure clean state
+          jest.resetModules()
+          
+          // Mock the email module before importing anything else
+          jest.doMock('../../lib/email', () => ({
+            sendFMSNotificationEmails: jest.fn().mockImplementation(async () => {
+              throw new Error('Unexpected error')
+            })
+          }))
 
-        const request = createMockRequest(validFormData)
-        const response = await POST(request)
+          // Now import the route with the isolated mock
+          const { POST } = await import('../../app/api/fms/submit/route')
 
-        expect(response.status).toBe(500)
-        expect((await response.json()).success).toBe(false)
+          // Use a unique IP to avoid rate limiting conflicts
+          const request = createMockRequest(validFormData, {
+            'x-forwarded-for': '192.168.99.999', // Unique IP
+          })
+          
+          const response = await POST(request)
+
+          expect(response.status).toBe(500)
+          expect((await response.json()).success).toBe(false)
+          
+          // Clean up the isolated mock
+          jest.dontMock('../../lib/email')
+        })
       })
     })
   })
