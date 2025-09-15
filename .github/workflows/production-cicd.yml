@@ -134,7 +134,7 @@ jobs:
           NODE_ENV: production
         run: npm run build:vercel
 
-      - name: Debug Vercel Configuration
+      - name: Debug Vercel Configurations
         run: |
           echo "🔍 Debugging Vercel configuration values..."
           echo "VERCEL_ORG_ID length: ${#VERCEL_ORG_ID}"

@@ -113,7 +113,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug Vercel Configuration (Preview)
+      - name: Debug Vercel Configurations (Preview)
         run: |
           echo "🔍 Debugging Vercel configuration for preview..."
           echo "VERCEL_ORG_ID length: ${#VERCEL_ORG_ID}"
