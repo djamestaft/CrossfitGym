@@ -40,15 +40,24 @@
   - TypeScript compilation verification
   - ESLint code quality checks with zero warnings
   - Prettier code formatting validation
-  - Unit test execution with coverage reporting
+  - Unit test execution with coverage reporting (>80% threshold)
+  - Integration test execution for API endpoints
+  - E2E test execution for critical user journeys
   - Build artifact generation and verification
+  - Code coverage threshold enforcement
+  - Dead code elimination verification
 
 - [ ] **Performance & Security:**
-  - Bundle size analysis and budget enforcement
-  - Lighthouse CI performance audits
+  - Bundle size analysis and budget enforcement (<10% growth limit)
+  - Lighthouse CI performance audits (Core Web Vitals thresholds)
+  - Performance regression detection and budget enforcement
   - Security vulnerability scanning (npm audit)
+  - Static Application Security Testing (SAST)
   - Dependency license compliance check
   - Image optimization verification
+  - Accessibility compliance testing (WCAG 2.1 AA)
+  - Content Security Policy (CSP) validation
+  - Cross-site scripting (XSS) protection verification
 
 ### Deployment Strategy
 
@@ -94,6 +103,10 @@
   - Performance budgets trigger build failures when exceeded
   - Security vulnerabilities block deployment
   - All quality checks pass on clean codebase
+  - Test coverage thresholds enforce minimum quality standards
+  - Flaky test detection and reporting (<2% failure rate)
+  - Accessibility violations block deployment
+  - Visual regression tests prevent UI breakage
 
 - [ ] **Performance Testing:**
   - Core Web Vitals thresholds met on production
@@ -137,6 +150,12 @@
 - **Mean Time to Deploy:** <5 minutes from merge to live
 - **Mean Time to Rollback:** <1 minute to previous version
 - **Uptime Target:** >99.9% availability from Day 1
+- **Test Coverage:** >80% line coverage, >90% critical path coverage
+- **Test Execution Time:** Full test suite <5 minutes
+- **Flaky Test Rate:** <2% test failure rate due to flakiness
+- **Bug Escape Rate:** <1 production bug per sprint
+- **Performance Regression:** 0 Core Web Vitals degradation
+- **Accessibility Compliance:** 100% WCAG 2.1 AA compliance
 
 ## 🛠️ Technical Implementation Notes
 
@@ -188,11 +207,26 @@ jobs:
       - uses: actions/setup-node@v3
         with: { node-version: '18', cache: 'npm' }
       - run: npm ci
+      
+      # Core Quality Checks
       - run: npm run type-check
       - run: npm run lint
-      - run: npm run test
+      - name: Unit Tests with Coverage
+        run: npm run test:coverage -- --coverage --watchAll=false
+      - name: Integration Tests
+        run: npm run test:integration
+      - name: E2E Tests (Critical Paths)
+        run: npm run test:e2e:ci
+      - name: Accessibility Tests
+        run: npm run test:a11y
+      
+      # Build & Security
       - run: npm run build
       - run: npm audit --audit-level moderate
+      - name: Bundle Analysis
+        run: npm run analyze:bundle
+      - name: Performance Budget Check
+        run: npm run test:performance-budget
 ```
 
 ## 📝 Operational Procedures
@@ -204,6 +238,10 @@ jobs:
 - [ ] Performance impact assessed (bundle size, Core Web Vitals)
 - [ ] Security review completed for sensitive changes
 - [ ] Rollback plan documented if needed
+- [ ] Test coverage maintained above threshold (>80%)
+- [ ] Accessibility compliance verified (WCAG 2.1 AA)
+- [ ] Visual regression tests passing
+- [ ] Integration tests covering new functionality
 
 ### Emergency Rollback Procedure
 
@@ -218,5 +256,6 @@ jobs:
 **Story Owner:** DevOps Lead  
 **Technical Lead:** Development Lead  
 **Reviewer:** Product Manager  
+**QA Review:** Quinn (Test Architect) - September 15, 2025  
 **Created:** September 14, 2025  
-**Status:** Ready for Development
+**Status:** QA Enhanced - Ready for Development
