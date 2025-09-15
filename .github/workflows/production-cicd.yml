@@ -134,6 +134,20 @@ jobs:
           NODE_ENV: production
         run: npm run build:vercel
 
+      - name: Debug Vercel Configuration
+        run: |
+          echo "🔍 Debugging Vercel configuration..."
+          echo "VERCEL_ORG_ID length: ${#VERCEL_ORG_ID}"
+          echo "VERCEL_PROJECT_ID length: ${#VERCEL_PROJECT_ID}"
+          echo "VERCEL_TOKEN length: ${#VERCEL_TOKEN}"
+          echo "ORG_ID starts with: ${VERCEL_ORG_ID:0:5}..."
+          echo "PROJECT_ID starts with: ${VERCEL_PROJECT_ID:0:8}..."
+          echo "TOKEN starts with: ${VERCEL_TOKEN:0:8}..."
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -167,6 +181,20 @@ jobs:
       - name: Build for preview
         working-directory: ./
         run: npm run build
+
+      - name: Debug Vercel Configuration (Preview)
+        run: |
+          echo "🔍 Debugging Vercel configuration for preview..."
+          echo "VERCEL_ORG_ID length: ${#VERCEL_ORG_ID}"
+          echo "VERCEL_PROJECT_ID length: ${#VERCEL_PROJECT_ID}"
+          echo "VERCEL_TOKEN length: ${#VERCEL_TOKEN}"
+          echo "ORG_ID starts with: ${VERCEL_ORG_ID:0:5}..."
+          echo "PROJECT_ID starts with: ${VERCEL_PROJECT_ID:0:8}..."
+          echo "TOKEN starts with: ${VERCEL_TOKEN:0:8}..."
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel Preview
         uses: amondnet/vercel-action@v25
