@@ -17,7 +17,6 @@ export function Footer() {
                 height={100}
                 className='w-auto h-8'
               />
-             
             </Link>
             <div className='space-y-2 text-sm text-muted-foreground'>
               <div className='flex items-start space-x-2'>
