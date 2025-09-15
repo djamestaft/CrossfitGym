@@ -174,25 +174,29 @@ describe('Email Service', () => {
   describe('sendTestEmail', () => {
     it('should only work in development environment', async () => {
       const originalNodeEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'production'
+      Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
 
       await expect(sendTestEmail()).rejects.toThrow(
         'Test emails can only be sent in development environment'
       )
 
-      process.env.NODE_ENV = originalNodeEnv
+      Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
     })
 
     it('should send test email in development', async () => {
       const originalNodeEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'development'
+      Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', writable: true })
       process.env.RESEND_API_KEY = 'test-api-key'
+
+      // Clear module cache to pick up new NODE_ENV
+      jest.resetModules()
+      const { sendTestEmail: freshSendTestEmail } = await import('../../lib/email')
 
       mockSend
         .mockResolvedValueOnce({ data: { id: 'admin-email-id' } })
         .mockResolvedValueOnce({ data: { id: 'customer-email-id' } })
 
-      const result = await sendTestEmail()
+      const result = await freshSendTestEmail()
 
       expect(result.success).toBe(true)
       expect(mockSend).toHaveBeenCalledTimes(2)
@@ -205,7 +209,7 @@ describe('Email Service', () => {
         html: expect.stringContaining('test_fms_123'),
       })
 
-      process.env.NODE_ENV = originalNodeEnv
+      Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
     })
   })
 

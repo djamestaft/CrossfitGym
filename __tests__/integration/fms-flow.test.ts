@@ -7,10 +7,11 @@ import { NextRequest } from 'next/server'
 import { POST } from '../../app/api/fms/submit/route'
 
 // Mock the email service
-const mockSendFMSNotificationEmails = jest.fn()
 jest.mock('../../lib/email', () => ({
-  sendFMSNotificationEmails: mockSendFMSNotificationEmails,
+  sendFMSNotificationEmails: jest.fn(),
 }))
+
+const { sendFMSNotificationEmails: mockSendFMSNotificationEmails } = jest.mocked(require('../../lib/email'))
 
 describe('FMS Form Integration Tests', () => {
   const validSubmissionData = {
@@ -27,14 +28,17 @@ describe('FMS Form Integration Tests', () => {
     utmCampaign: 'summer-fitness',
   }
 
+  let requestCounter = 0
+  
   const createMockRequest = (
     body: any,
     headers: Record<string, string> = {}
   ): NextRequest => {
+    requestCounter++
     const defaultHeaders = {
       'content-type': 'application/json',
       origin: 'https://geelongmovement.com',
-      'x-forwarded-for': '203.45.67.89',
+      'x-forwarded-for': `203.45.67.${requestCounter}`, // Unique IP per request
       'user-agent': 'Mozilla/5.0 (compatible; Integration Test)',
       ...headers,
     }
@@ -42,14 +46,21 @@ describe('FMS Form Integration Tests', () => {
     return {
       json: () => Promise.resolve(body),
       headers: {
-        get: (name: string) => defaultHeaders[name.toLowerCase()] || null,
+        get: (name: string) => (defaultHeaders as Record<string, string>)[name.toLowerCase()] || null,
       },
     } as NextRequest
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    process.env.NODE_ENV = 'production'
+    requestCounter = 0 // Reset counter for each test
+    Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
+    
+    // Clear rate limiting between tests
+    const rateLimitMap = (globalThis as any).__rateLimitMap
+    if (rateLimitMap) {
+      rateLimitMap.clear()
+    }
     
     // Mock successful email sending by default
     mockSendFMSNotificationEmails.mockResolvedValue({
@@ -60,7 +71,7 @@ describe('FMS Form Integration Tests', () => {
   })
 
   afterEach(() => {
-    delete process.env.NODE_ENV
+    Object.defineProperty(process.env, 'NODE_ENV', { value: 'test', writable: true })
   })
 
   describe('Complete submission flow', () => {
@@ -86,7 +97,7 @@ describe('FMS Form Integration Tests', () => {
       expect(mockSendFMSNotificationEmails).toHaveBeenCalledWith({
         ...validSubmissionData,
         submittedAt: expect.any(String),
-        clientIP: '203.45.67.89',
+        clientIP: expect.stringMatching(/^203\.45\.67\.\d+$/),
         userAgent: 'Mozilla/5.0 (compatible; Integration Test)',
         id: expect.stringMatching(/^fms_[a-z0-9]+_[a-z0-9]+$/),
       })
@@ -340,7 +351,7 @@ describe('FMS Form Integration Tests', () => {
       await POST(request)
 
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
-      expect(emailCallArgs.clientIP).toBe('203.45.67.89')
+      expect(emailCallArgs.clientIP).toMatch(/^203\.45\.67\.\d+$/)
       expect(emailCallArgs.userAgent).toContain('iPhone')
       expect(emailCallArgs.submittedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)
     })

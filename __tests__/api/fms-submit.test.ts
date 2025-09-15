@@ -13,10 +13,11 @@ jest.mock('../../lib/email', () => ({
 // Mock environment variables
 const originalEnv = process.env
 beforeAll(() => {
-  process.env = {
-    ...originalEnv,
-    NODE_ENV: 'test',
-  }
+  Object.defineProperty(process.env, 'NODE_ENV', { 
+    value: 'test', 
+    writable: true, 
+    configurable: true 
+  })
 })
 
 afterAll(() => {
@@ -25,10 +26,10 @@ afterAll(() => {
 
 // Clear rate limiting between tests
 beforeEach(() => {
-  // Access the rate limit map from the module and clear it
-  const route = require('../../app/api/fms/submit/route')
-  if (route.rateLimitMap && route.rateLimitMap.clear) {
-    route.rateLimitMap.clear()
+  // Clear the rate limit map (exposed via global for testing)
+  const rateLimitMap = (globalThis as any).__rateLimitMap
+  if (rateLimitMap) {
+    rateLimitMap.clear()
   }
 })
 
@@ -214,7 +215,7 @@ describe('/api/fms/submit', () => {
 
       it('should accept requests from allowed origins in production', async () => {
         const originalNodeEnv = process.env.NODE_ENV
-        process.env.NODE_ENV = 'production'
+        Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
 
         const request = createMockRequest(validFormData, {
           origin: 'https://geelongmovement.com',
