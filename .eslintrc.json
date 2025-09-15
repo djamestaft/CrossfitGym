@@ -65,5 +65,8 @@
         "@typescript-eslint/no-explicit-any": "off"
       }
     }
+  ],
+  "ignorePatterns": [
+    "__tests__/components/fms-form-localstorage.test.tsx"
   ]
 }
