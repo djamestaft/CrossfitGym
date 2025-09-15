@@ -259,7 +259,7 @@ jobs:
         run: |
           echo "🏥 Running health check..."
           # Replace with your actual domain
-          HEALTH_URL="https://geelongmovement.com/api/health"
+          HEALTH_URL="https://crossfit-gym-devon-james-tafts-projects.vercel.app/api/health"
 
           # Try to get health status
           if curl -f -s "$HEALTH_URL" > /dev/null; then
