@@ -267,5 +267,3 @@ export async function sendTestEmail() {
 
   return await sendFMSNotificationEmails(testSubmission)
 }
-
-

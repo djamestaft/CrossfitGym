@@ -13,10 +13,10 @@ jest.mock('../../lib/email', () => ({
 // Mock environment variables
 const originalEnv = process.env
 beforeAll(() => {
-  Object.defineProperty(process.env, 'NODE_ENV', { 
-    value: 'test', 
-    writable: true, 
-    configurable: true 
+  Object.defineProperty(process.env, 'NODE_ENV', {
+    value: 'test',
+    writable: true,
+    configurable: true,
   })
 })
 
@@ -40,7 +40,8 @@ describe('/api/fms/submit', () => {
       email: 'john@example.com',
       phone: '0412345678',
       preferredTime: 'morning' as const,
-      goals: 'I want to improve my mobility and reduce back pain from desk work.',
+      goals:
+        'I want to improve my mobility and reduce back pain from desk work.',
       injuryFlags: ['None of the above'],
       experience: 'beginner' as const,
     }
@@ -82,7 +83,9 @@ describe('/api/fms/submit', () => {
 
         expect(response.status).toBe(201)
         expect(data.success).toBe(true)
-        expect(data.message).toBe('FMS assessment request submitted successfully')
+        expect(data.message).toBe(
+          'FMS assessment request submitted successfully'
+        )
         expect(data.submissionId).toMatch(/^fms_[a-z0-9]+_[a-z0-9]+$/)
         expect(data.nextSteps).toEqual({
           contactWindow: '1 business day',
@@ -198,7 +201,10 @@ describe('/api/fms/submit', () => {
     describe('Security measures', () => {
       it('should reject requests from invalid origins in production', async () => {
         const originalNodeEnv = process.env.NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'production',
+          writable: true,
+        })
 
         const request = createMockRequest(validFormData, {
           origin: 'https://malicious-site.com',
@@ -210,12 +216,18 @@ describe('/api/fms/submit', () => {
         expect(data.success).toBe(false)
         expect(data.message).toBe('Invalid origin')
 
-        Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: originalNodeEnv,
+          writable: true,
+        })
       })
 
       it('should accept requests from allowed origins in production', async () => {
         const originalNodeEnv = process.env.NODE_ENV
-        Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: 'production',
+          writable: true,
+        })
 
         const request = createMockRequest(validFormData, {
           origin: 'https://geelongmovement.com',
@@ -224,7 +236,10 @@ describe('/api/fms/submit', () => {
 
         expect(response.status).toBe(201)
 
-        Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
+        Object.defineProperty(process.env, 'NODE_ENV', {
+          value: originalNodeEnv,
+          writable: true,
+        })
       })
 
       it('should reject requests that are too large', async () => {

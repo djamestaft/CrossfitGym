@@ -11,7 +11,8 @@ jest.mock('../../lib/email', () => ({
   sendFMSNotificationEmails: jest.fn(),
 }))
 
-const { sendFMSNotificationEmails: mockSendFMSNotificationEmails } = jest.mocked(require('../../lib/email'))
+const { sendFMSNotificationEmails: mockSendFMSNotificationEmails } =
+  jest.mocked(require('../../lib/email'))
 
 describe('FMS Form Integration Tests', () => {
   const validSubmissionData = {
@@ -19,7 +20,8 @@ describe('FMS Form Integration Tests', () => {
     email: 'sarah.johnson@example.com',
     phone: '0434567890',
     preferredTime: 'afternoon' as const,
-    goals: 'I want to improve my posture and reduce shoulder pain from desk work. Also interested in building strength.',
+    goals:
+      'I want to improve my posture and reduce shoulder pain from desk work. Also interested in building strength.',
     injuryFlags: ['Current pain or injury'],
     experience: 'intermediate' as const,
     referralSource: 'Facebook Ad',
@@ -29,7 +31,7 @@ describe('FMS Form Integration Tests', () => {
   }
 
   let requestCounter = 0
-  
+
   const createMockRequest = (
     body: any,
     headers: Record<string, string> = {}
@@ -46,7 +48,9 @@ describe('FMS Form Integration Tests', () => {
     return {
       json: () => Promise.resolve(body),
       headers: {
-        get: (name: string) => (defaultHeaders as Record<string, string>)[name.toLowerCase()] || null,
+        get: (name: string) =>
+          (defaultHeaders as Record<string, string>)[name.toLowerCase()] ||
+          null,
       },
     } as NextRequest
   }
@@ -54,14 +58,17 @@ describe('FMS Form Integration Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     requestCounter = 0 // Reset counter for each test
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
-    
+    Object.defineProperty(process.env, 'NODE_ENV', {
+      value: 'production',
+      writable: true,
+    })
+
     // Clear rate limiting between tests
     const rateLimitMap = (globalThis as any).__rateLimitMap
     if (rateLimitMap) {
       rateLimitMap.clear()
     }
-    
+
     // Mock successful email sending by default
     mockSendFMSNotificationEmails.mockResolvedValue({
       success: true,
@@ -71,7 +78,10 @@ describe('FMS Form Integration Tests', () => {
   })
 
   afterEach(() => {
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'test', writable: true })
+    Object.defineProperty(process.env, 'NODE_ENV', {
+      value: 'test',
+      writable: true,
+    })
   })
 
   describe('Complete submission flow', () => {
@@ -106,20 +116,25 @@ describe('FMS Form Integration Tests', () => {
     it('should handle submission with injury flags requiring special attention', async () => {
       const submissionWithInjuries = {
         ...validSubmissionData,
-        injuryFlags: ['Current pain or injury', 'Previous surgery', 'Chronic condition'],
-        goals: 'Recovering from knee surgery 6 months ago. Want to rebuild strength safely.',
+        injuryFlags: [
+          'Current pain or injury',
+          'Previous surgery',
+          'Chronic condition',
+        ],
+        goals:
+          'Recovering from knee surgery 6 months ago. Want to rebuild strength safely.',
       }
 
       const request = createMockRequest(submissionWithInjuries)
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.injuryFlags).toEqual([
         'Current pain or injury',
-        'Previous surgery', 
-        'Chronic condition'
+        'Previous surgery',
+        'Chronic condition',
       ])
       expect(emailCallArgs.goals).toContain('surgery')
     })
@@ -136,7 +151,7 @@ describe('FMS Form Integration Tests', () => {
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.experience).toBe('beginner')
       expect(emailCallArgs.injuryFlags).toEqual(['None of the above'])
@@ -148,7 +163,8 @@ describe('FMS Form Integration Tests', () => {
         name: 'Mike Rodriguez',
         email: 'mike.rodriguez@example.com',
         experience: 'advanced' as const,
-        goals: 'Professional footballer looking to improve movement efficiency and prevent injuries during season.',
+        goals:
+          'Professional footballer looking to improve movement efficiency and prevent injuries during season.',
         injuryFlags: ['None of the above'],
         preferredTime: 'morning' as const,
       }
@@ -157,7 +173,7 @@ describe('FMS Form Integration Tests', () => {
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.experience).toBe('advanced')
       expect(emailCallArgs.goals).toContain('Professional footballer')
@@ -178,7 +194,7 @@ describe('FMS Form Integration Tests', () => {
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.referralSource).toBe('Google Ads')
       expect(emailCallArgs.utmSource).toBe('google')
@@ -187,13 +203,19 @@ describe('FMS Form Integration Tests', () => {
     })
 
     it('should handle submissions without marketing attribution', async () => {
-      const { referralSource, utmSource, utmMedium, utmCampaign, ...submissionWithoutUTM } = validSubmissionData
+      const {
+        referralSource,
+        utmSource,
+        utmMedium,
+        utmCampaign,
+        ...submissionWithoutUTM
+      } = validSubmissionData
 
       const request = createMockRequest(submissionWithoutUTM)
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.referralSource).toBeUndefined()
       expect(emailCallArgs.utmSource).toBeUndefined()
@@ -218,7 +240,9 @@ describe('FMS Form Integration Tests', () => {
     })
 
     it('should handle email service throwing exceptions', async () => {
-      mockSendFMSNotificationEmails.mockRejectedValue(new Error('Email service crashed'))
+      mockSendFMSNotificationEmails.mockRejectedValue(
+        new Error('Email service crashed')
+      )
 
       const request = createMockRequest(validSubmissionData)
       const response = await POST(request)
@@ -236,7 +260,7 @@ describe('FMS Form Integration Tests', () => {
       })
 
       const response = await POST(request)
-      
+
       expect(response.status).toBe(403)
       expect((await response.json()).message).toBe('Invalid origin')
       expect(mockSendFMSNotificationEmails).not.toHaveBeenCalled()
@@ -268,14 +292,15 @@ describe('FMS Form Integration Tests', () => {
       const maliciousSubmission = {
         ...validSubmissionData,
         name: 'John<script>alert("xss")</script>Smith',
-        goals: 'My goals include <img src=x onerror=alert(1)> improving fitness',
+        goals:
+          'My goals include <img src=x onerror=alert(1)> improving fitness',
       }
 
       const request = createMockRequest(maliciousSubmission)
       const response = await POST(request)
 
       expect(response.status).toBe(201)
-      
+
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       // Verify scripts are removed (exact sanitization depends on implementation)
       expect(emailCallArgs.name).not.toContain('<script>')
@@ -319,12 +344,15 @@ describe('FMS Form Integration Tests', () => {
   describe('Data persistence and formatting', () => {
     it('should generate unique submission IDs', async () => {
       const requests = Array.from({ length: 3 }, (_, i) =>
-        createMockRequest({
-          ...validSubmissionData,
-          email: `test${i}@example.com`,
-        }, {
-          'x-forwarded-for': `192.168.1.${100 + i}`, // Different IPs
-        })
+        createMockRequest(
+          {
+            ...validSubmissionData,
+            email: `test${i}@example.com`,
+          },
+          {
+            'x-forwarded-for': `192.168.1.${100 + i}`, // Different IPs
+          }
+        )
       )
 
       const responses = await Promise.all(requests.map(req => POST(req)))
@@ -344,7 +372,8 @@ describe('FMS Form Integration Tests', () => {
 
     it('should include client metadata in email data', async () => {
       const request = createMockRequest(validSubmissionData, {
-        'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X)',
+        'user-agent':
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X)',
         'x-forwarded-for': '203.45.67.89',
       })
 
@@ -353,24 +382,31 @@ describe('FMS Form Integration Tests', () => {
       const emailCallArgs = mockSendFMSNotificationEmails.mock.calls[0][0]
       expect(emailCallArgs.clientIP).toMatch(/^203\.45\.67\.\d+$/)
       expect(emailCallArgs.userAgent).toContain('iPhone')
-      expect(emailCallArgs.submittedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)
+      expect(emailCallArgs.submittedAt).toMatch(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+      )
     })
   })
 
   describe('Performance under load', () => {
     it('should handle concurrent submissions from different users', async () => {
       const concurrentRequests = Array.from({ length: 10 }, (_, i) =>
-        createMockRequest({
-          ...validSubmissionData,
-          name: `User ${i}`,
-          email: `user${i}@example.com`,
-        }, {
-          'x-forwarded-for': `192.168.1.${i}`, // Different IPs to avoid rate limiting
-        })
+        createMockRequest(
+          {
+            ...validSubmissionData,
+            name: `User ${i}`,
+            email: `user${i}@example.com`,
+          },
+          {
+            'x-forwarded-for': `192.168.1.${i}`, // Different IPs to avoid rate limiting
+          }
+        )
       )
 
       const startTime = Date.now()
-      const responses = await Promise.all(concurrentRequests.map(req => POST(req)))
+      const responses = await Promise.all(
+        concurrentRequests.map(req => POST(req))
+      )
       const endTime = Date.now()
 
       // All should succeed

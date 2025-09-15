@@ -76,7 +76,9 @@ describe('Email Service', () => {
         from: 'noreply@test.com',
         to: 'john@example.com',
         subject: 'Your FMS Assessment Request - Geelong Movement Co',
-        html: expect.stringContaining('Your FMS Assessment Request is Confirmed'),
+        html: expect.stringContaining(
+          'Your FMS Assessment Request is Confirmed'
+        ),
       })
     })
 
@@ -174,23 +176,34 @@ describe('Email Service', () => {
   describe('sendTestEmail', () => {
     it('should only work in development environment', async () => {
       const originalNodeEnv = process.env.NODE_ENV
-      Object.defineProperty(process.env, 'NODE_ENV', { value: 'production', writable: true })
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: 'production',
+        writable: true,
+      })
 
       await expect(sendTestEmail()).rejects.toThrow(
         'Test emails can only be sent in development environment'
       )
 
-      Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: originalNodeEnv,
+        writable: true,
+      })
     })
 
     it('should send test email in development', async () => {
       const originalNodeEnv = process.env.NODE_ENV
-      Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', writable: true })
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: 'development',
+        writable: true,
+      })
       process.env.RESEND_API_KEY = 'test-api-key'
 
       // Clear module cache to pick up new NODE_ENV
       jest.resetModules()
-      const { sendTestEmail: freshSendTestEmail } = await import('../../lib/email')
+      const { sendTestEmail: freshSendTestEmail } = await import(
+        '../../lib/email'
+      )
 
       mockSend
         .mockResolvedValueOnce({ data: { id: 'admin-email-id' } })
@@ -209,7 +222,10 @@ describe('Email Service', () => {
         html: expect.stringContaining('test_fms_123'),
       })
 
-      Object.defineProperty(process.env, 'NODE_ENV', { value: originalNodeEnv, writable: true })
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: originalNodeEnv,
+        writable: true,
+      })
     })
   })
 
@@ -228,22 +244,22 @@ describe('Email Service', () => {
       await sendFMSNotificationEmails(mockSubmission)
 
       const adminEmailHtml = mockSend.mock.calls[0][0].html
-      
+
       // Contact information
       expect(adminEmailHtml).toContain('John Smith')
       expect(adminEmailHtml).toContain('john@example.com')
       expect(adminEmailHtml).toContain('0412345678')
       expect(adminEmailHtml).toContain('morning')
-      
+
       // Assessment details
       expect(adminEmailHtml).toContain('beginner')
       expect(adminEmailHtml).toContain('Improve mobility and reduce back pain')
       expect(adminEmailHtml).toContain('Current pain or injury')
-      
+
       // Submission metadata
       expect(adminEmailHtml).toContain('fms_test_123')
       expect(adminEmailHtml).toContain('15/09/2025') // Australian date format
-      
+
       // Next steps
       expect(adminEmailHtml).toContain('Contact client within 1 business day')
       expect(adminEmailHtml).toContain('Schedule 45-minute FMS assessment')
@@ -253,20 +269,22 @@ describe('Email Service', () => {
       await sendFMSNotificationEmails(mockSubmission)
 
       const customerEmailHtml = mockSend.mock.calls[1][0].html
-      
+
       // Personalization
       expect(customerEmailHtml).toContain('Hi John,')
-      
+
       // Summary information
       expect(customerEmailHtml).toContain('morning')
       expect(customerEmailHtml).toContain('beginner')
-      expect(customerEmailHtml).toContain('Improve mobility and reduce back pain')
-      
+      expect(customerEmailHtml).toContain(
+        'Improve mobility and reduce back pain'
+      )
+
       // Next steps
       expect(customerEmailHtml).toContain('call you within 1 business day')
       expect(customerEmailHtml).toContain('approximately 45 minutes')
       expect(customerEmailHtml).toContain('comfortable workout clothes')
-      
+
       // Reference information
       expect(customerEmailHtml).toContain('fms_test_123')
       expect(customerEmailHtml).toContain('15/09/2025')
