@@ -178,7 +178,7 @@ describe('Email Service', () => {
       // This test validates that the function throws when NODE_ENV is not development or test
       // Since we can't easily mock NODE_ENV in Jest, we'll create a direct test
       // by temporarily modifying the function to check a different condition
-      
+
       // Instead of testing NODE_ENV mocking (which is complex in Jest),
       // we'll test the function behavior with actual environment
       // The function should work in 'test' environment (current), so let's skip this test
@@ -206,7 +206,7 @@ describe('Email Service', () => {
         subject: 'New FMS Assessment Request - John Smith',
         html: expect.stringContaining('test_fms_123'),
       })
-      
+
       jest.restoreAllMocks()
     })
   })

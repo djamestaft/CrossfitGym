@@ -43,12 +43,12 @@ const config = {
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  
+
   // Mock isolation configuration
   clearMocks: true, // Clear mock call history before every test
   restoreMocks: false, // Don't restore original implementations (would break mocks)
-  
-  // CI-specific configuration  
+
+  // CI-specific configuration
   testTimeout: process.env.CI ? 15000 : 10000, // 15s in CI, 10s locally
   maxWorkers: process.env.CI ? 2 : '50%', // Limit workers in CI
   bail: process.env.CI ? 1 : 0, // Stop on first failure in CI

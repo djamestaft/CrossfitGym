@@ -58,7 +58,7 @@ describe('FMS Form Integration Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     requestCounter = 0 // Reset counter for each test
-    
+
     // Clear rate limiting between tests
     const rateLimitMap = (globalThis as any).__rateLimitMap
     if (rateLimitMap) {
@@ -347,7 +347,7 @@ describe('FMS Form Integration Tests', () => {
       )
 
       const responses = await Promise.all(requests.map(req => POST(req)))
-      
+
       // Filter only successful responses
       const successfulResponses = responses.filter(res => res.status === 201)
       const submissionIds = await Promise.all(

@@ -134,10 +134,13 @@ describe('FMSForm Component', () => {
         await user.click(continueButton)
       })
 
-      await waitFor(() => {
-        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
-      }, { timeout: 10000 })
-      
+      await waitFor(
+        () => {
+          expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
+
       expect(mockGtag).toHaveBeenCalledWith('event', 'fms_start', {
         event_category: 'engagement',
         event_label: 'FMS Form Step 2',
@@ -152,7 +155,7 @@ describe('FMSForm Component', () => {
         await user.clear(screen.getByLabelText(/full name/i))
         await user.type(screen.getByLabelText(/full name/i), 'John Smith')
       })
-      
+
       await act(async () => {
         await user.clear(screen.getByLabelText(/email address/i))
         await user.type(
@@ -160,21 +163,23 @@ describe('FMSForm Component', () => {
           'john@example.com'
         )
       })
-      
+
       await act(async () => {
         await user.clear(screen.getByLabelText(/phone number/i))
         await user.type(screen.getByLabelText(/phone number/i), '0412345678')
       })
-      
+
       await act(async () => {
         await user.click(screen.getByLabelText(/morning/i))
       })
-      
+
       // Wait for form to be valid before proceeding
       await waitFor(() => {
-        expect(screen.queryByText('Please select a preferred time')).not.toBeInTheDocument()
+        expect(
+          screen.queryByText('Please select a preferred time')
+        ).not.toBeInTheDocument()
       })
-      
+
       await act(async () => {
         await user.click(screen.getByText('Continue to Step 2'))
       })
@@ -225,10 +230,13 @@ describe('FMSForm Component', () => {
 
       await fillStep1(user)
 
-      await waitFor(() => {
-        const progressBar = document.querySelector('.bg-primary')
-        expect(progressBar).toHaveStyle('width: 100%')
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          const progressBar = document.querySelector('.bg-primary')
+          expect(progressBar).toHaveStyle('width: 100%')
+        },
+        { timeout: 10000 }
+      )
     })
 
     it('should allow going back to step 1', async () => {
@@ -237,21 +245,29 @@ describe('FMSForm Component', () => {
 
       await fillStep1(user)
 
-      await waitFor(() => {
-        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       const backButton = screen.getByText('Back')
       await act(async () => {
         await user.click(backButton)
       })
 
-      await waitFor(() => {
-        expect(screen.getByText(/step 1 of 2/i)).toBeInTheDocument()
-        // Data should be preserved
-        expect(screen.getByDisplayValue('John Smith')).toBeInTheDocument()
-        expect(screen.getByDisplayValue('john@example.com')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText(/step 1 of 2/i)).toBeInTheDocument()
+          // Data should be preserved
+          expect(screen.getByDisplayValue('John Smith')).toBeInTheDocument()
+          expect(
+            screen.getByDisplayValue('john@example.com')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
     })
 
     it('should validate step 2 required fields', async () => {
@@ -260,9 +276,12 @@ describe('FMSForm Component', () => {
 
       await fillStep1(user)
 
-      await waitFor(() => {
-        expect(screen.getByText('Book My Assessment')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('Book My Assessment')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       const submitButton = screen.getByText('Book My Assessment')
       await user.click(submitButton)
@@ -283,11 +302,14 @@ describe('FMSForm Component', () => {
 
       await fillStep1(user)
 
-      await waitFor(() => {
-        expect(
-          screen.getByLabelText(/current pain or injury/i)
-        ).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByLabelText(/current pain or injury/i)
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       const injuryCheckbox = screen.getByLabelText(/current pain or injury/i)
       const noneCheckbox = screen.getByLabelText(/none of the above/i)
@@ -330,7 +352,7 @@ describe('FMSForm Component', () => {
         },
         { timeout: 10000 }
       )
-      
+
       await waitFor(
         () => {
           expect(
@@ -346,11 +368,11 @@ describe('FMSForm Component', () => {
           'I want to improve my mobility and reduce back pain.'
         )
       })
-      
+
       await act(async () => {
         await user.click(screen.getByLabelText(/none of the above/i))
       })
-      
+
       await act(async () => {
         await user.click(screen.getByLabelText(/beginner/i))
       })
@@ -533,15 +555,21 @@ describe('FMSForm Component', () => {
       await user.click(screen.getByText('Continue to Step 2'))
 
       // Wait for step 2 transition
-      await waitFor(() => {
-        expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
-      }, { timeout: 10000 })
-      
-      await waitFor(() => {
-        expect(
-          screen.getByLabelText(/what are your movement goals/i)
-        ).toBeInTheDocument()
-      }, { timeout: 5000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText(/step 2 of 2/i)).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByLabelText(/what are your movement goals/i)
+          ).toBeInTheDocument()
+        },
+        { timeout: 5000 }
+      )
 
       await user.type(
         screen.getByLabelText(/what are your movement goals/i),

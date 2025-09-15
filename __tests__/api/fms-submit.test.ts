@@ -79,12 +79,12 @@ describe('/api/fms/submit', () => {
     beforeEach(() => {
       // Clear mock call history but preserve implementations
       jest.clearAllMocks()
-      
+
       requestCounter = 0 // Reset counter for each test
-      
+
       // Clear rate limiting between tests
       jest.clearAllTimers()
-      
+
       // Ensure email service mock has the default successful behavior
       const { sendFMSNotificationEmails } = require('../../lib/email')
       sendFMSNotificationEmails.mockResolvedValue({
@@ -332,12 +332,14 @@ describe('/api/fms/submit', () => {
         await jest.isolateModulesAsync(async () => {
           // Reset all modules first to ensure clean state
           jest.resetModules()
-          
+
           // Mock the email module before importing anything else
           jest.doMock('../../lib/email', () => ({
-            sendFMSNotificationEmails: jest.fn().mockImplementation(async () => {
-              throw new Error('Unexpected error')
-            })
+            sendFMSNotificationEmails: jest
+              .fn()
+              .mockImplementation(async () => {
+                throw new Error('Unexpected error')
+              }),
           }))
 
           // Now import the route with the isolated mock
@@ -347,12 +349,12 @@ describe('/api/fms/submit', () => {
           const request = createMockRequest(validFormData, {
             'x-forwarded-for': '192.168.99.999', // Unique IP
           })
-          
+
           const response = await POST(request)
 
           expect(response.status).toBe(500)
           expect((await response.json()).success).toBe(false)
-          
+
           // Clean up the isolated mock
           jest.dontMock('../../lib/email')
         })
