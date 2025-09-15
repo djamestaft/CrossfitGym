@@ -26,9 +26,9 @@ export function Header() {
           <Image
             src='/images/logo.webp'
             alt='Geelong Movement Co Logo'
-            width={40}
-            height={40}
-            className='w-auto'
+            width={100}
+            height={100}
+            className='w-auto h-8'
           />
         </Link>
 
