@@ -170,5 +170,5 @@ jobs:
 
       - name: Post-deployment health check
         run: |
-          curl -f https://crossfit-gym-devon-james-tafts-projects.vercel.app/api/health || exit 1
+          curl -f https://crossfit-gym-sigma.vercel.app/api/health || exit 1
         continue-on-error: false
