@@ -339,6 +339,50 @@ html.dark {
   line-height: 1.6;
 }
 
+/* Mobile-specific text sizing */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Base font size for mobile */
+  }
+
+  .typography-h1 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .typography-h2 {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+
+  .typography-h3 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .typography-body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Reduce button text on mobile */
+  .btn-primary,
+  .btn-secondary {
+    font-size: 14px;
+  }
+
+  /* Adjust card text */
+  .card-enhanced {
+    font-size: 14px;
+  }
+
+  /* Smaller navigation text */
+  nav a,
+  .nav-link {
+    font-size: 13px;
+  }
+}
+
 /* Focus Indicators for Accessibility */
 .focus-visible:focus {
   outline: 2px solid var(--therapy-primary);
