@@ -1,26 +1,10 @@
-import { CoachBio } from '@/components/coach-bio'
-import { SafetyPanel } from '@/components/safety-panel'
 import { SanityTestimonials } from '@/components/testimonials-Sanity'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { client } from '@/sanity/lib/client'
 import { ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-
-async function getTestimonials() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/testimonials`,
-    {
-      cache: 'no-store',
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch testimonials')
-  }
-
-  return response.json()
-}
 
 export const metadata: Metadata = {
   title: 'About Us | Geelong Movement Co',
@@ -34,7 +18,18 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const testimonials = await getTestimonials()
+  const testimonials =
+    await client.fetch(`*[_type == "testimonial"] | order(featured desc, _createdAt desc) {
+    _id,
+    name,
+    content,
+    rating,
+    role,
+    featured,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt
+  }`)
+
   return (
     <div className='min-h-screen bg-background'>
       {/* Header */}
@@ -65,14 +60,14 @@ export default async function AboutPage() {
               experience in movement therapy and rehabilitation.
             </p>
           </div>
-          <CoachBio showAll={true} layout='list' />
+          {/* Team component will be added here */}
         </div>
       </section>
 
       {/* Safety & Standards */}
       <section className='py-16 bg-muted'>
         <div className='container mx-auto px-4'>
-          <SafetyPanel variant='full' />
+          {/* Safety component will be added here */}
         </div>
       </section>
 

@@ -26,7 +26,13 @@
       "Bash(rename:*)",
       "mcp__ide__getDiagnostics",
       "WebFetch(domain:crossfit-gym-sigma.vercel.app)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(npm install:*)",
+      "Bash(npx sanity:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(npm ls:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

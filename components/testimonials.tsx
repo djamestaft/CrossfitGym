@@ -1,25 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 interface Testimonial {
   id: string
   name: string
   role: string
-  location: string
+  location?: string
   rating: number
   quote: string
-  condition: string
-  outcome: string
-  timeframe: string
+  condition?: string
+  outcome?: string
+  timeframe?: string
   image?: string
 }
 
-const testimonials: Testimonial[] = [
+const fallbackTestimonials: Testimonial[] = [
   {
     id: '1',
     name: 'Sarah Mitchell',
@@ -113,8 +113,8 @@ export function Testimonials({
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   const displayedTestimonials = showAll
-    ? testimonials
-    : testimonials.slice(0, maxItems)
+    ? fallbackTestimonials
+    : fallbackTestimonials.slice(0, maxItems)
 
   useEffect(() => {
     if (!isAutoPlaying || showAll) return
@@ -142,7 +142,7 @@ export function Testimonials({
   if (showAll) {
     return (
       <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {testimonials.map(testimonial => (
+        {fallbackTestimonials.map(testimonial => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
       </div>
