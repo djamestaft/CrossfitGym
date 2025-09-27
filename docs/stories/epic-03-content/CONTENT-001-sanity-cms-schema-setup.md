@@ -247,17 +247,60 @@
   - Image upload with alt text
   - Published at timestamp
 
+- ✅ **Article Schema** (`article`):
+  - Title, slug, excerpt, rich text body
+  - SEO metadata fields (meta title, description, OG image)
+  - Author reference, categories, and tags
+  - Publication status and scheduling
+  - Related content relationships (hubs, other articles)
+  - Featured image with alt text and caption
+  - Call-to-action settings
+
+- ✅ **Condition Hub Schema** (`conditionHub`):
+  - Condition name and descriptive title
+  - Structured sections (hero, understanding, dos/donts, modifications)
+  - FAQ array with structured markup support
+  - Related articles and internal linking
+  - CTA configuration options
+  - Progress tracking and completion status
+
+- ✅ **FAQ Schema** (`faq`):
+  - Question and rich text answer
+  - Category assignment and priority ordering
+  - Search tags and keywords
+  - Related question references
+  - Usage analytics fields
+  - Featured/pinned status flags
+
+- ✅ **Coach Bio Schema** (`coachBio`):
+  - Personal information and professional photo
+  - Qualifications, certifications, and specialties
+  - Personal story and coaching philosophy
+  - Social media links and contact preferences
+  - Availability and class focus areas
+  - Professional achievements and continuing education
+
 **Next.js Integration:**
 - ✅ **Client Configuration** (`sanity/lib/client.ts`):
   - Using next-sanity for optimal Next.js integration
   - CDN enabled for production performance
   - Environment variable configuration
 
-- ✅ **API Endpoints** (`app/api/testimonials/route.ts`):
-  - GET endpoint for fetching testimonials
-  - Support for featured filter
-  - Proper error handling and response formatting
-  - GROQ queries for optimized data retrieval
+- ✅ **API Endpoints**:
+  - `/api/testimonials` - Fetch testimonials with featured filter
+  - `/api/articles` - Fetch articles with category, status, and featured filters
+  - `/api/articles/[slug]` - Fetch single article by slug
+  - `/api/condition-hubs` - Fetch condition hubs with status filter
+  - `/api/condition-hubs/[slug]` - Fetch single condition hub by slug
+  - `/api/faqs` - Fetch FAQs with category, search, and featured filters
+  - `/api/coaches` - Fetch coach bios with active status and specialty filters
+
+- ✅ **Security Measures**:
+  - Rate limiting (100 requests per minute per IP)
+  - Input validation and sanitization
+  - Query parameter validation
+  - Security headers middleware
+  - Protection against XSS and injection attacks
 
 - ✅ **Frontend Components**:
   - `testimonials-Sanity.tsx` - Sanity-integrated testimonials component
@@ -269,6 +312,16 @@
 - ✅ `.env.local` with Sanity credentials
 - ✅ Environment fallbacks in `sanity/env.ts`
 - ✅ Development mode warnings for missing configuration
+
+**Technical Implementation:**
+- ✅ All schemas include proper validation rules
+- ✅ Preview functionality with status indicators
+- ✅ SEO optimization fields
+- ✅ Rich text content support
+- ✅ Image handling with alt text requirements
+- ✅ Reference fields for content relationships
+- ✅ TypeScript type safety throughout
+- ✅ GROQ queries optimized for performance
 
 ### 🔧 Technical Implementation Notes
 
@@ -845,18 +898,29 @@ export async function getConditionHub(slug: string) {
 - [ ] Frontend component displaying Sanity testimonials
 
 ### 🔍 Testing Criteria
-- [ ] **Content Creation**: Create new testimonial via Sanity Studio
-- [ ] **API Response**: Verify `/api/testimonials` returns data
-- [ ] **Frontend Display**: Check testimonials appear on About page
-- [ ] **Featured Filter**: Test featured=true parameter
-- [ ] **Image Handling**: Verify images display correctly
-- [ ] **Responsive Design**: Test on mobile and desktop
+- [ ] **Content Creation**: Create content for all 5 schema types via Sanity Studio
+- [ ] **API Response**: Verify all API endpoints return data correctly:
+  - `/api/testimonials` with featured filter
+  - `/api/articles` with category and status filters
+  - `/api/condition-hubs` with status filter
+  - `/api/faqs` with category and search filters
+  - `/api/coaches` with active status and specialty filters
+- [ ] **Individual Content**: Test single item endpoints:
+  - `/api/articles/[slug]`
+  - `/api/condition-hubs/[slug]`
+- [ ] **Frontend Display**: Check content displays correctly (testimonials working)
+- [ ] **Security Testing**: Test rate limiting and input validation
+- [ ] **Performance**: Verify all queries execute under 500ms
+- [ ] **Image Handling**: Verify images display correctly with alt text
+- [ ] **Responsive Design**: Test Sanity Studio on mobile and desktop
 
 ### 🚨 Known Issues for QA Attention
-- ℹ️ Currently only testimonial schema implemented
-- ℹ️ About page updated to use Sanity testimonials
-- ℹ️ Other pages still using fallback content
-- ℹ️ Additional schemas (Article, Condition Hub, FAQ, Coach Bio) pending
+- ✅ All content schemas implemented (Article, Condition Hub, FAQ, Coach Bio, Testimonial)
+- ✅ API endpoints created for all content types
+- ✅ Security measures implemented (rate limiting, input validation)
+- ⚠️ Frontend components needed for new content types (Articles, Condition Hubs, FAQ, Coach Bios)
+- ⚠️ Integration testing required for new API endpoints
+- ⚠️ Performance testing needed to validate <500ms query targets
 
 ---
 
@@ -864,6 +928,7 @@ export async function getConditionHub(slug: string) {
 **Technical Lead:** Full Stack Developer
 **SEO Specialist:** Marketing Lead
 **Created:** September 14, 2025
-**Status:** ✅ IMPLEMENTED - Ready for QA Testing
+**Status:** ✅ IMPLEMENTED - All schemas and API endpoints complete with security measures
 **Implementation Date:** September 26, 2025
 **Implemented By:** James (Full Stack Developer)
+**QA Status:** Ready for comprehensive testing

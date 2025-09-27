@@ -1,9 +1,93 @@
-import type { Metadata } from 'next'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Clock, User, Calendar } from 'lucide-react'
+import { ArrowRight, Calendar, User } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+// Type for Sanity API response
+interface SanityArticle {
+  _id: string
+  title: string
+  slug: string
+  excerpt?: string
+  description?: string
+  categories?: Array<{ title: string }>
+  relatedHubs?: Array<{ title: string }>
+  author?: { name: string }
+  publishedAt?: string
+  tags?: string[]
+}
+
+// Type for fallback data
+interface FallbackArticle {
+  slug: string
+  title: string
+  description: string
+  category: string
+  hub: string
+  hubTitle: string
+  readTime: string
+  author: string
+  lastUpdated: string
+  tags: string[]
+}
+
+// Union type for both data sources
+type Article = SanityArticle | FallbackArticle
+
+// Type guard to check if article is from Sanity
+function isSanityArticle(article: Article): article is SanityArticle {
+  return '_id' in article
+}
+
+// Helper function to safely access article properties
+function getArticleData(article: Article) {
+  if (isSanityArticle(article)) {
+    return {
+      slug: article.slug,
+      title: article.title,
+      description: article.excerpt || article.description || '',
+      category: article.categories?.[0]?.title || 'Article',
+      hubTitle: article.relatedHubs?.[0]?.title || '',
+      author: article.author?.name || '',
+      publishedAt: article.publishedAt,
+      tags: article.tags || [],
+    }
+  } else {
+    return {
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      category: article.category,
+      hubTitle: article.hubTitle,
+      author: article.author,
+      publishedAt: article.lastUpdated,
+      tags: article.tags,
+    }
+  }
+}
+
+async function getArticles(): Promise<SanityArticle[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?status=published`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch articles')
+    }
+
+    return response.json()
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    // Return fallback data if API fails
+    return []
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Articles | Geelong Movement Co',
@@ -16,62 +100,68 @@ export const metadata: Metadata = {
   },
 }
 
-const articles = [
-  {
-    slug: 'desk-worker-shoulder-pain',
-    title: "Desk Worker's Guide to Shoulder Pain Prevention",
-    description:
-      'Simple exercises and ergonomic tips to prevent shoulder pain from prolonged desk work.',
-    category: 'Prevention',
-    hub: 'shoulder',
-    hubTitle: 'Shoulder Pain & Movement',
-    readTime: '6 min read',
-    author: 'Dr. Sarah Mitchell',
-    lastUpdated: '2024-01-10',
-    tags: ['desk work', 'ergonomics', 'prevention'],
-  },
-  {
-    slug: 'rotator-cuff-exercises',
-    title: 'Essential Rotator Cuff Strengthening Exercises',
-    description:
-      'Evidence-based exercises to strengthen and protect your rotator cuff muscles.',
-    category: 'Exercise',
-    hub: 'shoulder',
-    hubTitle: 'Shoulder Pain & Movement',
-    readTime: '8 min read',
-    author: 'Dr. Mark Thompson',
-    lastUpdated: '2024-01-12',
-    tags: ['rotator cuff', 'strengthening', 'rehabilitation'],
-  },
-  {
-    slug: 'core-strengthening-back-pain',
-    title: 'Core Strengthening for Back Pain Prevention',
-    description:
-      'Learn the most effective core exercises to support your lower back and prevent pain.',
-    category: 'Exercise',
-    hub: 'low-back',
-    hubTitle: 'Low Back Pain Solutions',
-    readTime: '7 min read',
-    author: 'Dr. Sarah Mitchell',
-    lastUpdated: '2024-01-15',
-    tags: ['core strength', 'back pain', 'prevention'],
-  },
-  {
-    slug: 'sitting-posture-back-health',
-    title: 'Optimal Sitting Posture for Back Health',
-    description:
-      'How to set up your workspace and maintain good posture throughout the day.',
-    category: 'Prevention',
-    hub: 'low-back',
-    hubTitle: 'Low Back Pain Solutions',
-    readTime: '9 min read',
-    author: 'Dr. Mark Thompson',
-    lastUpdated: '2024-01-18',
-    tags: ['posture', 'ergonomics', 'workplace health'],
-  },
-]
+export default async function ArticlesPage() {
+  const articles = await getArticles()
 
-export default function ArticlesPage() {
+  // If no articles from Sanity, show fallback content
+  const displayArticles: Article[] =
+    articles.length > 0
+      ? articles
+      : [
+          {
+            slug: 'desk-worker-shoulder-pain',
+            title: "Desk Worker's Guide to Shoulder Pain Prevention",
+            description:
+              'Simple exercises and ergonomic tips to prevent shoulder pain from prolonged desk work.',
+            category: 'Prevention',
+            hub: 'shoulder',
+            hubTitle: 'Shoulder Pain & Movement',
+            readTime: '6 min read',
+            author: 'Dr. Sarah Mitchell',
+            lastUpdated: '2024-01-10',
+            tags: ['desk work', 'ergonomics', 'prevention'],
+          },
+          {
+            slug: 'rotator-cuff-exercises',
+            title: 'Essential Rotator Cuff Strengthening Exercises',
+            description:
+              'Evidence-based exercises to strengthen and protect your rotator cuff muscles.',
+            category: 'Exercise',
+            hub: 'shoulder',
+            hubTitle: 'Shoulder Pain & Movement',
+            readTime: '8 min read',
+            author: 'Dr. Mark Thompson',
+            lastUpdated: '2024-01-12',
+            tags: ['rotator cuff', 'strengthening', 'rehabilitation'],
+          },
+          {
+            slug: 'core-strengthening-back-pain',
+            title: 'Core Strengthening for Back Pain Prevention',
+            description:
+              'Learn the most effective core exercises to support your lower back and prevent pain.',
+            category: 'Exercise',
+            hub: 'low-back',
+            hubTitle: 'Low Back Pain Solutions',
+            readTime: '7 min read',
+            author: 'Dr. Sarah Mitchell',
+            lastUpdated: '2024-01-15',
+            tags: ['core strength', 'back pain', 'prevention'],
+          },
+          {
+            slug: 'sitting-posture-back-health',
+            title: 'Optimal Sitting Posture for Back Health',
+            description:
+              'How to set up your workspace and maintain good posture throughout the day.',
+            category: 'Prevention',
+            hub: 'low-back',
+            hubTitle: 'Low Back Pain Solutions',
+            readTime: '9 min read',
+            author: 'Dr. Mark Thompson',
+            lastUpdated: '2024-01-18',
+            tags: ['posture', 'ergonomics', 'workplace health'],
+          },
+        ]
+
   return (
     <div className='min-h-screen bg-background'>
       {/* Header */}
@@ -97,73 +187,85 @@ export default function ArticlesPage() {
         <div className='container mx-auto px-4'>
           <div className='max-w-6xl mx-auto'>
             <div className='grid md:grid-cols-2 lg:grid-cols-2 gap-8'>
-              {articles.map(article => (
-                <Card
-                  key={article.slug}
-                  className='group hover:shadow-lg transition-shadow'
-                >
-                  <CardHeader>
-                    <div className='flex items-center gap-2 mb-3'>
-                      <Badge variant='secondary'>{article.category}</Badge>
-                      <Badge variant='outline' className='text-xs'>
-                        {article.hubTitle}
-                      </Badge>
-                    </div>
-                    <CardTitle className='text-xl group-hover:text-primary transition-colors'>
-                      <Link href={`/articles/${article.slug}`}>
-                        {article.title}
-                      </Link>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-4'>
-                    <p className='text-muted-foreground text-sm'>
-                      {article.description}
-                    </p>
+              {displayArticles.map((article: Article) => {
+                const articleData = getArticleData(article)
 
-                    <div className='flex flex-wrap gap-2'>
-                      {article.tags.slice(0, 3).map((tag, index) => (
-                        <Badge
-                          key={index}
-                          variant='outline'
-                          className='text-xs'
-                        >
-                          {tag}
+                return (
+                  <Card
+                    key={articleData.slug}
+                    className='group hover:shadow-lg transition-shadow'
+                  >
+                    <CardHeader>
+                      <div className='flex items-center gap-2 mb-3'>
+                        <Badge variant='secondary'>
+                          {articleData.category}
                         </Badge>
-                      ))}
-                    </div>
+                        {articleData.hubTitle && (
+                          <Badge variant='outline' className='text-xs'>
+                            {articleData.hubTitle}
+                          </Badge>
+                        )}
+                      </div>
+                      <CardTitle className='text-xl group-hover:text-primary transition-colors'>
+                        <Link href={`/articles/${articleData.slug}`}>
+                          {articleData.title}
+                        </Link>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className='space-y-4'>
+                      <p className='text-muted-foreground text-sm'>
+                        {articleData.description}
+                      </p>
 
-                    <div className='flex items-center justify-between text-xs text-muted-foreground'>
-                      <div className='flex items-center gap-4'>
-                        <div className='flex items-center gap-1'>
-                          <User className='h-3 w-3' />
-                          <span>{article.author}</span>
-                        </div>
-                        <div className='flex items-center gap-1'>
-                          <Clock className='h-3 w-3' />
-                          <span>{article.readTime}</span>
+                      <div className='flex flex-wrap gap-2'>
+                        {articleData.tags
+                          .slice(0, 3)
+                          .map((tag: string, index: number) => (
+                            <Badge
+                              key={index}
+                              variant='outline'
+                              className='text-xs'
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                      </div>
+
+                      <div className='flex items-center justify-between text-xs text-muted-foreground'>
+                        <div className='flex items-center gap-4'>
+                          {articleData.author && (
+                            <div className='flex items-center gap-1'>
+                              <User className='h-3 w-3' />
+                              <span>{articleData.author}</span>
+                            </div>
+                          )}
+                          {articleData.publishedAt && (
+                            <div className='flex items-center gap-1'>
+                              <Calendar className='h-3 w-3' />
+                              <span>
+                                {new Date(
+                                  articleData.publishedAt
+                                ).toLocaleDateString()}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className='flex items-center gap-1'>
-                        <Calendar className='h-3 w-3' />
-                        <span>
-                          {new Date(article.lastUpdated).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </div>
 
-                    <Button
-                      variant='outline'
-                      className='w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-colors bg-transparent'
-                      asChild
-                    >
-                      <Link href={`/articles/${article.slug}`}>
-                        Read Article
-                        <ArrowRight className='ml-2 h-4 w-4' />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+                      <Button
+                        variant='outline'
+                        className='w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-colors bg-transparent'
+                        asChild
+                      >
+                        <Link href={`/articles/${article.slug}`}>
+                          Read Article
+                          <ArrowRight className='ml-2 h-4 w-4' />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )
+              })}
             </div>
           </div>
         </div>

@@ -7,96 +7,66 @@ import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 interface Testimonial {
-  id: string
+  _id: string
   name: string
   role: string
-  location?: string
   rating: number
-  quote: string
-  condition?: string
-  outcome?: string
-  timeframe?: string
-  image?: string
+  content: string
+  featured?: boolean
+  imageUrl?: string
+  imageAlt?: string
 }
 
 const fallbackTestimonials: Testimonial[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'Sarah Mitchell',
-    role: 'Office Manager',
-    location: 'Geelong West',
+    role: 'Office Manager, Geelong West',
     rating: 5,
-    quote:
+    content:
       'The FMS assessment completely changed how I approach exercise. I was struggling with chronic shoulder pain from years of desk work. The team identified specific movement patterns that were causing my issues and created a personalized program that actually worked.',
-    condition: 'Chronic shoulder pain',
-    outcome: 'Pain-free daily activities',
-    timeframe: '6 weeks',
-    image: '/testimonial-sarah.jpg',
+    featured: true,
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Mark Thompson',
-    role: 'Marathon Runner',
-    location: 'Newtown',
+    role: 'Marathon Runner, Newtown',
     rating: 5,
-    quote:
+    content:
       'After my back injury, I thought my running days were over. The GMC team not only got me back to running but helped me understand how to prevent future injuries. Their approach is professional, evidence-based, and genuinely caring.',
-    condition: 'Lower back injury',
-    outcome: 'Returned to marathon training',
-    timeframe: '12 weeks',
-    image: '/testimonial-mark.jpg',
+    featured: true,
   },
   {
-    id: '3',
+    _id: '3',
     name: 'Jenny Liu',
-    role: 'New Mother',
-    location: 'Belmont',
+    role: 'New Mother, Belmont',
     rating: 5,
-    quote:
+    content:
       'Pregnancy and childbirth left me with significant core weakness and back pain. The movement plan they created was perfect for my situation as a new mum - realistic, effective, and something I could do at home with my baby nearby.',
-    condition: 'Postpartum core weakness',
-    outcome: 'Regained core strength and confidence',
-    timeframe: '8 weeks',
-    image: '/testimonial-jenny.jpg',
   },
   {
-    id: '4',
+    _id: '4',
     name: 'David Chen',
-    role: 'Tradesman',
-    location: 'Highton',
+    role: 'Tradesman, Highton',
     rating: 5,
-    quote:
+    content:
       'Working in construction, my body takes a beating. The team taught me how to move properly and gave me exercises I could do on-site during breaks. My chronic hip pain is gone and I feel stronger than I have in years.',
-    condition: 'Hip pain from manual labor',
-    outcome: 'Pain-free work performance',
-    timeframe: '10 weeks',
-    image: '/testimonial-david.jpg',
   },
   {
-    id: '5',
+    _id: '5',
     name: 'Lisa Anderson',
-    role: 'Teacher',
-    location: 'Torquay',
+    role: 'Teacher, Torquay',
     rating: 5,
-    quote:
+    content:
       "As a teacher, I'm on my feet all day and was developing knee problems. The FMS assessment revealed issues with my movement patterns that I never would have noticed. The corrective exercises have made such a difference.",
-    condition: 'Knee pain from prolonged standing',
-    outcome: 'Improved movement quality',
-    timeframe: '7 weeks',
-    image: '/testimonial-lisa.jpg',
   },
   {
-    id: '6',
+    _id: '6',
     name: 'Robert Williams',
-    role: 'Retiree',
-    location: 'Ocean Grove',
+    role: 'Retiree, Ocean Grove',
     rating: 5,
-    quote:
+    content:
       "At 68, I thought stiffness and pain were just part of aging. The GMC team showed me that wasn't true. Their gentle approach and clear explanations helped me regain mobility I thought I'd lost forever. I'm now more active than I've been in decades.",
-    condition: 'Age-related stiffness and mobility loss',
-    outcome: 'Increased mobility and activity levels',
-    timeframe: '16 weeks',
-    image: '/testimonial-robert.jpg',
   },
 ]
 
@@ -111,10 +81,39 @@ export function Testimonials({
 }: TestimonialsProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    async function fetchTestimonials() {
+      try {
+        const response = await fetch('/api/testimonials', {
+          cache: 'no-store',
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          setTestimonials(data)
+        } else {
+          console.warn('Failed to fetch testimonials, using fallback data')
+          setTestimonials(fallbackTestimonials)
+        }
+      } catch (error) {
+        console.warn('Error fetching testimonials, using fallback data:', error)
+        setTestimonials(fallbackTestimonials)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTestimonials()
+  }, [])
+
+  const displayTestimonials =
+    testimonials.length > 0 ? testimonials : fallbackTestimonials
   const displayedTestimonials = showAll
-    ? fallbackTestimonials
-    : fallbackTestimonials.slice(0, maxItems)
+    ? displayTestimonials
+    : displayTestimonials.slice(0, maxItems)
 
   useEffect(() => {
     if (!isAutoPlaying || showAll) return
@@ -125,6 +124,22 @@ export function Testimonials({
 
     return () => clearInterval(interval)
   }, [isAutoPlaying, displayedTestimonials.length, showAll])
+
+  if (loading) {
+    return (
+      <div
+        className={
+          showAll ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'relative'
+        }
+      >
+        {Array.from({ length: showAll ? 3 : maxItems }).map((_, index) => (
+          <div key={index} className='animate-pulse'>
+            <div className='bg-muted rounded-lg h-64'></div>
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   const nextTestimonial = () => {
     setCurrentIndex(prev => (prev + 1) % displayedTestimonials.length)
@@ -142,8 +157,8 @@ export function Testimonials({
   if (showAll) {
     return (
       <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {fallbackTestimonials.map(testimonial => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        {displayTestimonials.map(testimonial => (
+          <TestimonialCard key={testimonial._id} testimonial={testimonial} />
         ))}
       </div>
     )
@@ -157,7 +172,7 @@ export function Testimonials({
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {displayedTestimonials.map(testimonial => (
-            <div key={testimonial.id} className='w-full flex-shrink-0'>
+            <div key={testimonial._id} className='w-full flex-shrink-0'>
               <TestimonialCard testimonial={testimonial} />
             </div>
           ))}
@@ -212,9 +227,17 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         <div className='space-y-4'>
           <div className='flex items-start gap-4'>
             <div className='flex-shrink-0'>
-              <div className='w-12 h-12 bg-muted rounded-full flex items-center justify-center'>
-                <Quote className='h-6 w-6 text-primary' />
-              </div>
+              {testimonial.imageUrl ? (
+                <img
+                  src={testimonial.imageUrl}
+                  alt={testimonial.imageAlt || testimonial.name}
+                  className='w-12 h-12 rounded-full object-cover'
+                />
+              ) : (
+                <div className='w-12 h-12 bg-muted rounded-full flex items-center justify-center'>
+                  <Quote className='h-6 w-6 text-primary' />
+                </div>
+              )}
             </div>
             <div className='flex-1'>
               <div className='flex mb-2'>
@@ -224,35 +247,22 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
               </div>
               <h3 className='font-semibold'>{testimonial.name}</h3>
               <p className='text-sm text-muted-foreground'>
-                {testimonial.role} • {testimonial.location}
+                {testimonial.role}
               </p>
             </div>
           </div>
 
           <blockquote className='text-sm leading-relaxed italic'>
-            "{testimonial.quote}"
+            "{testimonial.content}"
           </blockquote>
 
-          <div className='grid grid-cols-1 gap-2 pt-2 border-t'>
-            <div className='flex justify-between items-center'>
-              <span className='text-xs text-muted-foreground'>Condition:</span>
-              <Badge variant='outline' className='text-xs'>
-                {testimonial.condition}
+          {testimonial.featured && (
+            <div className='pt-2 border-t'>
+              <Badge variant='default' className='text-xs'>
+                Featured Story
               </Badge>
             </div>
-            <div className='flex justify-between items-center'>
-              <span className='text-xs text-muted-foreground'>Outcome:</span>
-              <span className='text-xs font-medium text-primary'>
-                {testimonial.outcome}
-              </span>
-            </div>
-            <div className='flex justify-between items-center'>
-              <span className='text-xs text-muted-foreground'>Timeframe:</span>
-              <span className='text-xs font-medium'>
-                {testimonial.timeframe}
-              </span>
-            </div>
-          </div>
+          )}
         </div>
       </CardContent>
     </Card>

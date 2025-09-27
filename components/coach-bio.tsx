@@ -1,91 +1,168 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
+'use client'
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { GraduationCap, Award, Clock, MapPin, Mail, Phone } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Award, Clock, GraduationCap, Mail, MapPin, Phone } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 interface Coach {
-  id: string
+  _id: string
   name: string
-  title: string
-  qualifications: string[]
-  specializations: string[]
-  experience: string
-  bio: string
-  image?: string
-  email?: string
-  phone?: string
-  availableDays: string[]
+  specialties: string[]
+  experience?: number
+  bio: any[]
+  qualifications?: any[]
+  achievements?: string[]
+  imageUrl?: string
+  imageAlt?: string
+  active: boolean
+  order: number
+  socialMedia?: {
+    linkedin?: string
+    instagram?: string
+    facebook?: string
+    twitter?: string
+  }
+  contactPreferences?: {
+    email?: string
+    phone?: string
+    preferredContact?: string
+  }
+  availability?: string[]
 }
 
-const coaches: Coach[] = [
+const fallbackCoaches: Coach[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'Dr. Sarah Mitchell',
-    title: 'Senior Physiotherapist & Movement Specialist',
-    qualifications: [
-      'Bachelor of Physiotherapy (Hons)',
-      'Master of Sports Physiotherapy',
-      'Certified FMS Level 2',
-      'Dry Needling Certification',
-    ],
-    specializations: [
+    specialties: [
       'Shoulder & Neck Pain',
       'Workplace Ergonomics',
       "Women's Health",
       'Postural Correction',
     ],
-    experience: '12 years',
-    bio: 'Dr. Sarah Mitchell brings over a decade of experience in movement therapy and rehabilitation. She specializes in helping office workers and new mothers overcome pain and movement limitations through evidence-based treatment approaches. Sarah is passionate about educating clients on proper movement patterns and has helped hundreds of people in Geelong return to pain-free living.',
-    image: '/coach-sarah.jpg',
-    email: 'sarah@geelongmovement.com',
-    phone: '(03) 5234 5679',
-    availableDays: ['Monday', 'Tuesday', 'Wednesday', 'Friday'],
+    experience: 12,
+    bio: [
+      {
+        children: [
+          {
+            text: 'Dr. Sarah Mitchell brings over a decade of experience in movement therapy and rehabilitation. She specializes in helping office workers and new mothers overcome pain and movement limitations through evidence-based treatment approaches.',
+          },
+        ],
+      },
+    ],
+    qualifications: [
+      {
+        certification: 'Bachelor of Physiotherapy (Hons)',
+        issuer: 'University of Melbourne',
+        year: 2011,
+      },
+      {
+        certification: 'Master of Sports Physiotherapy',
+        issuer: 'La Trobe University',
+        year: 2014,
+      },
+    ],
+    achievements: [
+      'Published researcher in movement therapy',
+      '1000+ successful patient outcomes',
+    ],
+    active: true,
+    order: 1,
+    contactPreferences: {
+      email: 'sarah@geelongmovement.com',
+      phone: '(03) 5234 5679',
+      preferredContact: 'email',
+    },
+    availability: ['Monday', 'Tuesday', 'Wednesday', 'Friday'],
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Dr. Mark Thompson',
-    title: 'Sports Physiotherapist & Rehabilitation Specialist',
-    qualifications: [
-      'Bachelor of Exercise Science',
-      'Master of Physiotherapy',
-      'Sports Medicine Australia Certification',
-      'Certified Strength & Conditioning Specialist',
-    ],
-    specializations: [
+    specialties: [
       'Sports Injuries',
       'Lower Back Pain',
       'Return to Sport Programs',
       'Strength & Conditioning',
     ],
-    experience: '15 years',
-    bio: 'Dr. Mark Thompson has extensive experience working with athletes and active individuals. His background in both exercise science and physiotherapy allows him to create comprehensive rehabilitation programs that not only address current injuries but also prevent future problems. Mark has worked with local sports teams and is known for his practical, results-driven approach to movement therapy.',
-    image: '/coach-mark.jpg',
-    email: 'mark@geelongmovement.com',
-    phone: '(03) 5234 5680',
-    availableDays: ['Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
+    experience: 15,
+    bio: [
+      {
+        children: [
+          {
+            text: 'Dr. Mark Thompson has extensive experience working with athletes and active individuals. His background in both exercise science and physiotherapy allows him to create comprehensive rehabilitation programs.',
+          },
+        ],
+      },
+    ],
+    qualifications: [
+      {
+        certification: 'Bachelor of Exercise Science',
+        issuer: 'Deakin University',
+        year: 2008,
+      },
+      {
+        certification: 'Master of Physiotherapy',
+        issuer: 'University of Melbourne',
+        year: 2010,
+      },
+    ],
+    achievements: [
+      'Worked with elite sports teams',
+      'Specialized in sports rehabilitation',
+    ],
+    active: true,
+    order: 2,
+    contactPreferences: {
+      email: 'mark@geelongmovement.com',
+      phone: '(03) 5234 5680',
+      preferredContact: 'phone',
+    },
+    availability: ['Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
   },
   {
-    id: '3',
+    _id: '3',
     name: 'Dr. Emma Rodriguez',
-    title: 'Musculoskeletal Physiotherapist',
-    qualifications: [
-      'Bachelor of Physiotherapy',
-      'Graduate Certificate in Manual Therapy',
-      'Pilates Instructor Certification',
-      'Pain Science Specialist',
-    ],
-    specializations: [
+    specialties: [
       'Chronic Pain Management',
       'Hip & Knee Conditions',
       'Movement Re-education',
       'Clinical Pilates',
     ],
-    experience: '8 years',
-    bio: 'Dr. Emma Rodriguez specializes in complex musculoskeletal conditions and chronic pain management. Her gentle yet effective approach combines manual therapy techniques with movement re-education to help clients achieve lasting results. Emma is particularly skilled at working with clients who have had previous unsuccessful treatments, using her expertise in pain science to develop innovative solutions.',
-    image: '/coach-emma.jpg',
-    email: 'emma@geelongmovement.com',
-    phone: '(03) 5234 5681',
-    availableDays: ['Monday', 'Wednesday', 'Thursday', 'Friday'],
+    experience: 8,
+    bio: [
+      {
+        children: [
+          {
+            text: 'Dr. Emma Rodriguez specializes in complex musculoskeletal conditions and chronic pain management. Her gentle yet effective approach combines manual therapy techniques with movement re-education.',
+          },
+        ],
+      },
+    ],
+    qualifications: [
+      {
+        certification: 'Bachelor of Physiotherapy',
+        issuer: 'Monash University',
+        year: 2015,
+      },
+      {
+        certification: 'Graduate Certificate in Manual Therapy',
+        issuer: 'Australian Physiotherapy Association',
+        year: 2017,
+      },
+    ],
+    achievements: ['Pain science specialist', 'Expert in complex cases'],
+    active: true,
+    order: 3,
+    contactPreferences: {
+      email: 'emma@geelongmovement.com',
+      phone: '(03) 5234 5681',
+      preferredContact: 'email',
+    },
+    availability: ['Monday', 'Wednesday', 'Thursday', 'Friday'],
   },
 ]
 
@@ -100,13 +177,62 @@ export function CoachBio({
   maxItems = 3,
   layout = 'grid',
 }: CoachBioProps) {
-  const displayedCoaches = showAll ? coaches : coaches.slice(0, maxItems)
+  const [coaches, setCoaches] = useState<Coach[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchCoaches() {
+      try {
+        const response = await fetch('/api/coaches?active=true', {
+          cache: 'no-store',
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          setCoaches(data)
+        } else {
+          console.warn('Failed to fetch coaches, using fallback data')
+          setCoaches(fallbackCoaches)
+        }
+      } catch (error) {
+        console.warn('Error fetching coaches, using fallback data:', error)
+        setCoaches(fallbackCoaches)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCoaches()
+  }, [])
+
+  if (loading) {
+    return (
+      <div
+        className={
+          layout === 'list'
+            ? 'space-y-8'
+            : 'grid md:grid-cols-2 lg:grid-cols-3 gap-6'
+        }
+      >
+        {Array.from({ length: showAll ? 3 : maxItems }).map((_, index) => (
+          <div key={index} className='animate-pulse'>
+            <div className='bg-muted rounded-lg h-96'></div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const displayCoaches = coaches.length > 0 ? coaches : fallbackCoaches
+  const displayedCoaches = showAll
+    ? displayCoaches
+    : displayCoaches.slice(0, maxItems)
 
   if (layout === 'list') {
     return (
       <div className='space-y-8'>
         {displayedCoaches.map(coach => (
-          <CoachCard key={coach.id} coach={coach} layout='list' />
+          <CoachCard key={coach._id} coach={coach} layout='list' />
         ))}
       </div>
     )
@@ -115,10 +241,20 @@ export function CoachBio({
   return (
     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
       {displayedCoaches.map(coach => (
-        <CoachCard key={coach.id} coach={coach} layout='grid' />
+        <CoachCard key={coach._id} coach={coach} layout='grid' />
       ))}
     </div>
   )
+}
+
+// Helper function to extract text from Sanity rich text
+function getPlainText(richText: any[]): string {
+  if (!richText || !Array.isArray(richText)) return ''
+  return richText
+    .map(
+      block => block.children?.map((child: any) => child.text).join('') || ''
+    )
+    .join(' ')
 }
 
 function CoachCard({
@@ -128,42 +264,58 @@ function CoachCard({
   coach: Coach
   layout: 'grid' | 'list'
 }) {
+  const bioText = getPlainText(coach.bio)
+  const email = coach.contactPreferences?.email
+  const phone = coach.contactPreferences?.phone
+  const availability = coach.availability || []
+  const experience = coach.experience
+    ? `${coach.experience} years`
+    : 'Experience available'
+
   if (layout === 'list') {
     return (
       <Card>
         <CardContent className='pt-6'>
           <div className='grid md:grid-cols-3 gap-6'>
             <div className='space-y-4'>
-              <div className='w-32 h-32 bg-muted rounded-lg mx-auto md:mx-0 flex items-center justify-center'>
-                <div className='text-4xl font-bold text-primary'>
-                  {coach.name
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')}
-                </div>
+              <div className='w-32 h-32 bg-muted rounded-lg mx-auto md:mx-0 flex items-center justify-center overflow-hidden'>
+                {coach.imageUrl ? (
+                  <img
+                    src={coach.imageUrl}
+                    alt={coach.imageAlt || coach.name}
+                    className='w-full h-full object-cover'
+                  />
+                ) : (
+                  <div className='text-4xl font-bold text-primary'>
+                    {coach.name
+                      .split(' ')
+                      .map(n => n[0])
+                      .join('')}
+                  </div>
+                )}
               </div>
               <div className='text-center md:text-left'>
                 <h3 className='font-bold text-lg'>{coach.name}</h3>
                 <p className='text-sm text-muted-foreground mb-2'>
-                  {coach.title}
+                  Physiotherapist
                 </p>
                 <div className='flex items-center gap-1 justify-center md:justify-start mb-1'>
                   <Clock className='h-3 w-3 text-muted-foreground' />
                   <span className='text-xs text-muted-foreground'>
-                    {coach.experience} experience
+                    {experience}
                   </span>
                 </div>
                 <div className='flex items-center gap-1 justify-center md:justify-start'>
                   <MapPin className='h-3 w-3 text-muted-foreground' />
                   <span className='text-xs text-muted-foreground'>
-                    Available {coach.availableDays.length} days/week
+                    Available {availability.length} days/week
                   </span>
                 </div>
               </div>
             </div>
 
             <div className='md:col-span-2 space-y-4'>
-              <p className='text-sm leading-relaxed'>{coach.bio}</p>
+              <p className='text-sm leading-relaxed'>{bioText}</p>
 
               <div className='grid md:grid-cols-2 gap-4'>
                 <div>
@@ -172,9 +324,9 @@ function CoachCard({
                     Qualifications
                   </h4>
                   <ul className='space-y-1'>
-                    {coach.qualifications.map((qual, index) => (
+                    {coach.qualifications?.map((qual, index) => (
                       <li key={index} className='text-xs text-muted-foreground'>
-                        • {qual}
+                        • {qual.certification} ({qual.issuer})
                       </li>
                     ))}
                   </ul>
@@ -186,7 +338,7 @@ function CoachCard({
                     Specializations
                   </h4>
                   <div className='flex flex-wrap gap-1'>
-                    {coach.specializations.map((spec, index) => (
+                    {coach.specialties.map((spec, index) => (
                       <Badge key={index} variant='outline' className='text-xs'>
                         {spec}
                       </Badge>
@@ -196,17 +348,17 @@ function CoachCard({
               </div>
 
               <div className='flex flex-wrap gap-2 pt-2'>
-                {coach.email && (
+                {email && (
                   <Button variant='outline' size='sm' asChild>
-                    <a href={`mailto:${coach.email}`}>
+                    <a href={`mailto:${email}`}>
                       <Mail className='mr-2 h-3 w-3' />
                       Email
                     </a>
                   </Button>
                 )}
-                {coach.phone && (
+                {phone && (
                   <Button variant='outline' size='sm' asChild>
-                    <a href={`tel:${coach.phone}`}>
+                    <a href={`tel:${phone}`}>
                       <Phone className='mr-2 h-3 w-3' />
                       Call
                     </a>
@@ -223,26 +375,32 @@ function CoachCard({
   return (
     <Card className='h-full'>
       <CardHeader className='text-center'>
-        <div className='w-20 h-20 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center'>
-          <div className='text-2xl font-bold text-primary'>
-            {coach.name
-              .split(' ')
-              .map(n => n[0])
-              .join('')}
-          </div>
+        <div className='w-20 h-20 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden'>
+          {coach.imageUrl ? (
+            <img
+              src={coach.imageUrl}
+              alt={coach.imageAlt || coach.name}
+              className='w-full h-full object-cover'
+            />
+          ) : (
+            <div className='text-2xl font-bold text-primary'>
+              {coach.name
+                .split(' ')
+                .map(n => n[0])
+                .join('')}
+            </div>
+          )}
         </div>
         <CardTitle className='text-lg'>{coach.name}</CardTitle>
-        <p className='text-sm text-muted-foreground'>{coach.title}</p>
+        <p className='text-sm text-muted-foreground'>Physiotherapist</p>
         <div className='flex items-center gap-1 justify-center'>
           <Clock className='h-3 w-3 text-muted-foreground' />
-          <span className='text-xs text-muted-foreground'>
-            {coach.experience} experience
-          </span>
+          <span className='text-xs text-muted-foreground'>{experience}</span>
         </div>
       </CardHeader>
       <CardContent className='space-y-4'>
         <p className='text-sm leading-relaxed'>
-          {coach.bio.substring(0, 150)}...
+          {bioText.substring(0, 150)}...
         </p>
 
         <div>
@@ -251,41 +409,41 @@ function CoachCard({
             Specializations
           </h4>
           <div className='flex flex-wrap gap-1'>
-            {coach.specializations.slice(0, 3).map((spec, index) => (
+            {coach.specialties.slice(0, 3).map((spec, index) => (
               <Badge key={index} variant='outline' className='text-xs'>
                 {spec}
               </Badge>
             ))}
-            {coach.specializations.length > 3 && (
+            {coach.specialties.length > 3 && (
               <Badge variant='outline' className='text-xs'>
-                +{coach.specializations.length - 3} more
+                +{coach.specialties.length - 3} more
               </Badge>
             )}
           </div>
         </div>
 
         <div className='flex gap-2 pt-2'>
-          {coach.email && (
+          {email && (
             <Button
               variant='outline'
               size='sm'
               className='flex-1 bg-transparent'
               asChild
             >
-              <a href={`mailto:${coach.email}`}>
+              <a href={`mailto:${email}`}>
                 <Mail className='mr-2 h-3 w-3' />
                 Email
               </a>
             </Button>
           )}
-          {coach.phone && (
+          {phone && (
             <Button
               variant='outline'
               size='sm'
               className='flex-1 bg-transparent'
               asChild
             >
-              <a href={`tel:${coach.phone}`}>
+              <a href={`tel:${phone}`}>
                 <Phone className='mr-2 h-3 w-3' />
                 Call
               </a>
